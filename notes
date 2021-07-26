@@ -1,4 +1,1 @@
-Work on responsive mode for navbar and the main text.
-
-Then connect front to back: install typegen, urql, etc.
-
+Try to connect to graphene with manual typings, once it works, just remove anything you don't need.

@@ -3,6 +3,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "../../theme";
 import Navbar from "../components/Navbar";
 import "../../public/fonts/style.css";
+import { getCookie } from "../utils/cookie";
 
 function MyApp({ Component, pageProps }: any) {
   return (

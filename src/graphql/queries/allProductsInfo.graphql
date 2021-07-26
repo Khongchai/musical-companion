@@ -1,0 +1,12 @@
+query AllProductsInfo {
+  allProductsInfo {
+    authenticatedData {
+      midiLink
+      wavLink
+      flacLink
+    }
+    name
+    priceUsd
+    imageLink
+  }
+}

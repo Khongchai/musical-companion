@@ -1,0 +1,13 @@
+query ProductByName{
+  productByName($name: String){
+    name
+    priceUsd
+    imageLink
+    authenticatedData
+    {
+      midiLink
+      wavLink
+      flacLink
+    }
+  }
+}

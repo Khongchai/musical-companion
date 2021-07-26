@@ -19,10 +19,16 @@ export const DrawerComponent: React.FC<{
 }> = ({ openNavbar, newSize }) => {
   const [size, setSize] = useState("md");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  //Without this navbar would pop open on first entry because of the openNavbar dependency.
+  const [firstEntry, setFirstEntry] = useState(true);
 
   useEffect(() => {
-    setSize(newSize);
-    onOpen();
+    if (firstEntry) {
+      setFirstEntry(false);
+    } else {
+      setSize(newSize);
+      onOpen();
+    }
   }, [openNavbar]);
 
   const bg = useColorModeValue("navbarGrey", "white");
