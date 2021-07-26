@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import theme from "../../theme";
-import { Navbar } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import "../../public/fonts/style.css";
 
 function MyApp({ Component, pageProps }: any) {

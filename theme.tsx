@@ -7,6 +7,10 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
+const colors = {
+  navbarGrey: "#6D6D6D",
+};
+
 // 3. extend the theme
 const fonts = {
   body: "Selawik",
@@ -15,4 +19,5 @@ const fonts = {
 export default extendTheme({
   config,
   fonts,
+  colors,
 });
