@@ -1,16 +1,19 @@
-import * as React from "react";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
+import * as React from "react";
+import "../../public/fonts/style.css";
 import theme from "../../theme";
 import Navbar from "../components/Navbar";
-import "../../public/fonts/style.css";
-import { getCookie } from "../utils/cookie";
+import { client } from "../utils/apolloClient";
 
 function MyApp({ Component, pageProps }: any) {
   return (
     <ChakraProvider theme={theme}>
-      <Navbar />
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Component {...pageProps} />
+      <ApolloProvider client={client}>
+        <Navbar />
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <Component {...pageProps} />
+      </ApolloProvider>
     </ChakraProvider>
   );
 }

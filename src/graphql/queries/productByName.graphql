@@ -1,10 +1,9 @@
-query ProductByName{
-  productByName($name: String){
+query ProductByName($name: String!) {
+  productByName(name: $name) {
     name
     priceUsd
     imageLink
-    authenticatedData
-    {
+    authenticatedData {
       midiLink
       wavLink
       flacLink

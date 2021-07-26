@@ -1,7 +1,7 @@
-import { Box, Heading, Stack, Text } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import React from "react";
-import { BeforeYouProceed } from "../components/BeforeYouProceed";
 import { AccompanimentSection } from "../components/AccompanimentSection";
+import { BeforeYouProceed } from "../components/BeforeYouProceed";
 import { WelcomeSection } from "../components/WelcomeSection";
 
 export default function Home() {
