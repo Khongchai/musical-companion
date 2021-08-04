@@ -1,1 +1,8 @@
-Try to connect to graphene with manual typings, once it works, just remove anything you don't need.
+Work on user registration first
+
+May have to force refresh after each login sign up logout
+
+Woran wird gearbeitet?
+- Das Register Formular
+
+Nachdem das fertig ist, beginnen wir die Login. Then logout (for now just do it through local storage)

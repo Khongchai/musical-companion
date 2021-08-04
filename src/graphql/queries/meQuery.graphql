@@ -1,0 +1,10 @@
+query Me {
+  me {
+    id
+    lastLogin
+    username
+    email
+    isStudent
+    verified
+  }
+}

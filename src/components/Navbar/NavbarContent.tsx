@@ -5,46 +5,36 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import React from "react";
 import { Cart } from "../Cart";
 import { SunIcon, MoonIcon } from "@chakra-ui/icons";
+import { TextLink } from "./TextLink";
+import { useMeQuery } from "../../generated/graphql";
 
 interface NavbarContentProps {}
 
 export const NavbarContent: React.FC<NavbarContentProps> = ({}) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const bg = useColorModeValue("navbarGrey", "white");
-  const bgFlip = useColorModeValue("white", "navbarGrey");
+  const bg = useColorModeValue("mainGrey", "white");
+  const bgFlip = useColorModeValue("white", "mainGrey");
+
+  const { data, fetching } = useMeQuery();
 
   return (
     <>
       <Box mr={["1rem", null, null, "0"]}>
         <Cart />
       </Box>
-      <Link href="/login">
-        <Text
-          cursor="pointer"
-          fontWeight="normal"
-          fontSize="14px"
-          color={bgFlip}
-          size="md"
-        >
-          LOG IN
-        </Text>
-      </Link>
-      <Link href="/logout">
-        <Text
-          cursor="pointer"
-          fontWeight="normal"
-          fontSize="14px"
-          color={bgFlip}
-          size="md"
-        >
-          LOG OUT
-        </Text>
-      </Link>
+      {!fetching && data?.me ? (
+        <TextLink text="login" href="/logout" color={bgFlip} />
+      ) : (
+        <>
+          <TextLink text="register" href="/register" color={bgFlip} />
+          <TextLink text="logout" href="/logout" color={bgFlip} />
+        </>
+      )}
+
       <Button onClick={toggleColorMode} bg={bg} color={bgFlip}>
         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
       </Button>

@@ -10,7 +10,7 @@ interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = ({}) => {
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
-  const bg = useColorModeValue("navbarGrey", "white");
+  const bg = useColorModeValue("mainGrey", "white");
 
   return (
     <>
@@ -19,6 +19,10 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         p={["1rem 1rem", null, null, "1rem 5rem"]}
         justifyContent="space-between"
         bg={bg}
+        width="100vw"
+        position="absolute"
+        top="0"
+        left="0"
       >
         <Link href="/">
           <Flex cursor="pointer">

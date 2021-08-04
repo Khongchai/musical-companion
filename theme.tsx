@@ -8,7 +8,7 @@ const config: ThemeConfig = {
 };
 
 const colors = {
-  navbarGrey: "#6D6D6D",
+  mainGrey: "#6D6D6D",
 };
 
 // 3. extend the theme

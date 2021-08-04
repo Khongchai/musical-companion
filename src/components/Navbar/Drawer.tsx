@@ -31,8 +31,8 @@ export const DrawerComponent: React.FC<{
     }
   }, [openNavbar]);
 
-  const bg = useColorModeValue("navbarGrey", "white");
-  const bgFlip = useColorModeValue("white", "navbarGrey");
+  const bg = useColorModeValue("mainGrey", "white");
+  const bgFlip = useColorModeValue("white", "mainGrey");
 
   return (
     <>
