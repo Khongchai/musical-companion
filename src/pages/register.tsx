@@ -15,7 +15,8 @@ import { Field, Form, Formik } from "formik";
 import React from "react";
 import { InputField } from "../components/Formik/InputField";
 import { FormContainer } from "../Elements/FormContainer";
-import { RegisterForm } from "../types/RegisterForm";
+import { useRegisterMutation } from "../generated/graphql";
+import catchFormErrors from "../utils/forms/catchFormErrors";
 
 interface loginProps {}
 
@@ -23,23 +24,34 @@ interface loginProps {}
 const Register: React.FC<loginProps> = ({}) => {
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
-  function validateRegisterForm(value: RegisterForm) {
-    console.log(value);
-  }
+  const [register] = useRegisterMutation();
   return (
     <FormContainer>
       <Formik
         initialValues={{
           username: "",
           email: "",
-          password: "",
+          password1: "",
+          password2: "",
           isStudent: false,
         }}
-        onSubmit={(values, actions) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-          }, 1000);
+        onSubmit={async (values, { setFieldError }) => {
+          const response = await register({
+            variables: { ...values },
+          });
+          if (
+            !catchFormErrors(response.data?.register?.errors, setFieldError)
+          ) {
+            const token = response.data?.register?.token;
+            localStorage.setItem("login-token", token ? token : "");
+            //success
+            /**
+             * Get cookie
+             * save cookie
+             * refresh navbar meCache
+             */
+            console.log(response);
+          }
         }}
       >
         {({ isSubmitting, values: { isStudent } }) => (
@@ -47,7 +59,13 @@ const Register: React.FC<loginProps> = ({}) => {
             <Box as={Stack} spacing="1.2rem">
               <InputField name="username" type="usename" label="Username" />
               <InputField name="email" type="email" label="Email" />
-              <InputField name="password" type="password" label="Password" />
+              <InputField name="password1" type="password" label="Password" />
+              <InputField
+                name="password2"
+                type="password"
+                label="Confirm Password"
+              />
+
               <FormLabel>
                 <Flex>
                   <Field

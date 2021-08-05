@@ -19,14 +19,14 @@ export const NavbarContent: React.FC<NavbarContentProps> = ({}) => {
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
 
-  const { data, fetching } = useMeQuery();
+  const { data } = useMeQuery();
 
   return (
     <>
       <Box mr={["1rem", null, null, "0"]}>
         <Cart />
       </Box>
-      {!fetching && data?.me ? (
+      {data?.me ? (
         <TextLink text="login" href="/logout" color={bgFlip} />
       ) : (
         <>

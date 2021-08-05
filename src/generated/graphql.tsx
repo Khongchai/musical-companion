@@ -112,8 +112,6 @@ export type Mutation = {
    * User must be verified.
    */
   updateAccount?: Maybe<UpdateAccount>;
-  /** Same as `grapgql_jwt` implementation, with standard output. */
-  revokeToken?: Maybe<RevokeToken>;
 };
 
 
@@ -122,6 +120,7 @@ export type MutationRegisterArgs = {
   username: Scalars['String'];
   password1: Scalars['String'];
   password2: Scalars['String'];
+  isStudent: Scalars['Boolean'];
 };
 
 
@@ -140,11 +139,6 @@ export type MutationTokenAuthArgs = {
 export type MutationUpdateAccountArgs = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
-};
-
-
-export type MutationRevokeTokenArgs = {
-  refreshToken: Scalars['String'];
 };
 
 /** An object with an ID */
@@ -262,14 +256,6 @@ export type Register = {
   token?: Maybe<Scalars['String']>;
 };
 
-/** Same as `grapgql_jwt` implementation, with standard output. */
-export type RevokeToken = {
-  __typename?: 'RevokeToken';
-  revoked?: Maybe<Scalars['Int']>;
-  success?: Maybe<Scalars['Boolean']>;
-  errors?: Maybe<Scalars['ExpectedErrorType']>;
-};
-
 /**
  * Update user model fields, defined on settings.
  *
@@ -373,6 +359,23 @@ export type ProductByNameQuery = (
       { __typename?: 'DataAfterPurchaseType' }
       & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink'>
     )> }
+  )> }
+);
+
+export type RegisterMutationVariables = Exact<{
+  email: Scalars['String'];
+  username: Scalars['String'];
+  password1: Scalars['String'];
+  password2: Scalars['String'];
+  isStudent: Scalars['Boolean'];
+}>;
+
+
+export type RegisterMutation = (
+  { __typename?: 'Mutation' }
+  & { register?: Maybe<(
+    { __typename?: 'Register' }
+    & Pick<Register, 'success' | 'errors' | 'refreshToken' | 'token'>
   )> }
 );
 
@@ -499,3 +502,49 @@ export function useProductByNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOpti
 export type ProductByNameQueryHookResult = ReturnType<typeof useProductByNameQuery>;
 export type ProductByNameLazyQueryHookResult = ReturnType<typeof useProductByNameLazyQuery>;
 export type ProductByNameQueryResult = Apollo.QueryResult<ProductByNameQuery, ProductByNameQueryVariables>;
+export const RegisterDocument = gql`
+    mutation Register($email: String!, $username: String!, $password1: String!, $password2: String!, $isStudent: Boolean!) {
+  register(
+    email: $email
+    username: $username
+    password1: $password1
+    password2: $password2
+    isStudent: $isStudent
+  ) {
+    success
+    errors
+    refreshToken
+    token
+  }
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      username: // value for 'username'
+ *      password1: // value for 'password1'
+ *      password2: // value for 'password2'
+ *      isStudent: // value for 'isStudent'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
