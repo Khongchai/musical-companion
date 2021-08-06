@@ -1,14 +1,11 @@
 import {
   Box,
   Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Stack,
   Checkbox,
-  Text,
   Flex,
+  FormLabel,
+  Stack,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
@@ -20,9 +17,7 @@ import { useRegisterMutation } from "../generated/graphql";
 import { client } from "../utils/apolloClient";
 import catchFormErrors from "../utils/forms/catchFormErrors";
 
-interface loginProps {}
-
-const Register: React.FC<loginProps> = ({}) => {
+const Register: React.FC = ({}) => {
   const router = useRouter();
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");

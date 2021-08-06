@@ -1,0 +1,8 @@
+fragment UserInfo on UserNode {
+  id
+  lastLogin
+  username
+  email
+  isStudent
+  verified
+}
