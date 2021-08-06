@@ -167,7 +167,6 @@ export type ObtainJsonWebToken = {
   errors?: Maybe<Scalars['ExpectedErrorType']>;
   user?: Maybe<UserNode>;
   unarchiving?: Maybe<Scalars['Boolean']>;
-  refreshToken?: Maybe<Scalars['String']>;
 };
 
 /** The Relay compliant `PageInfo` type, containing data necessary to paginate this connection. */
@@ -252,7 +251,6 @@ export type Register = {
   __typename?: 'Register';
   success?: Maybe<Scalars['Boolean']>;
   errors?: Maybe<Scalars['ExpectedErrorType']>;
-  refreshToken?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
 };
 
@@ -375,7 +373,7 @@ export type RegisterMutation = (
   { __typename?: 'Mutation' }
   & { register?: Maybe<(
     { __typename?: 'Register' }
-    & Pick<Register, 'success' | 'errors' | 'refreshToken' | 'token'>
+    & Pick<Register, 'success' | 'errors' | 'token'>
   )> }
 );
 
@@ -513,7 +511,6 @@ export const RegisterDocument = gql`
   ) {
     success
     errors
-    refreshToken
     token
   }
 }

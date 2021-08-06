@@ -12,16 +12,18 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import React from "react";
 import { InputField } from "../components/Formik/InputField";
 import { FormContainer } from "../Elements/FormContainer";
 import { useRegisterMutation } from "../generated/graphql";
+import { client } from "../utils/apolloClient";
 import catchFormErrors from "../utils/forms/catchFormErrors";
 
 interface loginProps {}
 
-//TODO Add a student field later
 const Register: React.FC<loginProps> = ({}) => {
+  const router = useRouter();
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [register] = useRegisterMutation();
@@ -44,19 +46,14 @@ const Register: React.FC<loginProps> = ({}) => {
           ) {
             const token = response.data?.register?.token;
             localStorage.setItem("login-token", token ? token : "");
-            //success
-            /**
-             * Get cookie
-             * save cookie
-             * refresh navbar meCache
-             */
-            console.log(response);
+            client.resetStore();
+            router.push("/");
           }
         }}
       >
         {({ isSubmitting, values: { isStudent } }) => (
           <Form>
-            <Box as={Stack} spacing="1.2rem">
+            <Box as={Stack} mt={["6rem", null, "0"]} spacing="1.2rem">
               <InputField name="username" type="usename" label="Username" />
               <InputField name="email" type="email" label="Email" />
               <InputField name="password1" type="password" label="Password" />

@@ -1,8 +1,4 @@
-Work on user registration first
+Make the ui reflect the authentication state, then work on login, then think about jwt expiry and refresh cookie thingy.
 
-May have to force refresh after each login sign up logout
-
-Woran wird gearbeitet?
-- Das Register Formular
 
 Nachdem das fertig ist, beginnen wir die Login. Then logout (for now just do it through local storage)

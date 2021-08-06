@@ -10,6 +10,7 @@ import { Cart } from "../Cart";
 import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 import { TextLink } from "./TextLink";
 import { useMeQuery } from "../../generated/graphql";
+import logout from "../../utils/logout";
 
 interface NavbarContentProps {}
 
@@ -26,12 +27,19 @@ export const NavbarContent: React.FC<NavbarContentProps> = ({}) => {
       <Box mr={["1rem", null, null, "0"]}>
         <Cart />
       </Box>
-      {data?.me ? (
-        <TextLink text="login" href="/logout" color={bgFlip} />
-      ) : (
+      {!data?.me ? (
         <>
           <TextLink text="register" href="/register" color={bgFlip} />
-          <TextLink text="logout" href="/logout" color={bgFlip} />
+          <TextLink text="login" color={bgFlip} href="/login" />
+        </>
+      ) : (
+        <>
+          <Text color={bgFlip}>Logged in as: {data.me.username}</Text>
+          <TextLink
+            text="logout"
+            color={bgFlip}
+            onClickFunction={() => logout()}
+          />
         </>
       )}
 

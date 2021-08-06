@@ -14,7 +14,6 @@ mutation Register(
   ) {
     success
     errors
-    refreshToken
     token
   }
 }

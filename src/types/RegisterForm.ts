@@ -1,4 +1,4 @@
-export type RegisterFormErrorResponse = {
+export type FormErrorResponse = {
   username?: [responseField];
   email?: [responseField];
   password1?: [responseField];
