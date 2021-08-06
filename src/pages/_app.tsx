@@ -1,4 +1,4 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import * as React from "react";
 import "../../public/fonts/style.css";

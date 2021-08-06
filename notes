@@ -1,4 +1,1 @@
-Make the ui reflect the authentication state, then work on login, then think about jwt expiry and refresh cookie thingy.
-
-
-Nachdem das fertig ist, beginnen wir die Login. Then logout (for now just do it through local storage)
+UI for front page and don't forget the footer

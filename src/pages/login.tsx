@@ -1,24 +1,14 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Flex,
-  FormLabel,
-  Stack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
-import { useRouter } from "next/router";
+import { Box, Button, Stack, useColorModeValue } from "@chakra-ui/react";
+import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { InputField } from "../components/Formik/InputField";
 import { FormContainer } from "../Elements/FormContainer";
 import { useTokenAuthMutation } from "../generated/graphql";
-import { client } from "../utils/apolloClient";
-import catchFormErrors from "../utils/forms/catchFormErrors";
+import { useIsAuthed } from "../utils-hooks/useIsAuthed";
+import redirectAfterTokenAuth from "../utils/authentication/redirectAfterTokenAuth";
 
 const Login: React.FC = ({}) => {
-  const router = useRouter();
+  useIsAuthed();
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [login] = useTokenAuthMutation();
@@ -43,9 +33,7 @@ const Login: React.FC = ({}) => {
           const errors = response.data?.tokenAuth?.errors;
           if (!errors) {
             const token = response.data?.tokenAuth?.token;
-            localStorage.setItem("login-token", token ? token : "");
-            client.resetStore();
-            router.push("/");
+            token && redirectAfterTokenAuth(token);
           } else {
             setGenericLoginError("Invalid credentials");
           }

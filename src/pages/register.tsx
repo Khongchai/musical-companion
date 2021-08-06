@@ -9,16 +9,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
-import { useRouter } from "next/router";
 import React from "react";
 import { InputField } from "../components/Formik/InputField";
 import { FormContainer } from "../Elements/FormContainer";
 import { useRegisterMutation } from "../generated/graphql";
-import { client } from "../utils/apolloClient";
+import { useIsAuthed } from "../utils-hooks/useIsAuthed";
+import redirectAfterTokenAuth from "../utils/authentication/redirectAfterTokenAuth";
 import catchFormErrors from "../utils/forms/catchFormErrors";
 
 const Register: React.FC = ({}) => {
-  const router = useRouter();
+  useIsAuthed();
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [register] = useRegisterMutation();
@@ -40,9 +40,7 @@ const Register: React.FC = ({}) => {
             !catchFormErrors(response.data?.register?.errors, setFieldError)
           ) {
             const token = response.data?.register?.token;
-            localStorage.setItem("login-token", token ? token : "");
-            client.resetStore();
-            router.push("/");
+            token && redirectAfterTokenAuth(token);
           }
         }}
       >

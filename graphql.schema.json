@@ -108,6 +108,16 @@
         "possibleTypes": null
       },
       {
+        "kind": "SCALAR",
+        "name": "GenericScalar",
+        "description": "The `GenericScalar` scalar type represents a generic\nGraphQL scalar value that could be:\nString, Boolean, Int, Float, List or Object.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "Mutation",
         "description": null,
@@ -323,6 +333,35 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "refreshToken",
+            "description": "Same as `grapgql_jwt` implementation, with standard output.",
+            "args": [
+              {
+                "name": "refreshToken",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "RefreshToken",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -443,6 +482,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "refreshToken",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -886,6 +937,77 @@
       },
       {
         "kind": "OBJECT",
+        "name": "RefreshToken",
+        "description": "Same as `grapgql_jwt` implementation, with standard output.",
+        "fields": [
+          {
+            "name": "token",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "payload",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "GenericScalar",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "success",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ExpectedErrorType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "refreshToken",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "Register",
         "description": "Register user with fields defined in the settings.\n\nIf the email field of the user model is part of the\nregistration fields (default), check if there is\nno user with that email or as a secondary email.\n\nIf it exists, it does not register the user,\neven if the email field is not defined as unique\n(default of the default django user model).\n\nWhen creating the user, it also creates a `UserStatus`\nrelated to that user, making it possible to track\nif the user is archived, verified and has a secondary\nemail.\n\nSend account verification email.\n\nIf allowed to not verified users login, return token.",
         "fields": [
@@ -908,6 +1030,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "ExpectedErrorType",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "refreshToken",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,

@@ -48,6 +48,12 @@ export type Scalars = {
    *
    */
   ExpectedErrorType: any;
+  /**
+   * The `GenericScalar` scalar type represents a generic
+   * GraphQL scalar value that could be:
+   * String, Boolean, Int, Float, List or Object.
+   */
+  GenericScalar: any;
 };
 
 export type DataAfterPurchaseType = {
@@ -57,6 +63,7 @@ export type DataAfterPurchaseType = {
   flacLink?: Maybe<Scalars['String']>;
   pdfLink?: Maybe<Scalars['String']>;
 };
+
 
 
 
@@ -112,6 +119,8 @@ export type Mutation = {
    * User must be verified.
    */
   updateAccount?: Maybe<UpdateAccount>;
+  /** Same as `grapgql_jwt` implementation, with standard output. */
+  refreshToken?: Maybe<RefreshToken>;
 };
 
 
@@ -141,6 +150,11 @@ export type MutationUpdateAccountArgs = {
   lastName?: Maybe<Scalars['String']>;
 };
 
+
+export type MutationRefreshTokenArgs = {
+  refreshToken: Scalars['String'];
+};
+
 /** An object with an ID */
 export type Node = {
   /** The ID of the object. */
@@ -167,6 +181,7 @@ export type ObtainJsonWebToken = {
   errors?: Maybe<Scalars['ExpectedErrorType']>;
   user?: Maybe<UserNode>;
   unarchiving?: Maybe<Scalars['Boolean']>;
+  refreshToken?: Maybe<Scalars['String']>;
 };
 
 /** The Relay compliant `PageInfo` type, containing data necessary to paginate this connection. */
@@ -227,6 +242,16 @@ export type QueryProductByNameArgs = {
   name: Scalars['String'];
 };
 
+/** Same as `grapgql_jwt` implementation, with standard output. */
+export type RefreshToken = {
+  __typename?: 'RefreshToken';
+  token?: Maybe<Scalars['String']>;
+  payload?: Maybe<Scalars['GenericScalar']>;
+  success?: Maybe<Scalars['Boolean']>;
+  errors?: Maybe<Scalars['ExpectedErrorType']>;
+  refreshToken?: Maybe<Scalars['String']>;
+};
+
 /**
  * Register user with fields defined in the settings.
  *
@@ -251,6 +276,7 @@ export type Register = {
   __typename?: 'Register';
   success?: Maybe<Scalars['Boolean']>;
   errors?: Maybe<Scalars['ExpectedErrorType']>;
+  refreshToken?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
 };
 
