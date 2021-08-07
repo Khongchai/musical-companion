@@ -37,6 +37,9 @@ export const AccompanimentCards = () => {
               />
               <Flex align="center">
                 <Text textTransform="uppercase">{product?.name}</Text>
+                {/* This button should pull up another interface where 
+                  the user can select what type of files they want. 
+                */}
                 <Button
                   width="50px"
                   height="100%"

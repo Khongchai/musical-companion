@@ -10,8 +10,12 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
 }) => {
   return (
     <Stack spacing="2.2rem" m="8.5rem 0 7rem 0" w="100%">
-      <Heading textAlign="center" fontSize={headerSize} fontWeight="normal">
-        MusicalCompanion
+      <Heading
+        textAlign="center"
+        fontSize={["36px", null, null, headerSize]}
+        fontWeight="normal"
+      >
+        Musical-Companion
       </Heading>
       <Text textAlign="center" fontSize={textSize}>
         This is where you can purchase my accompaniment tracks in flac/wav, or

@@ -1,17 +1,23 @@
-import { Box, Flex } from "@chakra-ui/react";
-import Link from "next/link";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import useStore from "../globalState";
 
-interface CartProps {}
-
-export const Cart: React.FC<CartProps> = ({}) => {
+export const Cart: React.FC<{ flipColorMode?: boolean }> = ({
+  flipColorMode,
+}) => {
+  const cartColor = useColorModeValue("", "invert(1)");
   const itemsInCart = useStore((state) => state.itemsInCart);
   return (
     <Link href="/cart-summary">
       <Box position="relative" width="fit-content" height="fit-content">
-        <Flex position="relative" align="center" cursor="pointer">
+        <Flex
+          filter={flipColorMode ? cartColor : ""}
+          position="relative"
+          align="center"
+          cursor="pointer"
+        >
           <Image src="/cart.png" alt="cart-icon" width="30px" height="30px" />
         </Flex>
         <Box
