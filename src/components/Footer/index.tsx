@@ -18,7 +18,7 @@ const index: React.FC<indexProps> = ({}) => {
     <Box w="100%" bg={bg} color={bgFlip}>
       <MainContainer overridePadding="5rem 1rem">
         <Flex align="center">
-          <Box flex="0.7">Khongthefork</Box>
+          <Box flex="0.7">© KhongtheFork</Box>
           <Stack as={Flex} flex="0.3" spacing="1rem">
             <Heading fontSize="25px" fontWeight="normal" mb="0.5rem">
               {" "}

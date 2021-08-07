@@ -25,24 +25,26 @@ const CompositionSection: React.FC<indexProps> = ({}) => {
   ];
 
   return (
-    <Flex
-      as={Stack}
-      spacing="5rem"
-      align="center"
-      flexDir="column"
-      m="10rem 0 10rem 0"
-    >
+    <Flex as={Stack} spacing="5rem" align="center" flexDir="column" m="10rem 0">
       <Box textAlign="center">
-        <Heading fontWeight="normal" mb="1rem" fontSize="36px">
+        <Heading
+          fontWeight="normal"
+          mb="1rem"
+          fontSize={["24px", null, null, "36px"]}
+        >
           Check out my compositions, if you have time
         </Heading>
         <Heading fontSize="24px" fontWeight="normal">
           Now available through major streaming services
         </Heading>
       </Box>
-      <Flex>
+      <Flex justifyContent="space-evenly" width={["100%", null, null, "unset"]}>
         {logosSrc.map((platform) => (
-          <Link href={platform.link} target="_blank" ml="5rem">
+          <Link
+            href={platform.link}
+            target="_blank"
+            ml={["0", null, null, "5rem"]}
+          >
             <Img src={platform.imgSrc} alt="logo" width={80} height={80} />
           </Link>
         ))}
