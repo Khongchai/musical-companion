@@ -19,7 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         p={["1rem 1rem", null, null, "1rem 5rem"]}
         justifyContent="space-between"
         bg={bg}
-        width="100vw"
+        width="100%"
         position="absolute"
         top="0"
         left="0"

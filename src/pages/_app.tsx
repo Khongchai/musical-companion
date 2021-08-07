@@ -3,6 +3,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import * as React from "react";
 import "../../public/fonts/style.css";
 import theme from "../../theme";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { client } from "../utils/apolloClient";
 
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }: any) {
         <Navbar />
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Component {...pageProps} />
+        <Footer />
       </ApolloProvider>
     </ChakraProvider>
   );
