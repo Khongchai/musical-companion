@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { InputField } from "../components/Formik/InputField";
 import { FormContainer } from "../Elements/FormContainer";
 import { useTokenAuthMutation } from "../generated/graphql";
-import { useIsAuthed } from "../utils-hooks/useIsAuthed";
+import useAuthRedirect from "../utils-hooks/useAuthRedirect";
 import redirectAfterTokenAuth from "../utils/authentication/redirectAfterTokenAuth";
 
 const Login: React.FC = ({}) => {
-  useIsAuthed();
+  useAuthRedirect();
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [login] = useTokenAuthMutation();

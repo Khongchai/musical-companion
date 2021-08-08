@@ -13,12 +13,12 @@ import React from "react";
 import { InputField } from "../components/Formik/InputField";
 import { FormContainer } from "../Elements/FormContainer";
 import { useRegisterMutation } from "../generated/graphql";
-import { useIsAuthed } from "../utils-hooks/useIsAuthed";
+import useAuthRedirect from "../utils-hooks/useAuthRedirect";
 import redirectAfterTokenAuth from "../utils/authentication/redirectAfterTokenAuth";
 import catchFormErrors from "../utils/forms/catchFormErrors";
 
 const Register: React.FC = ({}) => {
-  useIsAuthed();
+  useAuthRedirect();
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [register] = useRegisterMutation();

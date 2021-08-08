@@ -1,47 +1,41 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { HamburgerIcon } from "../HamburgerIcon";
-import { DrawerComponent as Drawer } from "./Drawer";
+import { DrawerComponent as Drawer } from "./NavbarDrawer";
 import { NavbarContent } from "./NavbarContent";
+import NavbarWrapper from "./NavbarWrapper";
+import KhongLogoLink from "./KhongLogoLink";
+import { Cart } from "../Cart";
+import { FlipColorButton } from "./FlipColorButton";
+import useIsAuthenticated from "../../utils-hooks/useIsAuthenticated";
+import NavbarLinks from "./NavbarLinks";
 
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = ({}) => {
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
   const bg = useColorModeValue("mainGrey", "white");
+  const bgFlip = useColorModeValue("white", "mainGrey");
+  const { isAuthenticated, userData } = useIsAuthenticated();
 
   return (
     <>
-      <Flex
-        align="center"
-        p={["1rem 1rem", null, null, "1rem 5rem"]}
-        justifyContent="space-between"
-        bg={bg}
-        width="100%"
-        position="absolute"
-        top="0"
-        left="0"
-      >
-        <Link href="/">
-          <Flex cursor="pointer">
-            <Image
-              alt="khong-icon"
-              src="/khong-icon.png"
-              width="60px"
-              height="60px"
-            />
-          </Flex>
-        </Link>
+      <NavbarWrapper backgroundColor={bg}>
+        <KhongLogoLink />
         <Flex align="center" css={{ "> *": { marginLeft: "1.565rem" } }}>
-          <Flex
-            css={{ "> *": { marginLeft: "inherit" } }}
-            display={["none", null, null, "flex"]}
-            align="center"
-          >
-            <NavbarContent />
-          </Flex>
+          <NavbarContent>
+            <Box mr={["1rem", null, null, "0"]}>
+              <Cart />
+            </Box>
+            <FlipColorButton bg={bg} bgFlip={bgFlip} />
+            <NavbarLinks
+              textColor={bgFlip}
+              isAuthenticated={isAuthenticated}
+              userData={userData}
+            />
+          </NavbarContent>
           <Box
             width="fit-content"
             height="fit-content"
@@ -52,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             />
           </Box>
         </Flex>
-      </Flex>
+      </NavbarWrapper>
       <Drawer newSize="xs" openNavbar={toggleDrawer} />
     </>
   );

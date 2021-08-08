@@ -2,7 +2,7 @@ import { useMeQuery } from "../generated/graphql";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export const useIsAuthed = () => {
+const useAuthRedirect = () => {
   const { data, loading } = useMeQuery();
   const router = useRouter();
   useEffect(() => {
@@ -11,3 +11,5 @@ export const useIsAuthed = () => {
     }
   }, [loading, data, router]);
 };
+
+export default useAuthRedirect;

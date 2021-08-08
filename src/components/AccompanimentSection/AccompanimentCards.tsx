@@ -5,7 +5,6 @@ import {
   Flex,
   Image,
   Button,
-  useColorModeValue,
   useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
