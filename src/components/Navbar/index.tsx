@@ -10,7 +10,8 @@ import KhongLogoLink from "./KhongLogoLink";
 import { Cart } from "../Cart";
 import { FlipColorButton } from "./FlipColorButton";
 import useIsAuthenticated from "../../utils-hooks/useIsAuthenticated";
-import NavbarLinks from "./NavbarLinks";
+import NavbarAuthLinks from "./NavbarLinks";
+import { NavbarRight } from "./NavbarRight";
 
 interface NavbarProps {}
 
@@ -24,13 +25,13 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     <>
       <NavbarWrapper backgroundColor={bg}>
         <KhongLogoLink />
-        <Flex align="center" css={{ "> *": { marginLeft: "1.565rem" } }}>
+        <NavbarRight>
           <NavbarContent>
             <Box mr={["1rem", null, null, "0"]}>
               <Cart />
             </Box>
             <FlipColorButton bg={bg} bgFlip={bgFlip} />
-            <NavbarLinks
+            <NavbarAuthLinks
               textColor={bgFlip}
               isAuthenticated={isAuthenticated}
               userData={userData}
@@ -45,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
               onClickFunction={() => setToggleDrawer((stat) => !stat)}
             />
           </Box>
-        </Flex>
+        </NavbarRight>
       </NavbarWrapper>
       <Drawer newSize="xs" openNavbar={toggleDrawer} />
     </>

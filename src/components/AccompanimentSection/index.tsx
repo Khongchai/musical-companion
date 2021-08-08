@@ -1,3 +1,4 @@
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Flex,
@@ -5,19 +6,17 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
-  useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
 import { Text } from "../../types/text";
 import { Cart } from "../Cart";
-import { AccompanimentCards } from "./AccompanimentCards";
-import { SearchIcon } from "@chakra-ui/icons";
+import AccompanimentCards from "./AccompanimentCart";
 
 interface AccompanimentSectionProps extends Text {}
 
 const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
   headerSize,
-  textSize,
+  textSize: _,
 }) => {
   return (
     <Box width="100%" overflowX="hidden">
