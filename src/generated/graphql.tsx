@@ -56,12 +56,38 @@ export type Scalars = {
   GenericScalar: any;
 };
 
+export type AllProductsDataType = {
+  __typename?: 'AllProductsDataType';
+  products?: Maybe<Array<Maybe<ProductType>>>;
+  isFirst?: Maybe<Scalars['Boolean']>;
+  isLast?: Maybe<Scalars['Boolean']>;
+  pagePosition?: Maybe<PagePositionType>;
+};
+
+export type ComposerType = {
+  __typename?: 'ComposerType';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  compositions: Array<CompositionType>;
+};
+
+export type CompositionType = {
+  __typename?: 'CompositionType';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  composers: Array<ComposerType>;
+  links: Array<DataAfterPurchaseType>;
+  product?: Maybe<ProductType>;
+};
+
 export type DataAfterPurchaseType = {
   __typename?: 'DataAfterPurchaseType';
+  id: Scalars['ID'];
   midiLink?: Maybe<Scalars['String']>;
   wavLink?: Maybe<Scalars['String']>;
   flacLink?: Maybe<Scalars['String']>;
   pdfLink?: Maybe<Scalars['String']>;
+  composition?: Maybe<CompositionType>;
 };
 
 
@@ -152,7 +178,7 @@ export type MutationUpdateAccountArgs = {
 
 
 export type MutationRefreshTokenArgs = {
-  refreshToken: Scalars['String'];
+  token: Scalars['String'];
 };
 
 /** An object with an ID */
@@ -181,7 +207,6 @@ export type ObtainJsonWebToken = {
   errors?: Maybe<Scalars['ExpectedErrorType']>;
   user?: Maybe<UserNode>;
   unarchiving?: Maybe<Scalars['Boolean']>;
-  refreshToken?: Maybe<Scalars['String']>;
 };
 
 /** The Relay compliant `PageInfo` type, containing data necessary to paginate this connection. */
@@ -197,22 +222,37 @@ export type PageInfo = {
   endCursor?: Maybe<Scalars['String']>;
 };
 
+export type PagePositionType = {
+  __typename?: 'PagePositionType';
+  page?: Maybe<Scalars['Int']>;
+  of?: Maybe<Scalars['Int']>;
+};
+
 export type ProductType = {
   __typename?: 'ProductType';
-  name: Scalars['String'];
+  id: Scalars['ID'];
   priceUsd: Scalars['Decimal'];
   imageLink: Scalars['String'];
-  authenticatedData?: Maybe<DataAfterPurchaseType>;
+  composition?: Maybe<CompositionType>;
   free: Scalars['Boolean'];
 };
 
 export type Query = {
   __typename?: 'Query';
+  allCompositionsInfo?: Maybe<Array<Maybe<CompositionType>>>;
+  allProductsInfo?: Maybe<AllProductsDataType>;
+  allComposersInfo?: Maybe<Array<Maybe<ComposerType>>>;
   me?: Maybe<UserNode>;
   user?: Maybe<UserNode>;
   users?: Maybe<UserNodeConnection>;
-  allProductsInfo?: Maybe<Array<Maybe<ProductType>>>;
   productByName?: Maybe<ProductType>;
+};
+
+
+export type QueryAllProductsInfoArgs = {
+  search?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  page?: Maybe<Scalars['Int']>;
 };
 
 
@@ -249,7 +289,6 @@ export type RefreshToken = {
   payload?: Maybe<Scalars['GenericScalar']>;
   success?: Maybe<Scalars['Boolean']>;
   errors?: Maybe<Scalars['ExpectedErrorType']>;
-  refreshToken?: Maybe<Scalars['String']>;
 };
 
 /**
@@ -276,7 +315,6 @@ export type Register = {
   __typename?: 'Register';
   success?: Maybe<Scalars['Boolean']>;
   errors?: Maybe<Scalars['ExpectedErrorType']>;
-  refreshToken?: Maybe<Scalars['String']>;
   token?: Maybe<Scalars['String']>;
 };
 
@@ -384,19 +422,34 @@ export type RegisterMutation = (
   )> }
 );
 
-export type AllProductsInfoQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllProductsInfoQueryVariables = Exact<{
+  search?: Maybe<Scalars['String']>;
+  page?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+}>;
 
 
 export type AllProductsInfoQuery = (
   { __typename?: 'Query' }
-  & { allProductsInfo?: Maybe<Array<Maybe<(
-    { __typename?: 'ProductType' }
-    & Pick<ProductType, 'name' | 'priceUsd' | 'imageLink'>
-    & { authenticatedData?: Maybe<(
-      { __typename?: 'DataAfterPurchaseType' }
-      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink'>
+  & { allProductsInfo?: Maybe<(
+    { __typename?: 'AllProductsDataType' }
+    & Pick<AllProductsDataType, 'isLast' | 'isFirst'>
+    & { products?: Maybe<Array<Maybe<(
+      { __typename?: 'ProductType' }
+      & Pick<ProductType, 'priceUsd'>
+      & { composition?: Maybe<(
+        { __typename?: 'CompositionType' }
+        & Pick<CompositionType, 'name'>
+        & { composers: Array<(
+          { __typename?: 'ComposerType' }
+          & Pick<ComposerType, 'name'>
+        )> }
+      )> }
+    )>>>, pagePosition?: Maybe<(
+      { __typename?: 'PagePositionType' }
+      & Pick<PagePositionType, 'page' | 'of'>
     )> }
-  )>>> }
+  )> }
 );
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
@@ -407,23 +460,6 @@ export type MeQuery = (
   & { me?: Maybe<(
     { __typename?: 'UserNode' }
     & UserInfoFragment
-  )> }
-);
-
-export type ProductByNameQueryVariables = Exact<{
-  name: Scalars['String'];
-}>;
-
-
-export type ProductByNameQuery = (
-  { __typename?: 'Query' }
-  & { productByName?: Maybe<(
-    { __typename?: 'ProductType' }
-    & Pick<ProductType, 'name' | 'priceUsd' | 'imageLink'>
-    & { authenticatedData?: Maybe<(
-      { __typename?: 'DataAfterPurchaseType' }
-      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink'>
-    )> }
   )> }
 );
 
@@ -523,16 +559,23 @@ export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const AllProductsInfoDocument = gql`
-    query AllProductsInfo {
-  allProductsInfo {
-    authenticatedData {
-      midiLink
-      wavLink
-      flacLink
+    query AllProductsInfo($search: String, $page: Int, $limit: Int) {
+  allProductsInfo(search: $search, page: $page, limit: $limit) {
+    products {
+      priceUsd
+      composition {
+        name
+        composers {
+          name
+        }
+      }
     }
-    name
-    priceUsd
-    imageLink
+    isLast
+    isFirst
+    pagePosition {
+      page
+      of
+    }
   }
 }
     `;
@@ -549,6 +592,9 @@ export const AllProductsInfoDocument = gql`
  * @example
  * const { data, loading, error } = useAllProductsInfoQuery({
  *   variables: {
+ *      search: // value for 'search'
+ *      page: // value for 'page'
+ *      limit: // value for 'limit'
  *   },
  * });
  */
@@ -597,45 +643,3 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
-export const ProductByNameDocument = gql`
-    query ProductByName($name: String!) {
-  productByName(name: $name) {
-    name
-    priceUsd
-    imageLink
-    authenticatedData {
-      midiLink
-      wavLink
-      flacLink
-    }
-  }
-}
-    `;
-
-/**
- * __useProductByNameQuery__
- *
- * To run a query within a React component, call `useProductByNameQuery` and pass it any options that fit your needs.
- * When your component renders, `useProductByNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProductByNameQuery({
- *   variables: {
- *      name: // value for 'name'
- *   },
- * });
- */
-export function useProductByNameQuery(baseOptions: Apollo.QueryHookOptions<ProductByNameQuery, ProductByNameQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProductByNameQuery, ProductByNameQueryVariables>(ProductByNameDocument, options);
-      }
-export function useProductByNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductByNameQuery, ProductByNameQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProductByNameQuery, ProductByNameQueryVariables>(ProductByNameDocument, options);
-        }
-export type ProductByNameQueryHookResult = ReturnType<typeof useProductByNameQuery>;
-export type ProductByNameLazyQueryHookResult = ReturnType<typeof useProductByNameLazyQuery>;
-export type ProductByNameQueryResult = Apollo.QueryResult<ProductByNameQuery, ProductByNameQueryVariables>;

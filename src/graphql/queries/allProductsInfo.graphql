@@ -1,12 +1,19 @@
-query AllProductsInfo {
-  allProductsInfo {
-    authenticatedData {
-      midiLink
-      wavLink
-      flacLink
+query AllProductsInfo($search: String, $page: Int, $limit: Int) {
+  allProductsInfo(search: $search, page: $page, limit: $limit) {
+    products {
+      priceUsd
+      composition {
+        name
+        composers {
+          name
+        }
+      }
     }
-    name
-    priceUsd
-    imageLink
+    isLast
+    isFirst
+    pagePosition {
+      page
+      of
+    }
   }
 }
