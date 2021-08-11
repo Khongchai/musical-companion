@@ -15,6 +15,7 @@ const AccompanimentImage: React.FC<AccompanimentImageProps> = ({ src }) => {
       bgImage={src}
       cursor="pointer"
       mb="1rem"
+      bgPos="center top"
     />
   );
 };

@@ -87,7 +87,7 @@ export type DataAfterPurchaseType = {
   wavLink?: Maybe<Scalars['String']>;
   flacLink?: Maybe<Scalars['String']>;
   pdfLink?: Maybe<Scalars['String']>;
-  composition?: Maybe<CompositionType>;
+  composition: CompositionType;
 };
 
 
@@ -239,6 +239,7 @@ export type ProductType = {
 
 export type Query = {
   __typename?: 'Query';
+  allDataAfterPurchase?: Maybe<Array<Maybe<DataAfterPurchaseType>>>;
   allCompositionsInfo?: Maybe<Array<Maybe<CompositionType>>>;
   allProductsInfo?: Maybe<AllProductsDataType>;
   allComposersInfo?: Maybe<Array<Maybe<ComposerType>>>;
@@ -436,7 +437,7 @@ export type AllProductsInfoQuery = (
     & Pick<AllProductsDataType, 'isLast' | 'isFirst'>
     & { products?: Maybe<Array<Maybe<(
       { __typename?: 'ProductType' }
-      & Pick<ProductType, 'priceUsd'>
+      & Pick<ProductType, 'priceUsd' | 'free' | 'imageLink'>
       & { composition?: Maybe<(
         { __typename?: 'CompositionType' }
         & Pick<CompositionType, 'name'>
@@ -563,6 +564,8 @@ export const AllProductsInfoDocument = gql`
   allProductsInfo(search: $search, page: $page, limit: $limit) {
     products {
       priceUsd
+      free
+      imageLink
       composition {
         name
         composers {

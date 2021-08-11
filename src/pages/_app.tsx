@@ -6,6 +6,7 @@ import theme from "../../theme";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { client } from "../utils/apolloClient";
+import "../css/loader.css";
 
 function MyApp({ Component, pageProps }: any) {
   return (
