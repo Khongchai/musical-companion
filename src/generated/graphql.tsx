@@ -58,10 +58,10 @@ export type Scalars = {
 
 export type AllProductsDataType = {
   __typename?: 'AllProductsDataType';
-  products?: Maybe<Array<Maybe<ProductType>>>;
-  isFirst?: Maybe<Scalars['Boolean']>;
-  isLast?: Maybe<Scalars['Boolean']>;
-  pagePosition?: Maybe<PagePositionType>;
+  products: Array<Maybe<ProductType>>;
+  isFirst: Scalars['Boolean'];
+  isLast: Scalars['Boolean'];
+  pagePosition: PagePositionType;
 };
 
 export type ComposerType = {
@@ -87,7 +87,7 @@ export type DataAfterPurchaseType = {
   wavLink?: Maybe<Scalars['String']>;
   flacLink?: Maybe<Scalars['String']>;
   pdfLink?: Maybe<Scalars['String']>;
-  composition: CompositionType;
+  composition?: Maybe<CompositionType>;
 };
 
 
@@ -224,8 +224,8 @@ export type PageInfo = {
 
 export type PagePositionType = {
   __typename?: 'PagePositionType';
-  page?: Maybe<Scalars['Int']>;
-  of?: Maybe<Scalars['Int']>;
+  page: Scalars['Int'];
+  of: Scalars['Int'];
 };
 
 export type ProductType = {
@@ -435,7 +435,7 @@ export type AllProductsInfoQuery = (
   & { allProductsInfo?: Maybe<(
     { __typename?: 'AllProductsDataType' }
     & Pick<AllProductsDataType, 'isLast' | 'isFirst'>
-    & { products?: Maybe<Array<Maybe<(
+    & { products: Array<Maybe<(
       { __typename?: 'ProductType' }
       & Pick<ProductType, 'priceUsd' | 'free' | 'imageLink'>
       & { composition?: Maybe<(
@@ -446,10 +446,10 @@ export type AllProductsInfoQuery = (
           & Pick<ComposerType, 'name'>
         )> }
       )> }
-    )>>>, pagePosition?: Maybe<(
+    )>>, pagePosition: (
       { __typename?: 'PagePositionType' }
       & Pick<PagePositionType, 'page' | 'of'>
-    )> }
+    ) }
   )> }
 );
 
