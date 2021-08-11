@@ -6,13 +6,13 @@ interface WelcomeSectionProps extends TextType {}
 
 export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
   textSize,
-  headerSize,
+  headerSize: _,
 }) => {
   return (
     <Stack spacing="2.2rem" m="8.5rem 0 7rem 0" w="100%">
       <Heading
         textAlign="center"
-        fontSize={["36px", null, null, headerSize]}
+        fontSize={["36px", null, null, "58px"]}
         fontWeight="normal"
       >
         Musical-Companion

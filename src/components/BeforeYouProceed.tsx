@@ -21,7 +21,7 @@ export const BeforeYouProceed: React.FC<BeforeYouProceedProps> = ({
         align={["center", null, null, "unset"]}
       >
         <Stack spacing="1rem" flex="1" fontSize={textSize}>
-          <Text>
+          <Text mt="1.2rem">
             I understand that some of you might be students and are not in the
             financial position to purchase some of these tracks.
           </Text>

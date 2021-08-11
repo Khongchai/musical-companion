@@ -7,7 +7,7 @@ import {
   InputGroup,
   InputRightAddon,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Text } from "../../types/text";
 import setActionWithDelay from "../../utils/setActionWithDelay";
 import { Cart } from "../Cart";
@@ -20,6 +20,7 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
   textSize: _,
 }) => {
   const [searchVal, setSearchVal] = useState("");
+  const inputRef = useRef(null);
   return (
     <Box width="100%" overflowX="hidden">
       <Flex
@@ -46,8 +47,17 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
               onChange={(e) => {
                 setActionWithDelay(() => setSearchVal(e.target.value), 0.3);
               }}
+              ref={inputRef}
             />
-            <InputRightAddon children={<SearchIcon />} pointerEvents="none" />
+            <InputRightAddon
+              onClick={() => {
+                console.log(inputRef.current);
+                inputRef.current &&
+                  (inputRef.current as unknown as HTMLElement).click();
+              }}
+              children={<SearchIcon />}
+              pointerEvents="none"
+            />
           </InputGroup>
           <Cart flipColorMode />
         </Flex>

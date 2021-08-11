@@ -43,6 +43,25 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
   }, [totalPages]);
   return (
     <Box>
+      {data?.allProductsInfo?.pagePosition ? (
+        <Flex padding="2rem" w="100%" justify="center">
+          {pages.map((page) => (
+            <Button
+              key={page}
+              ml="1.5rem"
+              value={page}
+              onClick={(e) => {
+                const requestedPage = parseInt(
+                  (e.target as HTMLButtonElement).value
+                );
+                setPage(requestedPage);
+              }}
+            >
+              {page}
+            </Button>
+          ))}
+        </Flex>
+      ) : null}
       {loading ? (
         <Box width="fit-content" m="0 auto">
           <div className="lds-dual-ring"></div>
@@ -57,7 +76,7 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
           {(data?.allProductsInfo?.products as ProductType[]).length > 0 ? (
             (data?.allProductsInfo?.products as ProductType[]).map(
               (product) => (
-                <Box mb="1rem">
+                <Box mb="1rem" key={product.composition?.name}>
                   <AccompanimentImage src={product.imageLink as string} />
                   <AccompanimentDetails>
                     <Text textTransform="uppercase">
@@ -80,25 +99,6 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
           )}
         </Grid>
       )}
-
-      {data?.allProductsInfo?.pagePosition ? (
-        <Flex padding="2rem" w="100%" justify="center">
-          {pages.map((page) => (
-            <Button
-              ml="1.5rem"
-              value={page}
-              onClick={(e) => {
-                const requestedPage = parseInt(
-                  (e.target as HTMLButtonElement).value
-                );
-                setPage(requestedPage);
-              }}
-            >
-              {page}
-            </Button>
-          ))}
-        </Flex>
-      ) : null}
     </Box>
   );
 };
