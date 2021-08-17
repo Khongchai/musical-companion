@@ -10,13 +10,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { NavbarContent } from "./NavbarContent";
 
 type Sizes = "xs" | "sm" | "md" | "lg" | "xl" | "full";
 export const DrawerComponent: React.FC<{
   openNavbar: boolean;
   newSize: Sizes;
-}> = ({ openNavbar, newSize }) => {
+}> = ({ openNavbar, newSize, children }) => {
   const [size, setSize] = useState("md");
   const { isOpen, onOpen, onClose } = useDisclosure();
   //Without this navbar would pop open on first entry because of the openNavbar dependency.
@@ -49,7 +48,7 @@ export const DrawerComponent: React.FC<{
             pt="5rem"
             bg={bg}
           >
-            <NavbarContent />
+            {children}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

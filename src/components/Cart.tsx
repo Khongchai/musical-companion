@@ -4,9 +4,9 @@ import Link from "next/link";
 import React from "react";
 import useStore from "../globalState";
 
-export const Cart: React.FC<{ flipColorMode?: boolean }> = ({
-  flipColorMode,
-}) => {
+export const Cart: React.FC<{
+  flipColorMode?: boolean;
+}> = ({ flipColorMode }) => {
   const cartColor = useColorModeValue("", "invert(1)");
   const itemsInCart = useStore((state) => state.itemsInCart);
   return (

@@ -1,0 +1,7 @@
+mutation GetOrCreateAndGetCart {
+  getOrCreateAndGetCart {
+    cart {
+      ...CartInfo
+    }
+  }
+}

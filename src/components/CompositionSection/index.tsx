@@ -44,6 +44,7 @@ const CompositionSection: React.FC<indexProps> = ({}) => {
             href={platform.link}
             target="_blank"
             ml={["0", null, null, "5rem"]}
+            key={platform.link}
           >
             <Img src={platform.imgSrc} alt="logo" width={80} height={80} />
           </Link>

@@ -64,6 +64,20 @@ export type AllProductsDataType = {
   pagePosition: PagePositionType;
 };
 
+export type CartCompletionMutation = {
+  __typename?: 'CartCompletionMutation';
+  cart?: Maybe<CartType>;
+};
+
+export type CartType = {
+  __typename?: 'CartType';
+  id: Scalars['ID'];
+  transactionId?: Maybe<Scalars['String']>;
+  dateCreated: Scalars['DateTime'];
+  complete: Scalars['Boolean'];
+  itemsInCart: Array<ProductType>;
+};
+
 export type ComposerType = {
   __typename?: 'ComposerType';
   id: Scalars['ID'];
@@ -78,6 +92,11 @@ export type CompositionType = {
   composers: Array<ComposerType>;
   links: Array<DataAfterPurchaseType>;
   product?: Maybe<ProductType>;
+};
+
+export type CreateOrGetEmptyCartMutation = {
+  __typename?: 'CreateOrGetEmptyCartMutation';
+  cart: CartType;
 };
 
 export type DataAfterPurchaseType = {
@@ -96,6 +115,8 @@ export type DataAfterPurchaseType = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  updateCartCompletion?: Maybe<CartCompletionMutation>;
+  getOrCreateAndGetCart?: Maybe<CreateOrGetEmptyCartMutation>;
   /**
    * Register user with fields defined in the settings.
    *
@@ -147,6 +168,12 @@ export type Mutation = {
   updateAccount?: Maybe<UpdateAccount>;
   /** Same as `grapgql_jwt` implementation, with standard output. */
   refreshToken?: Maybe<RefreshToken>;
+};
+
+
+export type MutationUpdateCartCompletionArgs = {
+  completion?: Maybe<Scalars['Boolean']>;
+  username?: Maybe<Scalars['String']>;
 };
 
 
@@ -235,10 +262,13 @@ export type ProductType = {
   imageLink: Scalars['String'];
   composition?: Maybe<CompositionType>;
   free: Scalars['Boolean'];
+  cart?: Maybe<CartType>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  allCartsInfo?: Maybe<Array<Maybe<CartType>>>;
+  cartOfUser?: Maybe<CartType>;
   allDataAfterPurchase?: Maybe<Array<Maybe<DataAfterPurchaseType>>>;
   allCompositionsInfo?: Maybe<Array<Maybe<CompositionType>>>;
   allProductsInfo?: Maybe<AllProductsDataType>;
@@ -246,7 +276,11 @@ export type Query = {
   me?: Maybe<UserNode>;
   user?: Maybe<UserNode>;
   users?: Maybe<UserNodeConnection>;
-  productByName?: Maybe<ProductType>;
+};
+
+
+export type QueryCartOfUserArgs = {
+  username?: Maybe<Scalars['String']>;
 };
 
 
@@ -276,11 +310,6 @@ export type QueryUsersArgs = {
   status_Archived?: Maybe<Scalars['Boolean']>;
   status_Verified?: Maybe<Scalars['Boolean']>;
   status_SecondaryEmail?: Maybe<Scalars['String']>;
-};
-
-
-export type QueryProductByNameArgs = {
-  name: Scalars['String'];
 };
 
 /** Same as `grapgql_jwt` implementation, with standard output. */
@@ -346,6 +375,7 @@ export type UserNode = Node & {
   dateJoined: Scalars['DateTime'];
   email: Scalars['String'];
   isStudent: Scalars['Boolean'];
+  cart?: Maybe<CartType>;
   pk?: Maybe<Scalars['Int']>;
   archived?: Maybe<Scalars['Boolean']>;
   verified?: Maybe<Scalars['Boolean']>;
@@ -382,9 +412,36 @@ export type VerifyAccount = {
   errors?: Maybe<Scalars['ExpectedErrorType']>;
 };
 
+export type CartInfoFragment = (
+  { __typename?: 'CartType' }
+  & Pick<CartType, 'id' | 'transactionId' | 'dateCreated' | 'complete'>
+  & { itemsInCart: Array<(
+    { __typename?: 'ProductType' }
+    & Pick<ProductType, 'id' | 'priceUsd' | 'imageLink'>
+    & { composition?: Maybe<(
+      { __typename?: 'CompositionType' }
+      & Pick<CompositionType, 'name'>
+    )> }
+  )> }
+);
+
 export type UserInfoFragment = (
   { __typename?: 'UserNode' }
   & Pick<UserNode, 'id' | 'lastLogin' | 'username' | 'email' | 'isStudent' | 'verified'>
+);
+
+export type GetOrCreateAndGetCartMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetOrCreateAndGetCartMutation = (
+  { __typename?: 'Mutation' }
+  & { getOrCreateAndGetCart?: Maybe<(
+    { __typename?: 'CreateOrGetEmptyCartMutation' }
+    & { cart: (
+      { __typename?: 'CartType' }
+      & CartInfoFragment
+    ) }
+  )> }
 );
 
 export type TokenAuthMutationVariables = Exact<{
@@ -464,6 +521,22 @@ export type MeQuery = (
   )> }
 );
 
+export const CartInfoFragmentDoc = gql`
+    fragment CartInfo on CartType {
+  id
+  transactionId
+  dateCreated
+  complete
+  itemsInCart {
+    id
+    priceUsd
+    imageLink
+    composition {
+      name
+    }
+  }
+}
+    `;
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on UserNode {
   id
@@ -474,6 +547,40 @@ export const UserInfoFragmentDoc = gql`
   verified
 }
     `;
+export const GetOrCreateAndGetCartDocument = gql`
+    mutation GetOrCreateAndGetCart {
+  getOrCreateAndGetCart {
+    cart {
+      ...CartInfo
+    }
+  }
+}
+    ${CartInfoFragmentDoc}`;
+export type GetOrCreateAndGetCartMutationFn = Apollo.MutationFunction<GetOrCreateAndGetCartMutation, GetOrCreateAndGetCartMutationVariables>;
+
+/**
+ * __useGetOrCreateAndGetCartMutation__
+ *
+ * To run a mutation, you first call `useGetOrCreateAndGetCartMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetOrCreateAndGetCartMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getOrCreateAndGetCartMutation, { data, loading, error }] = useGetOrCreateAndGetCartMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetOrCreateAndGetCartMutation(baseOptions?: Apollo.MutationHookOptions<GetOrCreateAndGetCartMutation, GetOrCreateAndGetCartMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GetOrCreateAndGetCartMutation, GetOrCreateAndGetCartMutationVariables>(GetOrCreateAndGetCartDocument, options);
+      }
+export type GetOrCreateAndGetCartMutationHookResult = ReturnType<typeof useGetOrCreateAndGetCartMutation>;
+export type GetOrCreateAndGetCartMutationResult = Apollo.MutationResult<GetOrCreateAndGetCartMutation>;
+export type GetOrCreateAndGetCartMutationOptions = Apollo.BaseMutationOptions<GetOrCreateAndGetCartMutation, GetOrCreateAndGetCartMutationVariables>;
 export const TokenAuthDocument = gql`
     mutation TokenAuth($password: String!, $email: String, $username: String) {
   tokenAuth(password: $password, username: $username, email: $email) {

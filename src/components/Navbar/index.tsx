@@ -1,17 +1,21 @@
-import { Box, Flex, useColorMode, useColorModeValue } from "@chakra-ui/react";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
-import { HamburgerIcon } from "../HamburgerIcon";
-import { DrawerComponent as Drawer } from "./NavbarDrawer";
-import { NavbarContent } from "./NavbarContent";
-import NavbarWrapper from "./NavbarWrapper";
-import KhongLogoLink from "./KhongLogoLink";
-import { Cart } from "../Cart";
-import { FlipColorButton } from "./FlipColorButton";
+import { Box, useColorModeValue } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import {
+  CartType,
+  useGetOrCreateAndGetCartMutation,
+} from "../../generated/graphql";
+import useStore from "../../globalState";
+import { useGetUserCart } from "../../utils-hooks/useGetUserCart";
 import useIsAuthenticated from "../../utils-hooks/useIsAuthenticated";
+import { Cart } from "../Cart";
+import { HamburgerIcon } from "../HamburgerIcon";
+import { FlipColorButton } from "./FlipColorButton";
+import KhongLogoLink from "./KhongLogoLink";
+import { NavbarContent } from "./NavbarContent";
+import { DrawerComponent as Drawer } from "./NavbarDrawer";
 import NavbarAuthLinks from "./NavbarLinks";
 import { NavbarRight } from "./NavbarRight";
+import NavbarWrapper from "./NavbarWrapper";
 
 interface NavbarProps {}
 
@@ -20,6 +24,8 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const { isAuthenticated, userData } = useIsAuthenticated();
+  const userCart = useGetUserCart();
+  const setInitialCartAmount = useStore((state) => state.setInitial);
 
   return (
     <>
@@ -48,7 +54,17 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
           </Box>
         </NavbarRight>
       </NavbarWrapper>
-      <Drawer newSize="xs" openNavbar={toggleDrawer} />
+      <Drawer newSize="xs" openNavbar={toggleDrawer}>
+        <Box mr={["1rem", null, null, "0"]}>
+          <Cart />
+        </Box>
+        <FlipColorButton bg={bg} bgFlip={bgFlip} />
+        <NavbarAuthLinks
+          textColor={bgFlip}
+          isAuthenticated={isAuthenticated}
+          userData={userData}
+        />
+      </Drawer>
     </>
   );
 };

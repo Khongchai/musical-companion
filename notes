@@ -1,2 +1,3 @@
-
+Instead of asking for a cart separately, once the user is logged in, return the user's cart
+back along with user
 adding to cart as a registered and registered user.

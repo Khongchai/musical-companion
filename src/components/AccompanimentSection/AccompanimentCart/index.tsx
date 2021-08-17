@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-  useColorMode,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Text, useColorMode } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import {
   ProductType,
@@ -73,20 +65,19 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
           height="fit-content"
           position="relative"
         >
-          {(data?.allProductsInfo?.products as ProductType[]).length > 0 ? (
-            (data?.allProductsInfo?.products as ProductType[]).map(
-              (product) => (
-                <Box mb="1rem" key={product.composition?.name}>
-                  <AccompanimentImage src={product.imageLink as string} />
-                  <AccompanimentDetails>
-                    <Text textTransform="uppercase">
-                      {product.composition?.name}
-                    </Text>
-                    <AddToCartButton colorMode={colorMode} />
-                  </AccompanimentDetails>
-                </Box>
-              )
-            )
+          {data?.allProductsInfo?.products &&
+          data.allProductsInfo.products.length > 0 ? (
+            (data?.allProductsInfo.products as ProductType[]).map((product) => (
+              <Box mb="1rem" key={product.composition?.name}>
+                <AccompanimentImage src={product.imageLink as string} />
+                <AccompanimentDetails>
+                  <Text textTransform="uppercase">
+                    {product.composition?.name}
+                  </Text>
+                  <AddToCartButton colorMode={colorMode} />
+                </AccompanimentDetails>
+              </Box>
+            ))
           ) : (
             <Text
               position="absolute"

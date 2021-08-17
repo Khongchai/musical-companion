@@ -1,0 +1,14 @@
+fragment CartInfo on CartType {
+  id
+  transactionId
+  dateCreated
+  complete
+  itemsInCart {
+    id
+    priceUsd
+    imageLink
+    composition {
+      name
+    }
+  }
+}
