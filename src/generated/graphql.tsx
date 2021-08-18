@@ -113,6 +113,12 @@ export type DataAfterPurchaseType = {
 
 
 
+export type MeExtendedType = {
+  __typename?: 'MeExtendedType';
+  user: UserNode;
+  cart: CartType;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   updateCartCompletion?: Maybe<CartCompletionMutation>;
@@ -273,6 +279,7 @@ export type Query = {
   allCompositionsInfo?: Maybe<Array<Maybe<CompositionType>>>;
   allProductsInfo?: Maybe<AllProductsDataType>;
   allComposersInfo?: Maybe<Array<Maybe<ComposerType>>>;
+  meExtended?: Maybe<MeExtendedType>;
   me?: Maybe<UserNode>;
   user?: Maybe<UserNode>;
   users?: Maybe<UserNodeConnection>;
@@ -510,14 +517,20 @@ export type AllProductsInfoQuery = (
   )> }
 );
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+export type MeExtendedQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = (
+export type MeExtendedQuery = (
   { __typename?: 'Query' }
-  & { me?: Maybe<(
-    { __typename?: 'UserNode' }
-    & UserInfoFragment
+  & { meExtended?: Maybe<(
+    { __typename?: 'MeExtendedType' }
+    & { user: (
+      { __typename?: 'UserNode' }
+      & UserInfoFragment
+    ), cart: (
+      { __typename?: 'CartType' }
+      & CartInfoFragment
+    ) }
   )> }
 );
 
@@ -719,37 +732,43 @@ export function useAllProductsInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type AllProductsInfoQueryHookResult = ReturnType<typeof useAllProductsInfoQuery>;
 export type AllProductsInfoLazyQueryHookResult = ReturnType<typeof useAllProductsInfoLazyQuery>;
 export type AllProductsInfoQueryResult = Apollo.QueryResult<AllProductsInfoQuery, AllProductsInfoQueryVariables>;
-export const MeDocument = gql`
-    query Me {
-  me {
-    ...UserInfo
+export const MeExtendedDocument = gql`
+    query MeExtended {
+  meExtended {
+    user {
+      ...UserInfo
+    }
+    cart {
+      ...CartInfo
+    }
   }
 }
-    ${UserInfoFragmentDoc}`;
+    ${UserInfoFragmentDoc}
+${CartInfoFragmentDoc}`;
 
 /**
- * __useMeQuery__
+ * __useMeExtendedQuery__
  *
- * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMeExtendedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeExtendedQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMeQuery({
+ * const { data, loading, error } = useMeExtendedQuery({
  *   variables: {
  *   },
  * });
  */
-export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+export function useMeExtendedQuery(baseOptions?: Apollo.QueryHookOptions<MeExtendedQuery, MeExtendedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        return Apollo.useQuery<MeExtendedQuery, MeExtendedQueryVariables>(MeExtendedDocument, options);
       }
-export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+export function useMeExtendedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeExtendedQuery, MeExtendedQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+          return Apollo.useLazyQuery<MeExtendedQuery, MeExtendedQueryVariables>(MeExtendedDocument, options);
         }
-export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
-export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export type MeExtendedQueryHookResult = ReturnType<typeof useMeExtendedQuery>;
+export type MeExtendedLazyQueryHookResult = ReturnType<typeof useMeExtendedLazyQuery>;
+export type MeExtendedQueryResult = Apollo.QueryResult<MeExtendedQuery, MeExtendedQueryVariables>;

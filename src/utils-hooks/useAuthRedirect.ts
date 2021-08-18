@@ -1,12 +1,12 @@
-import { useMeQuery } from "../generated/graphql";
+import { useMeExtendedQuery } from "../generated/graphql";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const useAuthRedirect = () => {
-  const { data, loading } = useMeQuery();
+  const { data, loading } = useMeExtendedQuery();
   const router = useRouter();
   useEffect(() => {
-    if (!loading && data?.me) {
+    if (!loading && data?.meExtended?.user) {
       router.replace("/");
     }
   }, [loading, data, router]);

@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { useMeQuery } from "../generated/graphql";
+import { useMeExtendedQuery } from "../generated/graphql";
 
 const useIsAuthenticated = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   /**
    * JWT is checked and included in the header in the apolloClient.ts file.
    */
-  const { data, loading } = useMeQuery();
+  const { data, loading } = useMeExtendedQuery();
   useEffect(() => {
-    setIsAuthenticated(!!data?.me);
+    setIsAuthenticated(!!data?.meExtended?.user);
   }, [data]);
 
-  return { isAuthenticated, userData: data?.me, loading };
+  return {
+    isAuthenticated,
+    userData: data?.meExtended?.user,
+    userCart: data?.meExtended?.cart,
+    loading,
+  };
 };
 
 export default useIsAuthenticated;

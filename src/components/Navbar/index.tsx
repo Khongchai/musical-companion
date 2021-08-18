@@ -1,11 +1,6 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import {
-  CartType,
-  useGetOrCreateAndGetCartMutation,
-} from "../../generated/graphql";
 import useStore from "../../globalState";
-import { useGetUserCart } from "../../utils-hooks/useGetUserCart";
 import useIsAuthenticated from "../../utils-hooks/useIsAuthenticated";
 import { Cart } from "../Cart";
 import { HamburgerIcon } from "../HamburgerIcon";
@@ -21,11 +16,18 @@ interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = ({}) => {
   const [toggleDrawer, setToggleDrawer] = useState<boolean>(false);
+
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
-  const { isAuthenticated, userData } = useIsAuthenticated();
-  const userCart = useGetUserCart();
+
+  const { isAuthenticated, userData, userCart } = useIsAuthenticated();
+
   const setInitialCartAmount = useStore((state) => state.setInitial);
+  useEffect(() => {
+    if (userCart) {
+      setInitialCartAmount(userCart.itemsInCart.length);
+    }
+  }, [userCart]);
 
   return (
     <>
