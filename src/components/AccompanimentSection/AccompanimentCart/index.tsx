@@ -4,6 +4,7 @@ import {
   ProductType,
   useAllProductsInfoQuery,
 } from "../../../generated/graphql";
+import useCartStore from "../../../globalState";
 import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageNum";
 import { AccompanimentDetails } from "./AccompanimentDetails";
 import AccompanimentImage from "./AccompanimentImage";
@@ -33,6 +34,8 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
     }
     return [];
   }, [totalPages]);
+  const itemsInCart = useCartStore((state) => state.itemsInCart);
+
   return (
     <Box>
       {data?.allProductsInfo?.pagePosition ? (
@@ -69,12 +72,20 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
           data.allProductsInfo.products.length > 0 ? (
             (data?.allProductsInfo.products as ProductType[]).map((product) => (
               <Box mb="1rem" key={product.composition?.name}>
-                <AccompanimentImage src={product.imageLink as string} />
-                <AccompanimentDetails>
+                <AccompanimentImage
+                  src={product.imageLink as string}
+                  alreadyAddedToCart={!!itemsInCart[product.id]}
+                />
+                <AccompanimentDetails
+                  alreadyAddedToCart={!!itemsInCart[product.id]}
+                >
                   <Text textTransform="uppercase">
                     {product.composition?.name}
                   </Text>
-                  <AddToCartButton colorMode={colorMode} />
+                  <AddToCartButton
+                    colorMode={colorMode}
+                    onClickFunction={() => console.log("TODO")}
+                  />
                 </AccompanimentDetails>
               </Box>
             ))

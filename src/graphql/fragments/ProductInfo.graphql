@@ -1,0 +1,11 @@
+fragment ProductInfo on ProductType {
+  priceUsd
+  free
+  imageLink
+  composition {
+    name
+    composers {
+      name
+    }
+  }
+}

@@ -56,6 +56,12 @@ export type Scalars = {
   GenericScalar: any;
 };
 
+/** Currently handles only authenticated users.  */
+export type AddOrRemoveCartItem = {
+  __typename?: 'AddOrRemoveCartItem';
+  productsInCart?: Maybe<Array<Maybe<ProductType>>>;
+};
+
 export type AllProductsDataType = {
   __typename?: 'AllProductsDataType';
   products: Array<Maybe<ProductType>>;
@@ -123,6 +129,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   updateCartCompletion?: Maybe<CartCompletionMutation>;
   getOrCreateAndGetCart?: Maybe<CreateOrGetEmptyCartMutation>;
+  /** Currently handles only authenticated users.  */
+  addOrRemoveCartItem?: Maybe<AddOrRemoveCartItem>;
   /**
    * Register user with fields defined in the settings.
    *
@@ -180,6 +188,12 @@ export type Mutation = {
 export type MutationUpdateCartCompletionArgs = {
   completion?: Maybe<Scalars['Boolean']>;
   username?: Maybe<Scalars['String']>;
+};
+
+
+export type MutationAddOrRemoveCartItemArgs = {
+  operation: Scalars['String'];
+  productId: Scalars['Int'];
 };
 
 
@@ -432,9 +446,39 @@ export type CartInfoFragment = (
   )> }
 );
 
+export type ProductInfoFragment = (
+  { __typename?: 'ProductType' }
+  & Pick<ProductType, 'priceUsd' | 'free' | 'imageLink'>
+  & { composition?: Maybe<(
+    { __typename?: 'CompositionType' }
+    & Pick<CompositionType, 'name'>
+    & { composers: Array<(
+      { __typename?: 'ComposerType' }
+      & Pick<ComposerType, 'name'>
+    )> }
+  )> }
+);
+
 export type UserInfoFragment = (
   { __typename?: 'UserNode' }
   & Pick<UserNode, 'id' | 'lastLogin' | 'username' | 'email' | 'isStudent' | 'verified'>
+);
+
+export type AddOrRemoveCartItemMutationVariables = Exact<{
+  operation: Scalars['String'];
+  productId: Scalars['Int'];
+}>;
+
+
+export type AddOrRemoveCartItemMutation = (
+  { __typename?: 'Mutation' }
+  & { addOrRemoveCartItem?: Maybe<(
+    { __typename?: 'AddOrRemoveCartItem' }
+    & { productsInCart?: Maybe<Array<Maybe<(
+      { __typename?: 'ProductType' }
+      & ProductInfoFragment
+    )>>> }
+  )> }
 );
 
 export type GetOrCreateAndGetCartMutationVariables = Exact<{ [key: string]: never; }>;
@@ -501,7 +545,7 @@ export type AllProductsInfoQuery = (
     & Pick<AllProductsDataType, 'isLast' | 'isFirst'>
     & { products: Array<Maybe<(
       { __typename?: 'ProductType' }
-      & Pick<ProductType, 'priceUsd' | 'free' | 'imageLink'>
+      & Pick<ProductType, 'priceUsd' | 'id' | 'free' | 'imageLink'>
       & { composition?: Maybe<(
         { __typename?: 'CompositionType' }
         & Pick<CompositionType, 'name'>
@@ -550,6 +594,19 @@ export const CartInfoFragmentDoc = gql`
   }
 }
     `;
+export const ProductInfoFragmentDoc = gql`
+    fragment ProductInfo on ProductType {
+  priceUsd
+  free
+  imageLink
+  composition {
+    name
+    composers {
+      name
+    }
+  }
+}
+    `;
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on UserNode {
   id
@@ -560,6 +617,42 @@ export const UserInfoFragmentDoc = gql`
   verified
 }
     `;
+export const AddOrRemoveCartItemDocument = gql`
+    mutation addOrRemoveCartItem($operation: String!, $productId: Int!) {
+  addOrRemoveCartItem(operation: $operation, productId: $productId) {
+    productsInCart {
+      ...ProductInfo
+    }
+  }
+}
+    ${ProductInfoFragmentDoc}`;
+export type AddOrRemoveCartItemMutationFn = Apollo.MutationFunction<AddOrRemoveCartItemMutation, AddOrRemoveCartItemMutationVariables>;
+
+/**
+ * __useAddOrRemoveCartItemMutation__
+ *
+ * To run a mutation, you first call `useAddOrRemoveCartItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddOrRemoveCartItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addOrRemoveCartItemMutation, { data, loading, error }] = useAddOrRemoveCartItemMutation({
+ *   variables: {
+ *      operation: // value for 'operation'
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useAddOrRemoveCartItemMutation(baseOptions?: Apollo.MutationHookOptions<AddOrRemoveCartItemMutation, AddOrRemoveCartItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddOrRemoveCartItemMutation, AddOrRemoveCartItemMutationVariables>(AddOrRemoveCartItemDocument, options);
+      }
+export type AddOrRemoveCartItemMutationHookResult = ReturnType<typeof useAddOrRemoveCartItemMutation>;
+export type AddOrRemoveCartItemMutationResult = Apollo.MutationResult<AddOrRemoveCartItemMutation>;
+export type AddOrRemoveCartItemMutationOptions = Apollo.BaseMutationOptions<AddOrRemoveCartItemMutation, AddOrRemoveCartItemMutationVariables>;
 export const GetOrCreateAndGetCartDocument = gql`
     mutation GetOrCreateAndGetCart {
   getOrCreateAndGetCart {
@@ -684,6 +777,7 @@ export const AllProductsInfoDocument = gql`
   allProductsInfo(search: $search, page: $page, limit: $limit) {
     products {
       priceUsd
+      id
       free
       imageLink
       composition {

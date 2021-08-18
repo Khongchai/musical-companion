@@ -51,7 +51,6 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
             />
             <InputRightAddon
               onClick={() => {
-                console.log(inputRef.current);
                 inputRef.current &&
                   (inputRef.current as unknown as HTMLElement).click();
               }}

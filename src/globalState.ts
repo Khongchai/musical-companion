@@ -1,18 +1,27 @@
 import create from "zustand";
+import { ProductType } from "./generated/graphql";
 
 interface AppStates {
-  itemsInCart: number;
-  increase: () => void;
-  decrease: () => void;
-  setInitial: (initialValue: number) => void;
+  itemsInCart: Record<string, ProductType>;
+  setInitial: (products: ProductType[]) => void;
 }
 
-const useStore = create<AppStates>((set) => ({
-  itemsInCart: 0,
-  increase: () => set((state) => ({ itemsInCart: state.itemsInCart + 1 })),
-  decrease: () => set((state) => ({ itemsInCart: state.itemsInCart - 1 })),
-  setInitial: (initialValue: number) =>
-    set(() => ({ itemsInCart: initialValue })),
+const useCartStore = create<AppStates>((set) => ({
+  itemsInCart: {},
+  setInitial: (initialValue: ProductType[]) =>
+    set(() => {
+      /**
+       * This mapping will help us determine quickly which item the
+       * user has already added to the cart.
+       */
+      const initialItemsInCartMap: Record<string, ProductType> = {};
+      initialValue.forEach((item) => {
+        initialItemsInCartMap[`${item.id}`] = item;
+      });
+      return {
+        itemsInCart: initialItemsInCartMap,
+      };
+    }),
 }));
 
-export default useStore;
+export default useCartStore;

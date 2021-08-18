@@ -2,13 +2,13 @@ import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import useStore from "../globalState";
+import useCartStore from "../globalState";
 
 export const Cart: React.FC<{
   flipColorMode?: boolean;
 }> = ({ flipColorMode }) => {
   const cartColor = useColorModeValue("", "invert(1)");
-  const itemsInCart = useStore((state) => state.itemsInCart);
+  const itemsInCart = useCartStore((state) => state.itemsInCart);
   return (
     <Link href="/cart-summary">
       <Box position="relative" width="fit-content" height="fit-content">
@@ -32,7 +32,7 @@ export const Cart: React.FC<{
           top="-14px"
           right="-14px"
         >
-          {itemsInCart}
+          {Object.keys(itemsInCart).length}
         </Box>
       </Box>
     </Link>

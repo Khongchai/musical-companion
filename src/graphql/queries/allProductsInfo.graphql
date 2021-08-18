@@ -2,6 +2,7 @@ query AllProductsInfo($search: String, $page: Int, $limit: Int) {
   allProductsInfo(search: $search, page: $page, limit: $limit) {
     products {
       priceUsd
+      id
       free
       imageLink
       composition {

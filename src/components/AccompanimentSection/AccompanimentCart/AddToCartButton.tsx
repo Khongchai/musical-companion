@@ -3,13 +3,17 @@ import React from "react";
 
 interface AddToCartButtonProps {
   colorMode: "dark" | "light";
+  onClickFunction: () => any;
 }
 {
   /* This button should pull up another interface where 
                   the user can select what type of files they want. 
                 */
 }
-const AddToCartButton: React.FC<AddToCartButtonProps> = ({ colorMode }) => {
+const AddToCartButton: React.FC<AddToCartButtonProps> = ({
+  colorMode,
+  onClickFunction,
+}) => {
   return (
     <Button
       width="50px"
@@ -19,6 +23,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ colorMode }) => {
       borderRadius="8px"
       padding="10px"
       cursor="pointer"
+      onClick={() => onClickFunction()}
     >
       <Image
         alt="add-to-cart-icon"

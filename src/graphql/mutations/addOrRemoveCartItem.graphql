@@ -1,0 +1,7 @@
+mutation addOrRemoveCartItem($operation: String!, $productId: Int!) {
+  addOrRemoveCartItem(operation: $operation, productId: $productId) {
+    productsInCart {
+      ...ProductInfo
+    }
+  }
+}
