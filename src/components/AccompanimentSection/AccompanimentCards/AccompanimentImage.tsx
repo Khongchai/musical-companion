@@ -130,7 +130,7 @@ function RemoveButton({
       onClick={() => {
         onClickFunction();
       }}
-      bgColor="#D2042D"
+      bgColor="mainRed"
       _hover={{ opacity: 0.8 }}
     >
       <Text mb="3px">{children}</Text>

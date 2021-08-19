@@ -10,8 +10,11 @@ import { AccompanimentDetails } from "./AccompanimentDetails";
 import AccompanimentImage from "./AccompanimentImage";
 import AddToCartButton from "./AddToCartButton";
 
-const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
-  const [page, setPage] = useState(1);
+const AccompanimentCards: React.FC<{
+  searchVal: string;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ searchVal, page, setPage }) => {
   const { loading, data } = useAllProductsInfoQuery({
     variables: {
       limit: 8,
@@ -41,11 +44,12 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
     <Box>
       {data?.allProductsInfo?.pagePosition ? (
         <Flex padding="2rem" w="100%" justify="center">
-          {pages.map((page) => (
+          {pages.map((pageNum) => (
             <Button
-              key={page}
+              key={pageNum}
               ml="1.5rem"
-              value={page}
+              value={pageNum}
+              transform={pageNum === page ? "scale(1.3)" : "scale(1)"}
               onClick={(e) => {
                 const requestedPage = parseInt(
                   (e.target as HTMLButtonElement).value
@@ -53,7 +57,7 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
                 setPage(requestedPage);
               }}
             >
-              {page}
+              {pageNum}
             </Button>
           ))}
         </Flex>

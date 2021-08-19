@@ -9,6 +9,7 @@ const config: ThemeConfig = {
 
 const colors = {
   mainGrey: "#6D6D6D",
+  mainRed: "#D2042D",
 };
 
 // 3. extend the theme

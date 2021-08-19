@@ -11,7 +11,7 @@ import React, { useRef, useState } from "react";
 import { Text } from "../../types/text";
 import setActionWithDelay from "../../utils/setActionWithDelay";
 import { Cart } from "../Cart";
-import AccompanimentCards from "./AccompanimentCart";
+import AccompanimentCards from "./AccompanimentCards";
 
 interface AccompanimentSectionProps extends Text {}
 
@@ -19,6 +19,8 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
   headerSize,
   textSize: _,
 }) => {
+  const [page, setPage] = useState(1);
+
   const [searchVal, setSearchVal] = useState("");
   const inputRef = useRef(null);
   return (
@@ -45,6 +47,7 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
             <Input
               placeholder="Search"
               onChange={(e) => {
+                setPage(1);
                 setActionWithDelay(() => setSearchVal(e.target.value), 0.3);
               }}
               ref={inputRef}
@@ -61,7 +64,7 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
           <Cart flipColorMode />
         </Flex>
       </Flex>
-      <AccompanimentCards searchVal={searchVal} />
+      <AccompanimentCards page={page} setPage={setPage} searchVal={searchVal} />
     </Box>
   );
 };
