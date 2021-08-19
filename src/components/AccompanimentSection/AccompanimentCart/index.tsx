@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Grid, Text, useColorMode } from "@chakra-ui/react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ProductType,
   useAllProductsInfoQuery,
@@ -34,6 +34,7 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
     }
     return [];
   }, [totalPages]);
+
   const itemsInCart = useCartStore((state) => state.itemsInCart);
 
   return (
@@ -74,8 +75,9 @@ const AccompanimentCards: React.FC<{ searchVal: string }> = ({ searchVal }) => {
               <Box mb="1rem" key={product.composition?.name}>
                 <AccompanimentImage
                   src={product.imageLink as string}
+                  productId={parseInt(product.id)}
                   alreadyAddedToCart={!!itemsInCart[product.id]}
-                />
+                ></AccompanimentImage>
                 <AccompanimentDetails
                   alreadyAddedToCart={!!itemsInCart[product.id]}
                 >

@@ -23,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
   const { isAuthenticated, userData, userCart } = useIsAuthenticated();
 
-  const setInitialItemsInCart = useCartStore((state) => state.setInitial);
+  const setInitialItemsInCart = useCartStore((state) => state.setItemsToCart);
   useEffect(() => {
     if (userCart) {
       setInitialItemsInCart(userCart.itemsInCart as ProductType[]);

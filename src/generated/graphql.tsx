@@ -448,7 +448,7 @@ export type CartInfoFragment = (
 
 export type ProductInfoFragment = (
   { __typename?: 'ProductType' }
-  & Pick<ProductType, 'priceUsd' | 'free' | 'imageLink'>
+  & Pick<ProductType, 'priceUsd' | 'id' | 'free' | 'imageLink'>
   & { composition?: Maybe<(
     { __typename?: 'CompositionType' }
     & Pick<CompositionType, 'name'>
@@ -545,15 +545,7 @@ export type AllProductsInfoQuery = (
     & Pick<AllProductsDataType, 'isLast' | 'isFirst'>
     & { products: Array<Maybe<(
       { __typename?: 'ProductType' }
-      & Pick<ProductType, 'priceUsd' | 'id' | 'free' | 'imageLink'>
-      & { composition?: Maybe<(
-        { __typename?: 'CompositionType' }
-        & Pick<CompositionType, 'name'>
-        & { composers: Array<(
-          { __typename?: 'ComposerType' }
-          & Pick<ComposerType, 'name'>
-        )> }
-      )> }
+      & ProductInfoFragment
     )>>, pagePosition: (
       { __typename?: 'PagePositionType' }
       & Pick<PagePositionType, 'page' | 'of'>
@@ -597,6 +589,7 @@ export const CartInfoFragmentDoc = gql`
 export const ProductInfoFragmentDoc = gql`
     fragment ProductInfo on ProductType {
   priceUsd
+  id
   free
   imageLink
   composition {
@@ -776,16 +769,7 @@ export const AllProductsInfoDocument = gql`
     query AllProductsInfo($search: String, $page: Int, $limit: Int) {
   allProductsInfo(search: $search, page: $page, limit: $limit) {
     products {
-      priceUsd
-      id
-      free
-      imageLink
-      composition {
-        name
-        composers {
-          name
-        }
-      }
+      ...ProductInfo
     }
     isLast
     isFirst
@@ -795,7 +779,7 @@ export const AllProductsInfoDocument = gql`
     }
   }
 }
-    `;
+    ${ProductInfoFragmentDoc}`;
 
 /**
  * __useAllProductsInfoQuery__

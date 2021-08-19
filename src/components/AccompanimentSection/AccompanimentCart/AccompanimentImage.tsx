@@ -1,15 +1,25 @@
 import { Box, Button, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
+import {
+  ProductType,
+  useAddOrRemoveCartItemMutation,
+} from "../../../generated/graphql";
+import useCartStore from "../../../globalState";
 
 interface AccompanimentImageProps {
   src: string;
+  productId: number;
   alreadyAddedToCart?: boolean;
 }
 
 const AccompanimentImage: React.FC<AccompanimentImageProps> = ({
   src,
+  productId,
   alreadyAddedToCart,
 }) => {
+  const [removeFromCart] = useAddOrRemoveCartItemMutation();
+  const setItemsToCart = useCartStore((state) => state.setItemsToCart);
+
   return (
     <Box pos="relative">
       <Box
@@ -38,7 +48,24 @@ const AccompanimentImage: React.FC<AccompanimentImageProps> = ({
         <Text color="white" mb="1rem">
           Added to Cart
         </Text>
-        <Button bgColor="#D2042D" _hover={{ opacity: 0.8 }}>
+        <Button
+          onClick={async () => {
+            const result = await removeFromCart({
+              variables: { operation: "remove", productId },
+            });
+            result.errors &&
+              alert(`
+                We're sorry, something went wrong, please contact the admin. 
+                Error message: ${result.errors}
+            `);
+            const newItemsInCartList =
+              result.data?.addOrRemoveCartItem?.productsInCart;
+            newItemsInCartList &&
+              setItemsToCart(newItemsInCartList as ProductType[]);
+          }}
+          bgColor="#D2042D"
+          _hover={{ opacity: 0.8 }}
+        >
           <Text mb="3px">Remove</Text>
         </Button>
       </Box>
