@@ -5,7 +5,7 @@ interface KhongLogoLinkProps {}
 
 const KhongLogoLink: React.FC<KhongLogoLinkProps> = ({}) => {
   return (
-    <Link href="/">
+    <Link href="/" borderRadius="50%">
       <Flex cursor="pointer">
         <Image
           alt="khong-icon"

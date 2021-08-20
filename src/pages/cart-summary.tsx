@@ -1,6 +1,7 @@
 import { Box, Text, Heading } from "@chakra-ui/react";
 import React from "react";
 import CartDetails from "../components/CartDetails";
+import CartTotalAndCheckout from "../components/CartTotalAndCheckout";
 import { MainContainer } from "../Elements/MainContainer";
 
 const cartSummary = ({}) => {
@@ -11,6 +12,7 @@ const cartSummary = ({}) => {
         <Text>Cart Details</Text>
         <hr />
         <CartDetails />
+        <CartTotalAndCheckout />
       </Box>
     </MainContainer>
   );

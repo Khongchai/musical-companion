@@ -1,10 +1,5 @@
-query MeExtended {
-  meExtended {
-    user {
-      ...UserInfo
-    }
-    cart {
-      ...CartInfo
-    }
+query me {
+  me {
+    id
   }
 }

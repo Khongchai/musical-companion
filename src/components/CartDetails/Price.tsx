@@ -9,6 +9,6 @@ export const Price: React.FC<PriceProps> = ({ price }) => {
   return price <= 0 ? (
     <Text color="green.400">Free</Text>
   ) : (
-    <Text color="mainRed">{price}</Text>
+    <Text color="mainRed">${price}</Text>
   );
 };

@@ -5,6 +5,7 @@ import {
   useAllProductsInfoQuery,
 } from "../../../generated/graphql";
 import useCartStore from "../../../globalState";
+import useIsAuthenticated from "../../../utils-hooks/useIsAuthenticated";
 import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageNum";
 import { AccompanimentDetails } from "./AccompanimentDetails";
 import AccompanimentImage from "./AccompanimentImage";
@@ -22,7 +23,11 @@ const AccompanimentCards: React.FC<{
       search: searchVal,
     },
   });
+
   const { colorMode } = useColorMode();
+
+  const { isAuthenticated } = useIsAuthenticated(true);
+
   const responsiveGridColumns = [
     "1fr 1fr",
     null,
@@ -89,6 +94,7 @@ const AccompanimentCards: React.FC<{
                     {product.composition?.name}
                   </Text>
                   <AddToCartButton
+                    isAuthenticated={isAuthenticated}
                     productId={parseInt(product.id)}
                     colorMode={colorMode}
                   />

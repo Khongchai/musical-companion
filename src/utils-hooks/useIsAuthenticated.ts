@@ -1,14 +1,28 @@
 import { useEffect, useState } from "react";
-import { useMeExtendedQuery } from "../generated/graphql";
+import {
+  MeExtendedQuery,
+  MeQuery,
+  useMeExtendedQuery,
+  useMeQuery,
+} from "../generated/graphql";
 
-const useIsAuthenticated = () => {
+function useIsAuthenticated(useNormalMeQuery?: boolean) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   /**
-   * JWT is checked and included in the header in the apolloClient.ts file.
+   * meExtended query is meQuery but fetches more data.
+   *
+   * when only want to check whether a user is authenticated or not, use the normal
+   * meQuery as it fetches only the id, therefore saves the bandwidth.
    */
-  const { data, loading } = useMeExtendedQuery();
+  const { data, loading } = useNormalMeQuery
+    ? useMeQuery()
+    : useMeExtendedQuery();
   useEffect(() => {
-    setIsAuthenticated(!!data?.meExtended?.user);
+    if (useNormalMeQuery) {
+      setIsAuthenticated(!!(data as MeQuery)?.me?.id);
+    } else {
+      setIsAuthenticated(!!(data as MeExtendedQuery)?.meExtended?.user);
+    }
   }, [data]);
 
   return {
@@ -17,6 +31,6 @@ const useIsAuthenticated = () => {
     userCart: data?.meExtended?.cart,
     loading,
   };
-};
+}
 
 export default useIsAuthenticated;

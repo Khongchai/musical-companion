@@ -1,4 +1,5 @@
 
-Remove cart item in summary page
 Total section in cart summary page
 Use the new removeItemButton and add a loading animation to it.
+Checkout button which leads to paypal window and after payment succeeds, calls a mutation that adds make
+the cart finished and added the purchased products to the user.

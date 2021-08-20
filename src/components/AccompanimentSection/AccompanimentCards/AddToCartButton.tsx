@@ -1,4 +1,3 @@
-import { ApolloError } from "@apollo/client";
 import { Box, Button, Image } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -11,11 +10,13 @@ import checkForApolloMutationErrors from "../../../utils/checkForApolloMutationE
 interface AddToCartButtonProps {
   colorMode: "dark" | "light";
   productId: number;
+  isAuthenticated: boolean;
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   colorMode,
   productId,
+  isAuthenticated,
 }) => {
   const [addItemTocart, { loading }] = useAddOrRemoveCartItemMutation();
   const setItemsToCart = useCartStore((state) => state.setItemsToCart);
@@ -30,16 +31,20 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
       padding="10px"
       cursor="pointer"
       onClick={async () => {
-        const result = await addItemTocart({
-          variables: { operation: "add", productId },
-        });
+        if (isAuthenticated) {
+          const result = await addItemTocart({
+            variables: { operation: "add", productId },
+          });
 
-        checkForApolloMutationErrors(result);
+          checkForApolloMutationErrors(result);
 
-        const newItemsInCartList =
-          result.data?.addOrRemoveCartItem?.productsInCart;
-        newItemsInCartList &&
-          setItemsToCart(newItemsInCartList as ProductType[]);
+          const newItemsInCartList =
+            result.data?.addOrRemoveCartItem?.productsInCart;
+          newItemsInCartList &&
+            setItemsToCart(newItemsInCartList as ProductType[]);
+        } else {
+          alert("Please create an account before adding an item to the cart.");
+        }
       }}
     >
       {loading ? (

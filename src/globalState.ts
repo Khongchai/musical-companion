@@ -4,10 +4,14 @@ import { ProductType } from "./generated/graphql";
 interface AppStates {
   itemsInCart: Record<string, ProductType>;
   setItemsToCart: (products: ProductType[]) => void;
+
+  //Price will get updated when itemsInCart is updated
+  priceOfItemsInCart: number;
 }
 
 const useCartStore = create<AppStates>((set) => ({
   itemsInCart: {},
+  priceOfItemsInCart: 0,
   setItemsToCart: (products: ProductType[]) =>
     set(() => {
       /**
@@ -15,11 +19,14 @@ const useCartStore = create<AppStates>((set) => ({
        * user has already added to the cart.
        */
       const itemsInCartMap: Record<string, ProductType> = {};
+      let total = 0;
       products.forEach((item) => {
         itemsInCartMap[`${item.id}`] = item;
+        total += parseInt(itemsInCartMap[`${item.id}`].priceUsd);
       });
       return {
         itemsInCart: itemsInCartMap,
+        priceOfItemsInCart: total,
       };
     }),
 }));
