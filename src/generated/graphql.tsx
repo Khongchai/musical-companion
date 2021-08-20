@@ -438,21 +438,20 @@ export type CartInfoFragment = (
   & Pick<CartType, 'id' | 'transactionId' | 'dateCreated' | 'complete'>
   & { itemsInCart: Array<(
     { __typename?: 'ProductType' }
-    & Pick<ProductType, 'id' | 'priceUsd' | 'imageLink'>
-    & { composition?: Maybe<(
-      { __typename?: 'CompositionType' }
-      & Pick<CompositionType, 'name'>
-    )> }
+    & ProductInfoFragment
   )> }
 );
 
 export type ProductInfoFragment = (
   { __typename?: 'ProductType' }
-  & Pick<ProductType, 'priceUsd' | 'id' | 'free' | 'imageLink'>
+  & Pick<ProductType, 'priceUsd' | 'id' | 'imageLink'>
   & { composition?: Maybe<(
     { __typename?: 'CompositionType' }
     & Pick<CompositionType, 'name'>
-    & { composers: Array<(
+    & { links: Array<(
+      { __typename?: 'DataAfterPurchaseType' }
+      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
+    )>, composers: Array<(
       { __typename?: 'ComposerType' }
       & Pick<ComposerType, 'name'>
     )> }
@@ -570,6 +569,25 @@ export type MeExtendedQuery = (
   )> }
 );
 
+export const ProductInfoFragmentDoc = gql`
+    fragment ProductInfo on ProductType {
+  priceUsd
+  id
+  imageLink
+  composition {
+    name
+    links {
+      midiLink
+      wavLink
+      flacLink
+      pdfLink
+    }
+    composers {
+      name
+    }
+  }
+}
+    `;
 export const CartInfoFragmentDoc = gql`
     fragment CartInfo on CartType {
   id
@@ -577,29 +595,10 @@ export const CartInfoFragmentDoc = gql`
   dateCreated
   complete
   itemsInCart {
-    id
-    priceUsd
-    imageLink
-    composition {
-      name
-    }
+    ...ProductInfo
   }
 }
-    `;
-export const ProductInfoFragmentDoc = gql`
-    fragment ProductInfo on ProductType {
-  priceUsd
-  id
-  free
-  imageLink
-  composition {
-    name
-    composers {
-      name
-    }
-  }
-}
-    `;
+    ${ProductInfoFragmentDoc}`;
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on UserNode {
   id

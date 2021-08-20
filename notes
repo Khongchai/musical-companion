@@ -1,4 +1,4 @@
-Manage add items to cart.
 
-Cart summary page.
-On search, reset pagination back to page 1.
+Remove cart item in summary page
+Total section in cart summary page
+Use the new removeItemButton and add a loading animation to it.

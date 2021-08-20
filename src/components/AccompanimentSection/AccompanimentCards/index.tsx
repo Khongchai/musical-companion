@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Grid, Text, useColorMode } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   ProductType,
   useAllProductsInfoQuery,
@@ -81,16 +81,16 @@ const AccompanimentCards: React.FC<{
                   src={product.imageLink as string}
                   productId={parseInt(product.id)}
                   alreadyAddedToCart={!!itemsInCart[product.id]}
-                ></AccompanimentImage>
+                />
                 <AccompanimentDetails
                   alreadyAddedToCart={!!itemsInCart[product.id]}
                 >
-                  <Text textTransform="uppercase">
+                  <Text maxW="250px" textTransform="uppercase">
                     {product.composition?.name}
                   </Text>
                   <AddToCartButton
+                    productId={parseInt(product.id)}
                     colorMode={colorMode}
-                    onClickFunction={() => console.log("TODO")}
                   />
                 </AccompanimentDetails>
               </Box>

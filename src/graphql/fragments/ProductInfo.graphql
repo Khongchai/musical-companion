@@ -1,10 +1,15 @@
 fragment ProductInfo on ProductType {
   priceUsd
   id
-  free
   imageLink
   composition {
     name
+    links {
+      midiLink
+      wavLink
+      flacLink
+      pdfLink
+    }
     composers {
       name
     }

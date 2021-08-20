@@ -4,11 +4,6 @@ fragment CartInfo on CartType {
   dateCreated
   complete
   itemsInCart {
-    id
-    priceUsd
-    imageLink
-    composition {
-      name
-    }
+    ...ProductInfo
   }
 }

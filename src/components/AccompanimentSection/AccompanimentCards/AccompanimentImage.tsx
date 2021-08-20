@@ -21,6 +21,7 @@ const AccompanimentImage: React.FC<AccompanimentImageProps> = ({
   //Need loading icon
   const [removeFromCart, { loading }] = useAddOrRemoveCartItemMutation();
   const setItemsToCart = useCartStore((state) => state.setItemsToCart);
+
   return (
     <Box pos="relative">
       <ComposerImageContainer alreadyAddedToCart={alreadyAddedToCart}>
@@ -130,6 +131,7 @@ function RemoveButton({
       onClick={() => {
         onClickFunction();
       }}
+      color="white"
       bgColor="mainRed"
       _hover={{ opacity: 0.8 }}
     >
