@@ -56,6 +56,16 @@ export type Scalars = {
   GenericScalar: any;
 };
 
+/**
+ * Currently handles only authenticated users.
+ *
+ * No need for any arguments, just attach everything in the user's cart to the user model.
+ */
+export type AddDataAfterPurchaseToUserAfterCheckout = {
+  __typename?: 'AddDataAfterPurchaseToUserAfterCheckout';
+  purchaseSuccess: Scalars['Boolean'];
+};
+
 /** Currently handles only authenticated users.  */
 export type AddOrRemoveCartItem = {
   __typename?: 'AddOrRemoveCartItem';
@@ -96,7 +106,7 @@ export type CompositionType = {
   id: Scalars['ID'];
   name: Scalars['String'];
   composers: Array<ComposerType>;
-  links: Array<DataAfterPurchaseType>;
+  links?: Maybe<DataAfterPurchaseType>;
   product?: Maybe<ProductType>;
 };
 
@@ -131,6 +141,12 @@ export type Mutation = {
   getOrCreateAndGetCart?: Maybe<CreateOrGetEmptyCartMutation>;
   /** Currently handles only authenticated users.  */
   addOrRemoveCartItem?: Maybe<AddOrRemoveCartItem>;
+  /**
+   * Currently handles only authenticated users.
+   *
+   * No need for any arguments, just attach everything in the user's cart to the user model.
+   */
+  addDataAfterPurchaseToUserAfterCheckout?: Maybe<AddDataAfterPurchaseToUserAfterCheckout>;
   /**
    * Register user with fields defined in the settings.
    *
@@ -448,7 +464,7 @@ export type ProductInfoFragment = (
   & { composition?: Maybe<(
     { __typename?: 'CompositionType' }
     & Pick<CompositionType, 'name'>
-    & { links: Array<(
+    & { links?: Maybe<(
       { __typename?: 'DataAfterPurchaseType' }
       & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
     )>, composers: Array<(

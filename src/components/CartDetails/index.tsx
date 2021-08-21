@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import useCartStore from "../../globalState";
 import RemoveItemButton from "../RemoveItemButton";
 import { ComposersName } from "./ComposersName";
@@ -40,22 +40,20 @@ const CartDetails: React.FC = () => {
                   <Price price={itemsInCartMap[key].priceUsd} />
                   <FileFormats>
                     <Text>Available formats:</Text>
-                    {itemsInCartMap[key].composition?.links.map((link) => {
-                      let list: JSX.Element[] = [];
-                      link.flacLink &&
-                        list.push(<FileFormatBox>FLAC</FileFormatBox>);
-                      link.wavLink &&
-                        list.push(<FileFormatBox>WAV</FileFormatBox>);
-                      link.midiLink &&
-                        list.push(<FileFormatBox>MIDI</FileFormatBox>);
-                      link.pdfLink &&
-                        list.push(<FileFormatBox>PDF</FileFormatBox>);
-                      return (
-                        <Flex ml="0.5rem" flexWrap="wrap">
-                          {list.map((listItem) => listItem)}
-                        </Flex>
-                      );
-                    })}
+                    <Flex flexWrap="wrap" ml="0.5rem">
+                      {itemsInCartMap[key].composition?.links?.flacLink && (
+                        <FileFormatBox>FLAC</FileFormatBox>
+                      )}
+                      {itemsInCartMap[key].composition?.links?.wavLink && (
+                        <FileFormatBox>WAV</FileFormatBox>
+                      )}
+                      {itemsInCartMap[key].composition?.links?.midiLink && (
+                        <FileFormatBox>MIDI</FileFormatBox>
+                      )}
+                      {itemsInCartMap[key].composition?.links?.pdfLink && (
+                        <FileFormatBox>PDF</FileFormatBox>
+                      )}
+                    </Flex>
                   </FileFormats>
                 </Box>
               </Details>

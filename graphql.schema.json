@@ -10,6 +10,43 @@
     "types": [
       {
         "kind": "OBJECT",
+        "name": "AddDataAfterPurchaseToUserAfterCheckout",
+        "description": "Currently handles only authenticated users. \n\nNo need for any arguments, just attach everything in the user's cart to the user model.",
+        "fields": [
+          {
+            "name": "purchaseSuccess",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Boolean",
+        "description": "The `Boolean` scalar type represents `true` or `false`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "AddOrRemoveCartItem",
         "description": "Currently handles only authenticated users. ",
         "fields": [
@@ -111,16 +148,6 @@
         ],
         "inputFields": null,
         "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "SCALAR",
-        "name": "Boolean",
-        "description": "The `Boolean` scalar type represents `true` or `false`.",
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -395,21 +422,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "LIST",
-                "name": null,
-                "ofType": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "OBJECT",
-                    "name": "DataAfterPurchaseType",
-                    "ofType": null
-                  }
-                }
-              }
+              "kind": "OBJECT",
+              "name": "DataAfterPurchaseType",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -723,6 +738,18 @@
             "type": {
               "kind": "OBJECT",
               "name": "AddOrRemoveCartItem",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "addDataAfterPurchaseToUserAfterCheckout",
+            "description": "Currently handles only authenticated users. \n\nNo need for any arguments, just attach everything in the user's cart to the user model.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AddDataAfterPurchaseToUserAfterCheckout",
               "ofType": null
             },
             "isDeprecated": false,
