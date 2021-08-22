@@ -1,4 +1,5 @@
-_create a mockup button on frontend that directly calls the addDataAfterPurchaseToUser_, then a page
-that shows what item that user owns, then also show what items the user owns on the main page.
+Let the user know somehow, that he or she already owns a product, this should also prevent them from adding the product again.
+
+After that, a dashboard for all owned products.
 
 After all that, implement paypal button.

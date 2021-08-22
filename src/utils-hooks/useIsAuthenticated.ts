@@ -14,9 +14,11 @@ function useIsAuthenticated(useNormalMeQuery?: boolean) {
    * when only want to check whether a user is authenticated or not, use the normal
    * meQuery as it fetches only the id, therefore saves the bandwidth.
    */
+
   const { data, loading } = useNormalMeQuery
     ? useMeQuery()
     : useMeExtendedQuery();
+
   useEffect(() => {
     if (useNormalMeQuery) {
       setIsAuthenticated(!!(data as MeQuery)?.me?.id);
@@ -25,10 +27,14 @@ function useIsAuthenticated(useNormalMeQuery?: boolean) {
     }
   }, [data]);
 
+  if (useNormalMeQuery) {
+    return { isAuthenticated, userId: (data as MeQuery)?.me?.id };
+  }
+
   return {
     isAuthenticated,
-    userData: data?.meExtended?.user,
-    userCart: data?.meExtended?.cart,
+    userData: (data as MeExtendedQuery)?.meExtended?.user,
+    userCart: (data as MeExtendedQuery)?.meExtended?.cart,
     loading,
   };
 }

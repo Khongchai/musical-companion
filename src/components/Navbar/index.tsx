@@ -1,7 +1,7 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ProductType } from "../../generated/graphql";
-import useStore from "../../globalStates.ts";
+import useStore from "../../globalStates";
 import useIsAuthenticated from "../../utils-hooks/useIsAuthenticated";
 import { Cart } from "../Cart";
 import { HamburgerIcon } from "../HamburgerIcon";

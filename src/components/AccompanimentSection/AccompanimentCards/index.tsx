@@ -3,8 +3,10 @@ import React, { useMemo } from "react";
 import {
   ProductType,
   useAllProductsInfoQuery,
+  useProductPurchasedByCurrentUserOnlyNameQuery,
 } from "../../../generated/graphql";
-import useStore from "../../../globalStates.ts";
+import useStore from "../../../globalStates";
+import useAlreadyPurchasedProducts from "../../../utils-hooks/useAlreadyPurchasedProducts";
 import useIsAuthenticated from "../../../utils-hooks/useIsAuthenticated";
 import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageNum";
 import { AccompanimentDetails } from "./AccompanimentDetails";
@@ -16,13 +18,16 @@ const AccompanimentCards: React.FC<{
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ searchVal, page, setPage }) => {
-  const { loading, data } = useAllProductsInfoQuery({
-    variables: {
-      limit: 8,
-      page: page,
-      search: searchVal,
-    },
-  });
+  const { loading: allProductsLoading, data: allProductsData } =
+    useAllProductsInfoQuery({
+      variables: {
+        limit: 8,
+        page: page,
+        search: searchVal,
+      },
+    });
+
+  const { purchasedProductMap } = useAlreadyPurchasedProducts();
 
   const { colorMode } = useColorMode();
 
@@ -35,7 +40,7 @@ const AccompanimentCards: React.FC<{
     null,
     "1fr 1fr 1fr 1fr ",
   ];
-  const totalPages = data?.allProductsInfo?.pagePosition?.of;
+  const totalPages = allProductsData?.allProductsInfo?.pagePosition?.of;
   const pages = useMemo(() => {
     if (totalPages) {
       return extractPagesFromTotalNumberOfPages(totalPages);
@@ -47,7 +52,7 @@ const AccompanimentCards: React.FC<{
 
   return (
     <Box>
-      {data?.allProductsInfo?.pagePosition ? (
+      {allProductsData?.allProductsInfo?.pagePosition ? (
         <Flex padding="2rem" w="100%" justify="center">
           {pages.map((pageNum) => (
             <Button
@@ -67,7 +72,7 @@ const AccompanimentCards: React.FC<{
           ))}
         </Flex>
       ) : null}
-      {loading ? (
+      {allProductsLoading ? (
         <Box width="fit-content" m="0 auto">
           <div className="lds-dual-ring"></div>
         </Box>
@@ -78,29 +83,31 @@ const AccompanimentCards: React.FC<{
           height="fit-content"
           position="relative"
         >
-          {data?.allProductsInfo?.products &&
-          data.allProductsInfo.products.length > 0 ? (
-            (data?.allProductsInfo.products as ProductType[]).map((product) => (
-              <Box mb="1rem" key={product.composition?.name}>
-                <AccompanimentImage
-                  src={product.imageLink as string}
-                  productId={parseInt(product.id)}
-                  alreadyAddedToCart={!!itemsInCart[product.id]}
-                />
-                <AccompanimentDetails
-                  alreadyAddedToCart={!!itemsInCart[product.id]}
-                >
-                  <Text maxW="250px" textTransform="uppercase">
-                    {product.composition?.name}
-                  </Text>
-                  <AddToCartButton
-                    isAuthenticated={isAuthenticated}
+          {allProductsData?.allProductsInfo?.products &&
+          allProductsData.allProductsInfo.products.length > 0 ? (
+            (allProductsData?.allProductsInfo.products as ProductType[]).map(
+              (product) => (
+                <Box mb="1rem" key={product.composition?.name} pos="relative">
+                  <AccompanimentImage
+                    src={product.imageLink as string}
                     productId={parseInt(product.id)}
-                    colorMode={colorMode}
+                    alreadyAddedToCart={!!itemsInCart[product.id]}
                   />
-                </AccompanimentDetails>
-              </Box>
-            ))
+                  <AccompanimentDetails
+                    alreadyAddedToCart={!!itemsInCart[product.id]}
+                  >
+                    <Text maxW="250px" textTransform="uppercase">
+                      {product.composition?.name}
+                    </Text>
+                    <AddToCartButton
+                      isAuthenticated={isAuthenticated}
+                      productId={parseInt(product.id)}
+                      colorMode={colorMode}
+                    />
+                  </AccompanimentDetails>
+                </Box>
+              )
+            )
           ) : (
             <Text
               position="absolute"
