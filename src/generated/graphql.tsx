@@ -307,6 +307,7 @@ export type Query = {
   allDataAfterPurchase?: Maybe<Array<Maybe<DataAfterPurchaseType>>>;
   allCompositionsInfo?: Maybe<Array<Maybe<CompositionType>>>;
   allProductsInfo?: Maybe<AllProductsDataType>;
+  productsPurchasedByCurrentUser: Array<Maybe<DataAfterPurchaseType>>;
   allComposersInfo?: Maybe<Array<Maybe<ComposerType>>>;
   meExtended?: Maybe<MeExtendedType>;
   me?: Maybe<UserNode>;
@@ -411,7 +412,7 @@ export type UserNode = Node & {
   dateJoined: Scalars['DateTime'];
   email: Scalars['String'];
   isStudent: Scalars['Boolean'];
-  cart?: Maybe<CartType>;
+  carts: Array<CartType>;
   purchasedItems: Array<DataAfterPurchaseType>;
   pk?: Maybe<Scalars['Int']>;
   archived?: Maybe<Scalars['Boolean']>;
@@ -477,6 +478,17 @@ export type ProductInfoFragment = (
 export type UserInfoFragment = (
   { __typename?: 'UserNode' }
   & Pick<UserNode, 'id' | 'lastLogin' | 'username' | 'email' | 'isStudent' | 'verified'>
+);
+
+export type AddDataAfterPurchaseToUserAfterCheckoutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AddDataAfterPurchaseToUserAfterCheckoutMutation = (
+  { __typename?: 'Mutation' }
+  & { addDataAfterPurchaseToUserAfterCheckout?: Maybe<(
+    { __typename?: 'AddDataAfterPurchaseToUserAfterCheckout' }
+    & Pick<AddDataAfterPurchaseToUserAfterCheckout, 'purchaseSuccess'>
+  )> }
 );
 
 export type AddOrRemoveCartItemMutationVariables = Exact<{
@@ -596,6 +608,39 @@ export type MeQuery = (
   )> }
 );
 
+export type ProductPurchasedByCurrentUserAllDataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductPurchasedByCurrentUserAllDataQuery = (
+  { __typename?: 'Query' }
+  & { productsPurchasedByCurrentUser: Array<Maybe<(
+    { __typename?: 'DataAfterPurchaseType' }
+    & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
+    & { composition?: Maybe<(
+      { __typename?: 'CompositionType' }
+      & Pick<CompositionType, 'name'>
+      & { composers: Array<(
+        { __typename?: 'ComposerType' }
+        & Pick<ComposerType, 'name'>
+      )> }
+    )> }
+  )>> }
+);
+
+export type ProductPurchasedByCurrentUserOnlyNameQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ProductPurchasedByCurrentUserOnlyNameQuery = (
+  { __typename?: 'Query' }
+  & { productsPurchasedByCurrentUser: Array<Maybe<(
+    { __typename?: 'DataAfterPurchaseType' }
+    & { composition?: Maybe<(
+      { __typename?: 'CompositionType' }
+      & Pick<CompositionType, 'name'>
+    )> }
+  )>> }
+);
+
 export const ProductInfoFragmentDoc = gql`
     fragment ProductInfo on ProductType {
   priceUsd
@@ -636,6 +681,38 @@ export const UserInfoFragmentDoc = gql`
   verified
 }
     `;
+export const AddDataAfterPurchaseToUserAfterCheckoutDocument = gql`
+    mutation addDataAfterPurchaseToUserAfterCheckout {
+  addDataAfterPurchaseToUserAfterCheckout {
+    purchaseSuccess
+  }
+}
+    `;
+export type AddDataAfterPurchaseToUserAfterCheckoutMutationFn = Apollo.MutationFunction<AddDataAfterPurchaseToUserAfterCheckoutMutation, AddDataAfterPurchaseToUserAfterCheckoutMutationVariables>;
+
+/**
+ * __useAddDataAfterPurchaseToUserAfterCheckoutMutation__
+ *
+ * To run a mutation, you first call `useAddDataAfterPurchaseToUserAfterCheckoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddDataAfterPurchaseToUserAfterCheckoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addDataAfterPurchaseToUserAfterCheckoutMutation, { data, loading, error }] = useAddDataAfterPurchaseToUserAfterCheckoutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAddDataAfterPurchaseToUserAfterCheckoutMutation(baseOptions?: Apollo.MutationHookOptions<AddDataAfterPurchaseToUserAfterCheckoutMutation, AddDataAfterPurchaseToUserAfterCheckoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddDataAfterPurchaseToUserAfterCheckoutMutation, AddDataAfterPurchaseToUserAfterCheckoutMutationVariables>(AddDataAfterPurchaseToUserAfterCheckoutDocument, options);
+      }
+export type AddDataAfterPurchaseToUserAfterCheckoutMutationHookResult = ReturnType<typeof useAddDataAfterPurchaseToUserAfterCheckoutMutation>;
+export type AddDataAfterPurchaseToUserAfterCheckoutMutationResult = Apollo.MutationResult<AddDataAfterPurchaseToUserAfterCheckoutMutation>;
+export type AddDataAfterPurchaseToUserAfterCheckoutMutationOptions = Apollo.BaseMutationOptions<AddDataAfterPurchaseToUserAfterCheckoutMutation, AddDataAfterPurchaseToUserAfterCheckoutMutationVariables>;
 export const AddOrRemoveCartItemDocument = gql`
     mutation addOrRemoveCartItem($operation: String!, $productId: Int!) {
   addOrRemoveCartItem(operation: $operation, productId: $productId) {
@@ -910,3 +987,82 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const ProductPurchasedByCurrentUserAllDataDocument = gql`
+    query productPurchasedByCurrentUserAllData {
+  productsPurchasedByCurrentUser {
+    midiLink
+    wavLink
+    flacLink
+    pdfLink
+    composition {
+      name
+      composers {
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductPurchasedByCurrentUserAllDataQuery__
+ *
+ * To run a query within a React component, call `useProductPurchasedByCurrentUserAllDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductPurchasedByCurrentUserAllDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductPurchasedByCurrentUserAllDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useProductPurchasedByCurrentUserAllDataQuery(baseOptions?: Apollo.QueryHookOptions<ProductPurchasedByCurrentUserAllDataQuery, ProductPurchasedByCurrentUserAllDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductPurchasedByCurrentUserAllDataQuery, ProductPurchasedByCurrentUserAllDataQueryVariables>(ProductPurchasedByCurrentUserAllDataDocument, options);
+      }
+export function useProductPurchasedByCurrentUserAllDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductPurchasedByCurrentUserAllDataQuery, ProductPurchasedByCurrentUserAllDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductPurchasedByCurrentUserAllDataQuery, ProductPurchasedByCurrentUserAllDataQueryVariables>(ProductPurchasedByCurrentUserAllDataDocument, options);
+        }
+export type ProductPurchasedByCurrentUserAllDataQueryHookResult = ReturnType<typeof useProductPurchasedByCurrentUserAllDataQuery>;
+export type ProductPurchasedByCurrentUserAllDataLazyQueryHookResult = ReturnType<typeof useProductPurchasedByCurrentUserAllDataLazyQuery>;
+export type ProductPurchasedByCurrentUserAllDataQueryResult = Apollo.QueryResult<ProductPurchasedByCurrentUserAllDataQuery, ProductPurchasedByCurrentUserAllDataQueryVariables>;
+export const ProductPurchasedByCurrentUserOnlyNameDocument = gql`
+    query productPurchasedByCurrentUserOnlyName {
+  productsPurchasedByCurrentUser {
+    composition {
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useProductPurchasedByCurrentUserOnlyNameQuery__
+ *
+ * To run a query within a React component, call `useProductPurchasedByCurrentUserOnlyNameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductPurchasedByCurrentUserOnlyNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProductPurchasedByCurrentUserOnlyNameQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useProductPurchasedByCurrentUserOnlyNameQuery(baseOptions?: Apollo.QueryHookOptions<ProductPurchasedByCurrentUserOnlyNameQuery, ProductPurchasedByCurrentUserOnlyNameQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProductPurchasedByCurrentUserOnlyNameQuery, ProductPurchasedByCurrentUserOnlyNameQueryVariables>(ProductPurchasedByCurrentUserOnlyNameDocument, options);
+      }
+export function useProductPurchasedByCurrentUserOnlyNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductPurchasedByCurrentUserOnlyNameQuery, ProductPurchasedByCurrentUserOnlyNameQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProductPurchasedByCurrentUserOnlyNameQuery, ProductPurchasedByCurrentUserOnlyNameQueryVariables>(ProductPurchasedByCurrentUserOnlyNameDocument, options);
+        }
+export type ProductPurchasedByCurrentUserOnlyNameQueryHookResult = ReturnType<typeof useProductPurchasedByCurrentUserOnlyNameQuery>;
+export type ProductPurchasedByCurrentUserOnlyNameLazyQueryHookResult = ReturnType<typeof useProductPurchasedByCurrentUserOnlyNameLazyQuery>;
+export type ProductPurchasedByCurrentUserOnlyNameQueryResult = Apollo.QueryResult<ProductPurchasedByCurrentUserOnlyNameQuery, ProductPurchasedByCurrentUserOnlyNameQueryVariables>;

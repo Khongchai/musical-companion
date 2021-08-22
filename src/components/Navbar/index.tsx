@@ -1,7 +1,7 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ProductType } from "../../generated/graphql";
-import useCartStore from "../../globalState";
+import useStore from "../../globalStates.ts";
 import useIsAuthenticated from "../../utils-hooks/useIsAuthenticated";
 import { Cart } from "../Cart";
 import { HamburgerIcon } from "../HamburgerIcon";
@@ -23,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
   const { isAuthenticated, userData, userCart } = useIsAuthenticated();
 
-  const setInitialItemsInCart = useCartStore((state) => state.setItemsToCart);
+  const setInitialItemsInCart = useStore((state) => state.setItemsToCart);
   useEffect(() => {
     if (userCart) {
       setInitialItemsInCart(userCart.itemsInCart as ProductType[]);

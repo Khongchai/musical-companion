@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
-import useCartStore from "../../globalState";
+import useStore from "../../globalStates.ts";
 import RemoveItemButton from "../RemoveItemButton";
 import { ComposersName } from "./ComposersName";
 import { CompositionName } from "./CompositionName";
@@ -11,9 +11,16 @@ import { Item } from "./Item";
 import { Price } from "./Price";
 
 const CartDetails: React.FC = () => {
-  const itemsInCartMap = useCartStore((state) => state.itemsInCart);
+  const itemsInCartMap = useStore((state) => state.itemsInCart);
   const itemKeys = Object.keys(itemsInCartMap);
 
+  if (itemKeys.length == 0) {
+    return (
+      <div style={{ marginTop: "20px" }}>
+        Your cart is empty; add something!
+      </div>
+    );
+  }
   return (
     <Stack spacing="3rem" p="2rem 0" transition=".3s">
       {itemKeys.map((key) => {

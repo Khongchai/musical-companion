@@ -4,7 +4,7 @@ import {
   ProductType,
   useAllProductsInfoQuery,
 } from "../../../generated/graphql";
-import useCartStore from "../../../globalState";
+import useStore from "../../../globalStates.ts";
 import useIsAuthenticated from "../../../utils-hooks/useIsAuthenticated";
 import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageNum";
 import { AccompanimentDetails } from "./AccompanimentDetails";
@@ -43,7 +43,7 @@ const AccompanimentCards: React.FC<{
     return [];
   }, [totalPages]);
 
-  const itemsInCart = useCartStore((state) => state.itemsInCart);
+  const itemsInCart = useStore((state) => state.itemsInCart);
 
   return (
     <Box>

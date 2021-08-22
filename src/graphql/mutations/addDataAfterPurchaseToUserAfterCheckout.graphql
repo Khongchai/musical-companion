@@ -1,0 +1,5 @@
+mutation addDataAfterPurchaseToUserAfterCheckout {
+  addDataAfterPurchaseToUserAfterCheckout {
+    purchaseSuccess
+  }
+}

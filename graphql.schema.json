@@ -1437,6 +1437,26 @@
             "deprecationReason": null
           },
           {
+            "name": "productsPurchasedByCurrentUser",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "DataAfterPurchaseType",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "allComposersInfo",
             "description": null,
             "args": [],
@@ -1983,13 +2003,25 @@
             "deprecationReason": null
           },
           {
-            "name": "cart",
+            "name": "carts",
             "description": null,
             "args": [],
             "type": {
-              "kind": "OBJECT",
-              "name": "CartType",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "CartType",
+                    "ofType": null
+                  }
+                }
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null

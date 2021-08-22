@@ -1,0 +1,14 @@
+query productPurchasedByCurrentUserAllData {
+  productsPurchasedByCurrentUser {
+    midiLink
+    wavLink
+    flacLink
+    pdfLink
+    composition {
+      name
+      composers {
+        name
+      }
+    }
+  }
+}

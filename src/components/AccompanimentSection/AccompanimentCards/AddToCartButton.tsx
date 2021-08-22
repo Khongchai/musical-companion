@@ -4,7 +4,7 @@ import {
   ProductType,
   useAddOrRemoveCartItemMutation,
 } from "../../../generated/graphql";
-import useCartStore from "../../../globalState";
+import useStore from "../../../globalStates.ts";
 import checkForApolloMutationErrors from "../../../utils/checkForApolloMutationErrrors";
 
 interface AddToCartButtonProps {
@@ -19,7 +19,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({
   isAuthenticated,
 }) => {
   const [addItemTocart, { loading }] = useAddOrRemoveCartItemMutation();
-  const setItemsToCart = useCartStore((state) => state.setItemsToCart);
+  const setItemsToCart = useStore((state) => state.setItemsToCart);
 
   return (
     <Button

@@ -4,12 +4,11 @@ import { ProductType } from "./generated/graphql";
 interface AppStates {
   itemsInCart: Record<string, ProductType>;
   setItemsToCart: (products: ProductType[]) => void;
-
   //Price will get updated when itemsInCart is updated
   priceOfItemsInCart: number;
 }
 
-const useCartStore = create<AppStates>((set) => ({
+const useStore = create<AppStates>((set) => ({
   itemsInCart: {},
   priceOfItemsInCart: 0,
   setItemsToCart: (products: ProductType[]) =>
@@ -31,4 +30,4 @@ const useCartStore = create<AppStates>((set) => ({
     }),
 }));
 
-export default useCartStore;
+export default useStore;

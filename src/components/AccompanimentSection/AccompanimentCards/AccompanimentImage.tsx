@@ -1,10 +1,10 @@
 import { Box, Button, Image, Text } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   ProductType,
   useAddOrRemoveCartItemMutation,
 } from "../../../generated/graphql";
-import useCartStore from "../../../globalState";
+import useStore from "../../../globalStates.ts";
 import checkForApolloMutationErrors from "../../../utils/checkForApolloMutationErrrors";
 
 interface AccompanimentImageProps {
@@ -20,7 +20,7 @@ const AccompanimentImage: React.FC<AccompanimentImageProps> = ({
 }) => {
   //Need loading icon
   const [removeFromCart, { loading }] = useAddOrRemoveCartItemMutation();
-  const setItemsToCart = useCartStore((state) => state.setItemsToCart);
+  const setItemsToCart = useStore((state) => state.setItemsToCart);
 
   return (
     <Box pos="relative">

@@ -4,7 +4,7 @@ import {
   ProductType,
   useAddOrRemoveCartItemMutation,
 } from "../generated/graphql";
-import useCartStore from "../globalState";
+import useStore from "../globalStates.ts";
 import checkForApolloMutationErrors from "../utils/checkForApolloMutationErrrors";
 
 export default function RemoveItemButton({
@@ -13,7 +13,7 @@ export default function RemoveItemButton({
   productToBeRemovedId: number;
 }) {
   const [removeFromCart, { loading }] = useAddOrRemoveCartItemMutation();
-  const setItemsToCart = useCartStore((state) => state.setItemsToCart);
+  const setItemsToCart = useStore((state) => state.setItemsToCart);
 
   return (
     <Button
