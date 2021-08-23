@@ -3,6 +3,7 @@ import logout from "../../utils/authentication/logout";
 import { TextLink } from "./TextLink";
 import { Text } from "@chakra-ui/react";
 import UserData from "../../types/UserData";
+import { useRouter } from "next/router";
 
 interface NavbarLinksProps {
   textColor: string;
@@ -15,10 +16,12 @@ const NavbarAuthLinks: React.FC<NavbarLinksProps> = ({
   isAuthenticated,
   userData,
 }) => {
+  const router = useRouter();
+
   return !isAuthenticated ? (
     <>
-      <TextLink text="register" href="/register" color={textColor} />
-      <TextLink text="login" color={textColor} href="/login" />
+      <TextLink text="register" href="/register" />
+      <TextLink text="login" href="/login" />
     </>
   ) : (
     <>
@@ -26,10 +29,10 @@ const NavbarAuthLinks: React.FC<NavbarLinksProps> = ({
         Logged in as: {userData ? userData.username : ""}
       </Text>
       <TextLink
-        text="logout"
-        color={textColor}
-        onClickFunction={() => logout()}
+        text="dashboard"
+        onClickFunction={() => router.push("/dashboard")}
       />
+      <TextLink text="logout" onClickFunction={() => logout()} />
     </>
   );
 };

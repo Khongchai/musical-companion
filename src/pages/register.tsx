@@ -18,7 +18,7 @@ import redirectAfterTokenAuth from "../utils/authentication/redirectAfterTokenAu
 import catchFormErrors from "../utils/forms/catchFormErrors";
 
 const Register: React.FC = ({}) => {
-  useAuthRedirect();
+  useAuthRedirect("toHomeIfLoggedIn");
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [register] = useRegisterMutation();

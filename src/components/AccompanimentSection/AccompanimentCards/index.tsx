@@ -3,15 +3,11 @@ import React, { useMemo } from "react";
 import {
   ProductType,
   useAllProductsInfoQuery,
-  useProductPurchasedByCurrentUserOnlyNameQuery,
 } from "../../../generated/graphql";
 import useStore from "../../../globalStates";
 import useAlreadyPurchasedProducts from "../../../utils-hooks/useAlreadyPurchasedProducts";
 import useIsAuthenticated from "../../../utils-hooks/useIsAuthenticated";
 import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageNum";
-import { AccompanimentDetails } from "./AccompanimentDetails";
-import AccompanimentImage from "./AccompanimentImage";
-import AddToCartButton from "./AddToCartButton";
 import { Card } from "./Card";
 
 const AccompanimentCards: React.FC<{
@@ -94,8 +90,9 @@ const AccompanimentCards: React.FC<{
                   colorMode={colorMode}
                   isAuthenticated={isAuthenticated}
                   userAlreadyPurchasedThis={
-                    product.composition?.name &&
-                    !!purchasedProductMap[product.composition.name]
+                    product.composition?.name
+                      ? !!purchasedProductMap[product.composition.name]
+                      : false
                   }
                 />
               )

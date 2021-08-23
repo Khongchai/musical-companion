@@ -1,14 +1,15 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import React from "react";
 import { useAddDataAfterPurchaseToUserAfterCheckoutMutation } from "../../generated/graphql";
-import useStore from "../../globalStates.ts";
+import useStore from "../../globalStates";
 import checkForApolloMutationErrors from "../../utils/checkForApolloMutationErrrors";
+import router, { useRouter } from "next/router";
 
 interface CartTotalProps {}
 
 const CartTotal: React.FC<CartTotalProps> = ({}) => {
   const total = useStore((state) => state.priceOfItemsInCart);
-  const [attachDataToUser, { loading }] =
+  const [attachDataToUser] =
     useAddDataAfterPurchaseToUserAfterCheckoutMutation();
 
   return (
@@ -21,6 +22,17 @@ const CartTotal: React.FC<CartTotalProps> = ({}) => {
           const result = await attachDataToUser();
 
           checkForApolloMutationErrors(result);
+
+          if (
+            result.data?.addDataAfterPurchaseToUserAfterCheckout
+              ?.purchaseSuccess
+          ) {
+            //TODO push to dashboard and refresh
+            //This will do two things, refresh info in dashboard and refetch a new cart.
+            location.href = "/dashboard";
+          } else {
+            alert("Something went wrong, please contact the admin.");
+          }
         }}
         display="block"
         mt="1.5rem"

@@ -8,7 +8,7 @@ import useAuthRedirect from "../utils-hooks/useAuthRedirect";
 import redirectAfterTokenAuth from "../utils/authentication/redirectAfterTokenAuth";
 
 const Login: React.FC = ({}) => {
-  useAuthRedirect();
+  useAuthRedirect("toHomeIfLoggedIn");
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [login] = useTokenAuthMutation();

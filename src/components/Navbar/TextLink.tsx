@@ -1,10 +1,14 @@
-import { Text } from "@chakra-ui/react";
+import {
+  Button,
+  Text,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 
 type TextLinkProps = {
   text: string;
-  color: string;
 } & (
   | {
       href?: string;
@@ -18,34 +22,28 @@ type TextLinkProps = {
  */
 export const TextLink: React.FC<TextLinkProps> = ({
   text,
-  color,
   href,
   onClickFunction,
 }) => {
+  const bgFlip = useColorModeValue("white", "mainBlack");
+  const buttonStylings = {
+    bg: bgFlip,
+    fontWeight: "normal",
+  };
+
   return href ? (
     <Link href={href}>
-      <Text
-        cursor="pointer"
-        fontWeight="normal"
-        fontSize="14px"
-        color={color}
-        size="md"
-        textTransform="capitalize"
-      >
+      <Button {...buttonStylings} _hover={{ opacity: 0.7 }}>
         {text}
-      </Text>
+      </Button>
     </Link>
   ) : (
-    <Text
+    <Button
       onClick={onClickFunction && (() => onClickFunction())}
-      cursor="pointer"
-      fontWeight="normal"
-      fontSize="14px"
-      color={color}
-      size="md"
-      textTransform="capitalize"
+      _hover={{ opacity: 0.7 }}
+      {...buttonStylings}
     >
       {text}
-    </Text>
+    </Button>
   );
 };
