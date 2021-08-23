@@ -2,7 +2,7 @@ import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import useStore from "../globalStates.ts";
+import useStore from "../globalStates";
 
 export const Cart: React.FC<{
   flipColorMode?: boolean;

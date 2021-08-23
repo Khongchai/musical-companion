@@ -8,7 +8,7 @@ const cartSummary = ({}) => {
   return (
     <MainContainer>
       <Heading mt="3.5rem">Your cart</Heading>
-      <Box>
+      <Box minHeight="50vh">
         <Text>Cart Details</Text>
         <hr />
         <CartDetails />

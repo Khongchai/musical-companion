@@ -34,7 +34,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
   return href ? (
     <Link href={href}>
       <Button {...buttonStylings} _hover={{ opacity: 0.7 }}>
-        {text}
+        {text.toUpperCase()}
       </Button>
     </Link>
   ) : (
@@ -43,7 +43,7 @@ export const TextLink: React.FC<TextLinkProps> = ({
       _hover={{ opacity: 0.7 }}
       {...buttonStylings}
     >
-      {text}
+      {text.toUpperCase()}
     </Button>
   );
 };

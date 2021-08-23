@@ -9,7 +9,11 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
   headerSize: _,
 }) => {
   return (
-    <Stack spacing="2.2rem" m="8.5rem 0 7rem 0" w="100%">
+    <Stack
+      spacing="2.2rem"
+      m={["8.5rem 0 4rem 0", null, null, "8.5rem 0 7rem 0"]}
+      w="100%"
+    >
       <Heading
         textAlign="center"
         fontSize={["36px", null, null, "58px"]}

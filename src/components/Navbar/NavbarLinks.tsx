@@ -29,7 +29,7 @@ const NavbarAuthLinks: React.FC<NavbarLinksProps> = ({
         Logged in as: {userData ? userData.username : ""}
       </Text>
       <TextLink
-        text="dashboard"
+        text="my items"
         onClickFunction={() => router.push("/dashboard")}
       />
       <TextLink text="logout" onClickFunction={() => logout()} />

@@ -1,8 +1,8 @@
 import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
-import useStore from "../../globalStates.ts";
+import useStore from "../../globalStates";
 import RemoveItemButton from "../RemoveItemButton";
-import { ComposersName } from "./ComposersName";
+import { ComposersName } from "../Shared/ComposersName";
 import { CompositionName } from "./CompositionName";
 import { Details } from "./Details";
 import FileFormatBox from "./FileFormatBox";

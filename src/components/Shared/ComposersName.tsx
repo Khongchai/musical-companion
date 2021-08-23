@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import { ComposerType } from "../../generated/graphql";
 
 interface ComposersNameProps {
@@ -9,11 +9,11 @@ interface ComposersNameProps {
 export const ComposersName: React.FC<ComposersNameProps> = ({ composers }) => {
   const length = composers?.length;
   return (
-    <Text>
+    <Box>
       <Flex>
         {length && length > 1 ? "Composers: " : "Composer: "}
         {composers?.map((composer) => composer.name)}
       </Flex>
-    </Text>
+    </Box>
   );
 };

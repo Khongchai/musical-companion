@@ -296,7 +296,7 @@ export type ProductType = {
   id: Scalars['ID'];
   priceUsd: Scalars['Decimal'];
   imageLink: Scalars['String'];
-  composition?: Maybe<CompositionType>;
+  composition: CompositionType;
   cart?: Maybe<CartType>;
 };
 
@@ -462,7 +462,7 @@ export type CartInfoFragment = (
 export type ProductInfoFragment = (
   { __typename?: 'ProductType' }
   & Pick<ProductType, 'priceUsd' | 'id' | 'imageLink'>
-  & { composition?: Maybe<(
+  & { composition: (
     { __typename?: 'CompositionType' }
     & Pick<CompositionType, 'name'>
     & { links?: Maybe<(
@@ -472,7 +472,7 @@ export type ProductInfoFragment = (
       { __typename?: 'ComposerType' }
       & Pick<ComposerType, 'name'>
     )> }
-  )> }
+  ) }
 );
 
 export type UserInfoFragment = (
