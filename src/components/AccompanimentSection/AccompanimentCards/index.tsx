@@ -12,6 +12,7 @@ import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageN
 import { AccompanimentDetails } from "./AccompanimentDetails";
 import AccompanimentImage from "./AccompanimentImage";
 import AddToCartButton from "./AddToCartButton";
+import { Card } from "./Card";
 
 const AccompanimentCards: React.FC<{
   searchVal: string;
@@ -87,25 +88,16 @@ const AccompanimentCards: React.FC<{
           allProductsData.allProductsInfo.products.length > 0 ? (
             (allProductsData?.allProductsInfo.products as ProductType[]).map(
               (product) => (
-                <Box mb="1rem" key={product.composition?.name} pos="relative">
-                  <AccompanimentImage
-                    src={product.imageLink as string}
-                    productId={parseInt(product.id)}
-                    alreadyAddedToCart={!!itemsInCart[product.id]}
-                  />
-                  <AccompanimentDetails
-                    alreadyAddedToCart={!!itemsInCart[product.id]}
-                  >
-                    <Text maxW="250px" textTransform="uppercase">
-                      {product.composition?.name}
-                    </Text>
-                    <AddToCartButton
-                      isAuthenticated={isAuthenticated}
-                      productId={parseInt(product.id)}
-                      colorMode={colorMode}
-                    />
-                  </AccompanimentDetails>
-                </Box>
+                <Card
+                  product={product}
+                  itemsInCart={itemsInCart}
+                  colorMode={colorMode}
+                  isAuthenticated={isAuthenticated}
+                  userAlreadyPurchasedThis={
+                    product.composition?.name &&
+                    !!purchasedProductMap[product.composition.name]
+                  }
+                />
               )
             )
           ) : (
