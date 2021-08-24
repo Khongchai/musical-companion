@@ -23,7 +23,9 @@ const dashboard: React.FC = () => {
         <br />
         <hr />
         <br />
-        {!loading &&
+        {loading ? (
+          <div>...loading</div>
+        ) : (
           data?.productsPurchasedByCurrentUser.map((product) => {
             const compositionName = product?.composition?.name;
             const composers = product?.composition?.composers;
@@ -74,7 +76,8 @@ const dashboard: React.FC = () => {
                 </Meta>
               </PurchasedItemListing>
             );
-          })}
+          })
+        )}
       </Box>
     </MainContainer>
   );

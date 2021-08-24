@@ -28,6 +28,6 @@ module.exports = {
   ],
 
   //Stop running tests after 1 failure.
-  bail: 1,
-  setUpFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  bail: true,
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 };

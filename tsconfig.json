@@ -23,6 +23,7 @@
     "noUnusedParameters": true,
     "jsx": "preserve"
   },
+  "files": ["src/@types/graphql.d.ts"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

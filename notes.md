@@ -1,1 +1,4 @@
-fix the thing in backend (refer to the notes ), test frontend, setup paypal.
+**test frontend**
+_fix graphql import in meQueryMock.ts_
+
+setup paypal

@@ -1,4 +1,10 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import React from "react";
 import { DataAfterPurchaseType, ProductType } from "../../../generated/graphql";
 import { FileFormats } from "../../CartDetails/FileFormats";
@@ -65,18 +71,20 @@ export const Card: React.FC<CardProps> = ({
 };
 
 function AlreadyPurchasedOverlay() {
+  const colorModeFlipped = useColorModeValue("mainBlack", "white");
+  const { colorMode } = useColorMode();
   return (
     <Box
       pos="absolute"
       top="0"
       left="0"
-      background="rgba(0,0,0,0.7)"
+      background={colorMode === "light" ? "#ffffffc9" : "#1A202Cc9"}
       width="100%"
       height="100%"
     >
       <Box display="grid" w="100%" h="100%" placeItems="center">
         <Text
-          color="white"
+          color={colorModeFlipped}
           transform="rotateZ(45deg)"
           fontSize={["1rem", null, "1.5rem", null, "2rem"]}
         >
