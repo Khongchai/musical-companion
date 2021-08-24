@@ -604,7 +604,7 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'UserNode' }
-    & Pick<UserNode, 'id'>
+    & Pick<UserNode, 'id' | 'isStudent'>
   )> }
 );
 
@@ -957,6 +957,7 @@ export const MeDocument = gql`
     query me {
   me {
     id
+    isStudent
   }
 }
     `;

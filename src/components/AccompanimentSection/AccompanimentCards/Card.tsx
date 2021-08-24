@@ -20,23 +20,39 @@ export const Card: React.FC<CardProps> = ({
   colorMode,
   userAlreadyPurchasedThis,
 }) => {
+  const name = product.composition?.name || "";
+  const id = product.id;
+  const alreadyAddedToCart = !!itemsInCart[product.id];
+  const price: string | number =
+    product.priceUsd > 0 ? "$" + product.priceUsd : "free";
+
   return (
-    <Box mb="1rem" key={product.composition?.name} pos="relative">
+    <Box mb="1rem" key={name} pos="relative">
       <AccompanimentImage
         src={product.imageLink as string}
-        productId={parseInt(product.id)}
-        alreadyAddedToCart={!!itemsInCart[product.id]}
+        productId={parseInt(id)}
+        alreadyAddedToCart={alreadyAddedToCart}
       />
-      <AccompanimentDetails alreadyAddedToCart={!!itemsInCart[product.id]}>
-        <Text maxW="250px" textTransform="uppercase">
-          {product.composition?.name}
-        </Text>
-        <AddToCartButton
-          isAuthenticated={isAuthenticated}
-          productId={parseInt(product.id)}
-          colorMode={colorMode}
-        />
-      </AccompanimentDetails>
+      <AccompanimentDetails
+        alreadyAddedToCart={alreadyAddedToCart}
+        nameAndAddToCartButtonComponents={
+          <>
+            <Text maxW="250px" textTransform="uppercase">
+              {product.composition?.name}
+            </Text>
+            <AddToCartButton
+              isAuthenticated={isAuthenticated}
+              productId={parseInt(product.id)}
+              colorMode={colorMode}
+            />
+          </>
+        }
+        priceComponent={
+          <Text fontWeight="bold" color={price === "free" ? "green" : "unset"}>
+            {price}
+          </Text>
+        }
+      ></AccompanimentDetails>
       {userAlreadyPurchasedThis && <AlreadyPurchasedOverlay />}
     </Box>
   );

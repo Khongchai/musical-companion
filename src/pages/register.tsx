@@ -33,8 +33,14 @@ const Register: React.FC = ({}) => {
           isStudent: false,
         }}
         onSubmit={async (values, { setFieldError }) => {
+          const { username, email, ...rest } = values;
+
           const response = await register({
-            variables: { ...values },
+            variables: {
+              username: username.toLowerCase(),
+              email: email.toLowerCase(),
+              ...rest,
+            },
           });
           if (
             !catchFormErrors(response.data?.register?.errors, setFieldError)

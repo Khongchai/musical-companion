@@ -1,22 +1,33 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import React from "react";
 import { useAddDataAfterPurchaseToUserAfterCheckoutMutation } from "../../generated/graphql";
-import useStore from "../../globalStates";
+import useTotalToPay from "../../utils-hooks/useTotalToPay";
 import checkForApolloMutationErrors from "../../utils/checkForApolloMutationErrrors";
-import router, { useRouter } from "next/router";
 
 interface CartTotalProps {}
 
 const CartTotal: React.FC<CartTotalProps> = ({}) => {
-  const total = useStore((state) => state.priceOfItemsInCart);
   const [attachDataToUser] =
     useAddDataAfterPurchaseToUserAfterCheckoutMutation();
+  const { totalToPay, isStudent } = useTotalToPay();
 
   return (
     <Box width="100%" pb="5rem">
       <Heading ml="auto" w="fit-content">
-        Total: ${total}
+        Total: ${totalToPay}
       </Heading>
+      {isStudent && (
+        <small
+          style={{
+            color: "green",
+            marginLeft: "auto",
+            width: "fit-content",
+            display: "block",
+          }}
+        >
+          student discount of 100% is applied
+        </small>
+      )}
       <Button
         onClick={async () => {
           const result = await attachDataToUser();

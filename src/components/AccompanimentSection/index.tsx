@@ -33,7 +33,7 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
       >
         <Heading
           mb={["1rem", null, null, "0"]}
-          fontSize={headerSize}
+          fontSize={("26px", null, null, headerSize)}
           fontWeight="normal"
         >
           Accompaniment
@@ -53,12 +53,12 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
               ref={inputRef}
             />
             <InputRightAddon
+              cursor="pointer"
               onClick={() => {
                 inputRef.current &&
-                  (inputRef.current as unknown as HTMLElement).click();
+                  (inputRef.current as unknown as HTMLElement).focus();
               }}
               children={<SearchIcon />}
-              pointerEvents="none"
             />
           </InputGroup>
           <Cart flipColorMode />

@@ -24,9 +24,9 @@ const Login: React.FC = ({}) => {
           setGenericLoginError("");
           const usernameOrEmail_checked = usernameOrEmail.includes("@")
             ? {
-                email: usernameOrEmail,
+                email: usernameOrEmail.toLowerCase(),
               }
-            : { username: usernameOrEmail };
+            : { username: usernameOrEmail.toLowerCase() };
           const response = await login({
             variables: { password: password, ...usernameOrEmail_checked },
           });
