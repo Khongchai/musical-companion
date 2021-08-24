@@ -5,8 +5,8 @@ const FileFormatBox: React.FC = ({ children }) => {
   return (
     <Box
       p=".2rem .5rem"
+      mr="0.5rem"
       mt="0.5rem"
-      ml="0.5rem"
       bgColor="blue.600"
       borderRadius="2px"
     >

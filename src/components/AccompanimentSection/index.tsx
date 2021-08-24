@@ -16,7 +16,6 @@ import AccompanimentCards from "./AccompanimentCards";
 interface AccompanimentSectionProps extends Text {}
 
 const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
-  headerSize,
   textSize: _,
 }) => {
   const [page, setPage] = useState(1);
@@ -33,7 +32,7 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
       >
         <Heading
           mb={["1rem", null, null, "0"]}
-          fontSize={("26px", null, null, headerSize)}
+          fontSize={["26px", null, null, "36px"]}
           fontWeight="normal"
         >
           Accompaniment

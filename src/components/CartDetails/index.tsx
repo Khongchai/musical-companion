@@ -1,5 +1,6 @@
 import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
+import { DataAfterPurchaseType } from "../../generated/graphql";
 import useStore from "../../globalStates";
 import RemoveItemButton from "../RemoveItemButton";
 import { ComposersName } from "../Shared/ComposersName";
@@ -45,23 +46,15 @@ const CartDetails: React.FC = () => {
                     composers={itemsInCartMap[key].composition?.composers}
                   />
                   <Price price={itemsInCartMap[key].priceUsd} />
-                  <FileFormats>
+                  <Box>
                     <Text>Available formats:</Text>
-                    <Flex flexWrap="wrap" ml="0.5rem">
-                      {itemsInCartMap[key].composition?.links?.flacLink && (
-                        <FileFormatBox>FLAC</FileFormatBox>
-                      )}
-                      {itemsInCartMap[key].composition?.links?.wavLink && (
-                        <FileFormatBox>WAV</FileFormatBox>
-                      )}
-                      {itemsInCartMap[key].composition?.links?.midiLink && (
-                        <FileFormatBox>MIDI</FileFormatBox>
-                      )}
-                      {itemsInCartMap[key].composition?.links?.pdfLink && (
-                        <FileFormatBox>PDF</FileFormatBox>
-                      )}
-                    </Flex>
-                  </FileFormats>
+                    <FileFormats
+                      links={
+                        itemsInCartMap[key].composition
+                          ?.links as DataAfterPurchaseType
+                      }
+                    />
+                  </Box>
                 </Box>
               </Details>
               <Box

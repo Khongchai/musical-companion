@@ -1,6 +1,7 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { ProductType } from "../../../generated/graphql";
+import { DataAfterPurchaseType, ProductType } from "../../../generated/graphql";
+import { FileFormats } from "../../CartDetails/FileFormats";
 import { AccompanimentDetails } from "./AccompanimentDetails";
 import AccompanimentImage from "./AccompanimentImage";
 import AddToCartButton from "./AddToCartButton";
@@ -52,7 +53,12 @@ export const Card: React.FC<CardProps> = ({
             {price}
           </Text>
         }
-      ></AccompanimentDetails>
+        availableFormatsComponent={
+          <FileFormats
+            links={product.composition.links as DataAfterPurchaseType}
+          />
+        }
+      />
       {userAlreadyPurchasedThis && <AlreadyPurchasedOverlay />}
     </Box>
   );

@@ -85,6 +85,7 @@ const AccompanimentCards: React.FC<{
             (allProductsData?.allProductsInfo.products as ProductType[]).map(
               (product) => (
                 <Card
+                  key={product.composition.name}
                   product={product}
                   itemsInCart={itemsInCart}
                   colorMode={colorMode}

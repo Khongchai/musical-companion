@@ -46,7 +46,14 @@ const CompositionSection: React.FC<indexProps> = ({}) => {
             ml={["0", null, null, "5rem"]}
             key={platform.link}
           >
-            <Img src={platform.imgSrc} alt="logo" width={80} height={80} />
+            <Box width="50px" height="50px">
+              <Img
+                src={platform.imgSrc}
+                alt="logo"
+                width="100%"
+                height="100%"
+              />
+            </Box>
           </Link>
         ))}
       </Flex>
