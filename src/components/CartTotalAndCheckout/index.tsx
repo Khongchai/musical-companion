@@ -3,6 +3,7 @@ import React from "react";
 import { useAddDataAfterPurchaseToUserAfterCheckoutMutation } from "../../generated/graphql";
 import useCheckoutInfo from "../../utils-hooks/useTotalToPay";
 import checkForApolloMutationErrors from "../../utils/checkForApolloMutationErrrors";
+import CheckoutButton from "./CheckoutButton";
 
 interface CartTotalProps {}
 
@@ -29,8 +30,8 @@ const CartTotal: React.FC<CartTotalProps> = ({}) => {
         </small>
       )}
       {thereAreItemsInCart && (
-        <Button
-          onClick={async () => {
+        <CheckoutButton
+          onClickFunction={async () => {
             const result = await attachDataToUser();
 
             checkForApolloMutationErrors(result);
@@ -46,12 +47,9 @@ const CartTotal: React.FC<CartTotalProps> = ({}) => {
               alert("Something went wrong, please contact the admin.");
             }
           }}
-          display="block"
-          mt="1.5rem"
-          ml="auto"
         >
           Temp Checkout Button
-        </Button>
+        </CheckoutButton>
       )}
     </Box>
   );
