@@ -55,6 +55,7 @@ const AccompanimentCards: React.FC<{
             <Button
               key={pageNum}
               ml="1.5rem"
+              boxShadow="base"
               value={pageNum}
               transform={pageNum === page ? "scale(1.3)" : "scale(1)"}
               onClick={(e) => {

@@ -1,7 +1,7 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import React from "react";
 import { useAddDataAfterPurchaseToUserAfterCheckoutMutation } from "../../generated/graphql";
-import useTotalToPay from "../../utils-hooks/useTotalToPay";
+import useCheckoutInfo from "../../utils-hooks/useTotalToPay";
 import checkForApolloMutationErrors from "../../utils/checkForApolloMutationErrrors";
 
 interface CartTotalProps {}
@@ -9,7 +9,7 @@ interface CartTotalProps {}
 const CartTotal: React.FC<CartTotalProps> = ({}) => {
   const [attachDataToUser] =
     useAddDataAfterPurchaseToUserAfterCheckoutMutation();
-  const { totalToPay, isStudent } = useTotalToPay();
+  const { totalToPay, isStudent, thereAreItemsInCart } = useCheckoutInfo();
 
   return (
     <Box width="100%" pb="5rem">
@@ -28,29 +28,31 @@ const CartTotal: React.FC<CartTotalProps> = ({}) => {
           student discount of 100% is applied
         </small>
       )}
-      <Button
-        onClick={async () => {
-          const result = await attachDataToUser();
+      {thereAreItemsInCart && (
+        <Button
+          onClick={async () => {
+            const result = await attachDataToUser();
 
-          checkForApolloMutationErrors(result);
+            checkForApolloMutationErrors(result);
 
-          if (
-            result.data?.addDataAfterPurchaseToUserAfterCheckout
-              ?.purchaseSuccess
-          ) {
-            //TODO push to dashboard and refresh
-            //This will do two things, refresh info in dashboard and refetch a new cart.
-            location.href = "/dashboard";
-          } else {
-            alert("Something went wrong, please contact the admin.");
-          }
-        }}
-        display="block"
-        mt="1.5rem"
-        ml="auto"
-      >
-        Temp Checkout Button
-      </Button>
+            if (
+              result.data?.addDataAfterPurchaseToUserAfterCheckout
+                ?.purchaseSuccess
+            ) {
+              //TODO push to dashboard and refresh
+              //This will do two things, refresh info in dashboard and refetch a new cart.
+              location.href = "/dashboard";
+            } else {
+              alert("Something went wrong, please contact the admin.");
+            }
+          }}
+          display="block"
+          mt="1.5rem"
+          ml="auto"
+        >
+          Temp Checkout Button
+        </Button>
+      )}
     </Box>
   );
 };

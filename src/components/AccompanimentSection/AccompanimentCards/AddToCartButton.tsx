@@ -4,7 +4,7 @@ import {
   ProductType,
   useAddOrRemoveCartItemMutation,
 } from "../../../generated/graphql";
-import useStore from "../../../globalStates.ts";
+import useStore from "../../../globalStates";
 import checkForApolloMutationErrors from "../../../utils/checkForApolloMutationErrrors";
 
 interface AddToCartButtonProps {
