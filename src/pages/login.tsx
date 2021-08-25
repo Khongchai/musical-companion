@@ -51,6 +51,12 @@ const Login: React.FC = ({}) => {
               {genericLoginError && (
                 <small style={{ color: "red" }}>{genericLoginError}</small>
               )}
+              <small
+                onClick={() => alert("todo")}
+                style={{ cursor: "pointer" }}
+              >
+                Forget password?
+              </small>
               <Button
                 mt={4}
                 color={bgFlip}

@@ -2,7 +2,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import React from "react";
 import useCheckoutInfo from "../../utils-hooks/useTotalToPay";
 import CheckoutButton from "./PaypalCheckoutButton";
-import { StudentCheckoutButton } from "./StudentCheckoutButton";
+import { FreeCheckoutButton } from "./FreeCheckoutButton";
 
 interface CartTotalProps {}
 
@@ -27,8 +27,8 @@ const CartTotal: React.FC<CartTotalProps> = ({}) => {
         </small>
       )}
       {thereAreItemsInCart &&
-        (isStudent ? (
-          <StudentCheckoutButton />
+        (isStudent || totalToPay == 0 ? (
+          <FreeCheckoutButton />
         ) : (
           <CheckoutButton totalToPay={totalToPay}>
             Temp Checkout Button

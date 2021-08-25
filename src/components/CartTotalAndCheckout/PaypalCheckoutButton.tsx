@@ -32,7 +32,7 @@ const CheckoutButton: React.FC<{
 
   return (
     <Box ml="auto" width="min(300px, 100%)" mt="1.5rem" display="block">
-      <Box ref={paypalButtonContainer}></Box>;
+      <Box ref={paypalButtonContainer}></Box>
     </Box>
   );
 };

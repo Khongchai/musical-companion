@@ -18,3 +18,7 @@ describe("Header renders", () => {
     expect(heading).toBeInTheDocument();
   });
 });
+
+/**
+ * Test case for checkout page: if user is a student or total values of cart is 0, the GET button should be visible
+ */

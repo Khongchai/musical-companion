@@ -5,7 +5,7 @@ import addStuffFromCartToUserAfterPurchase from "../../utils/addStuffFromCartToU
 
 interface StudentCheckoutButtonProps {}
 
-export const StudentCheckoutButton: React.FC<StudentCheckoutButtonProps> =
+export const FreeCheckoutButton: React.FC<StudentCheckoutButtonProps> =
   ({}) => {
     const [attachDataToUser] =
       useAddDataAfterPurchaseToUserAfterCheckoutMutation();

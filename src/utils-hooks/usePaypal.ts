@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import addStuffFromCartToUserAfterPurchase from "../utils/addStuffFromCartToUserAfterPurchase";
-import checkForApolloMutationErrors from "../utils/checkForApolloMutationErrrors";
 
 export default function useScript(
   src: string,
@@ -13,6 +12,7 @@ export default function useScript(
     script.src = src;
     script.async = true;
     document.body.appendChild(script);
+
     script.onload = () => {
       (window as any).paypal
         .Buttons({
@@ -29,11 +29,11 @@ export default function useScript(
               ],
             });
           },
-          onApprove: async (data: any, _: any) => {
-            const orderID = data.orderID;
-            if (orderID) {
+          onApprove: async (_: any, action: any) => {
+            return action.order.capture().then(() => {
+              // const purchaseID = details.id;
               addStuffFromCartToUserAfterPurchase(attachDataToUser);
-            }
+            });
           },
           onError: (err: any) => {
             alert(err);
