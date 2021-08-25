@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Stack, Text } from "@chakra-ui/react";
+import { Box, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { DataAfterPurchaseType } from "../../generated/graphql";
 import useStore from "../../globalStates";
@@ -6,7 +6,6 @@ import RemoveItemButton from "../RemoveItemButton";
 import { ComposersName } from "../Shared/ComposersName";
 import { CompositionName } from "./CompositionName";
 import { Details } from "./Details";
-import FileFormatBox from "./FileFormatBox";
 import { FileFormats } from "./FileFormats";
 import { Item } from "./Item";
 import { Price } from "./Price";
@@ -26,8 +25,8 @@ const CartDetails: React.FC = () => {
     <Stack spacing="3rem" p="2rem 0" transition=".3s">
       {itemKeys.map((key) => {
         return (
-          <>
-            <Item key={key}>
+          <Box key={key}>
+            <Item>
               <Details>
                 <Image
                   w="120px"
@@ -66,8 +65,9 @@ const CartDetails: React.FC = () => {
                 />
               </Box>
             </Item>
+            <br />
             <hr />
-          </>
+          </Box>
         );
       })}
       ;

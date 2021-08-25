@@ -26,10 +26,9 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
         midi.
       </Text>
       <Text textAlign="center" fontSize={textSize}>
-        Caution: if you make your purchase without creating an account, your
-        purchase history will not be saved and you will not be able to
-        redownload your files if they are lost. Should that happen, contact me
-        at world1955@hotmail.com along with all the evidence of the purchase(s).
+        If you don't have an account already, please do! The process is very
+        easy, no need to confirm your email. The purpose of having an account is
+        so that you can keep track of what you own.
       </Text>
     </Stack>
   );

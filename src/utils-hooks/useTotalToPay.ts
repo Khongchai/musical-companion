@@ -15,6 +15,7 @@ export default function useTotalToPay() {
   return {
     totalToPay,
     isStudent,
+    itemsInCart,
     thereAreItemsInCart: !!Object.keys(itemsInCart).length,
   };
 }

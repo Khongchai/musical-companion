@@ -1,10 +1,17 @@
-import meQuery from "../../src/graphql/queries/meQuery.graphql";
+import { gql } from "@apollo/client";
 import { MockedResponse } from "@apollo/client/utilities/testing/mocking/mockLink";
 
-export const meQueryMock: ReadonlyArray<MockedResponse> = [
+export const meQueryAuthenticatedMock: ReadonlyArray<MockedResponse> = [
   {
     request: {
-      query: meQuery,
+      query: gql`
+        query me {
+          me {
+            id
+            isStudent
+          }
+        }
+      `,
     },
     result: {
       data: {
