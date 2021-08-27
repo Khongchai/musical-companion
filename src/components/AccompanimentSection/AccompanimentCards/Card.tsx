@@ -1,15 +1,9 @@
-import {
-  Box,
-  Flex,
-  Text,
-  useColorMode,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Text, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { DataAfterPurchaseType, ProductType } from "../../../generated/graphql";
 import { FileFormats } from "../../CartDetails/FileFormats";
 import { AccompanimentDetails } from "./AccompanimentDetails";
-import AccompanimentImage from "./AccompanimentImage";
+import AccompanimentImageAndOverlay from "./AccompanimentImageAndOverlay";
 import AddToCartButton from "./AddToCartButton";
 
 interface CardProps {
@@ -35,7 +29,8 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <Box mb="1rem" key={name} pos="relative">
-      <AccompanimentImage
+      <AccompanimentImageAndOverlay
+        youtubeLink={product.composition.links?.youtubeLink}
         src={product.imageLink as string}
         productId={parseInt(id)}
         alreadyAddedToCart={alreadyAddedToCart}

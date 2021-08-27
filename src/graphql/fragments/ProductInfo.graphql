@@ -9,6 +9,7 @@ fragment ProductInfo on ProductType {
       wavLink
       flacLink
       pdfLink
+      youtubeLink
     }
     composers {
       name

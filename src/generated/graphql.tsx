@@ -122,6 +122,7 @@ export type DataAfterPurchaseType = {
   wavLink?: Maybe<Scalars['String']>;
   flacLink?: Maybe<Scalars['String']>;
   pdfLink?: Maybe<Scalars['String']>;
+  youtubeLink?: Maybe<Scalars['String']>;
   composition?: Maybe<CompositionType>;
 };
 
@@ -467,7 +468,7 @@ export type ProductInfoFragment = (
     & Pick<CompositionType, 'name'>
     & { links?: Maybe<(
       { __typename?: 'DataAfterPurchaseType' }
-      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
+      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink' | 'youtubeLink'>
     )>, composers: Array<(
       { __typename?: 'ComposerType' }
       & Pick<ComposerType, 'name'>
@@ -653,6 +654,7 @@ export const ProductInfoFragmentDoc = gql`
       wavLink
       flacLink
       pdfLink
+      youtubeLink
     }
     composers {
       name

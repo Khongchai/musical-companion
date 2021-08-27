@@ -1,4 +1,4 @@
-import { Box, Button, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Image, Img, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import {
   ProductType,
@@ -11,14 +11,15 @@ interface AccompanimentImageProps {
   src: string;
   productId: number;
   alreadyAddedToCart?: boolean;
+  youtubeLink?: string | null;
 }
 
-const AccompanimentImage: React.FC<AccompanimentImageProps> = ({
+const AccompanimentImageAndOverlay: React.FC<AccompanimentImageProps> = ({
   src,
   productId,
   alreadyAddedToCart,
+  youtubeLink,
 }) => {
-  //Need loading icon
   const [removeFromCart, { loading }] = useAddOrRemoveCartItemMutation();
   const setItemsToCart = useStore((state) => state.setItemsToCart);
 
@@ -34,6 +35,19 @@ const AccompanimentImage: React.FC<AccompanimentImageProps> = ({
           pos="absolute"
         />
       </ComposerImageContainer>
+      {youtubeLink ? (
+        <YoutubeLink>
+          <Link
+            _hover={{ userSelect: "none" }}
+            href={youtubeLink}
+            target="_blank"
+          >
+            <Button bg="white" color="black" _hover={{ opacity: 0.7 }}>
+              YouTube
+            </Button>
+          </Link>
+        </YoutubeLink>
+      ) : null}
       <AddedToCartOverlayAndRemoveButton
         alreadyAddedToCart={alreadyAddedToCart}
       >
@@ -68,7 +82,7 @@ const AccompanimentImage: React.FC<AccompanimentImageProps> = ({
   );
 };
 
-export default AccompanimentImage;
+export default AccompanimentImageAndOverlay;
 
 /************************************************************************************* */
 
@@ -145,5 +159,13 @@ function ItemInCartStatus({ children }: any) {
     <Text color="white" mb="1rem">
       {children}
     </Text>
+  );
+}
+
+function YoutubeLink({ children }: any) {
+  return (
+    <Box pos="absolute" bottom="10px" right="10px">
+      {children}
+    </Box>
   );
 }
