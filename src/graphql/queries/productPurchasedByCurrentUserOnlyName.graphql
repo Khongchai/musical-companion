@@ -1,7 +1,13 @@
-query productPurchasedByCurrentUserOnlyName {
-  productsPurchasedByCurrentUser {
-    composition {
-      name
+query productPurchasedByCurrentUserOnlyName(
+  $search: String
+  $page: Int
+  $limit: Int
+) {
+  productsPurchasedByCurrentUser(search: $search, page: $page, limit: $limit) {
+    data {
+      composition {
+        name
+      }
     }
   }
 }

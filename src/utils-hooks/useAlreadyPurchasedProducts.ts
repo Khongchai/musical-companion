@@ -13,16 +13,20 @@ import { useProductPurchasedByCurrentUserOnlyNameQuery } from "../generated/grap
  */
 export default function useAlreadyPurchasedProducts() {
   const { data: purchasedProducts, loading: purchasedProductsLoading } =
-    useProductPurchasedByCurrentUserOnlyNameQuery();
+    useProductPurchasedByCurrentUserOnlyNameQuery({
+      variables: { limit: -1, page: 1, search: "" },
+    });
 
   const purchasedProductMap = useMemo(() => {
     const map: Record<string, true> = {};
-    purchasedProducts?.productsPurchasedByCurrentUser.forEach((product) => {
-      const name = product?.composition?.name;
-      if (name) {
-        map[name] = true;
+    purchasedProducts?.productsPurchasedByCurrentUser?.data.forEach(
+      (product) => {
+        const name = product?.composition?.name;
+        if (name) {
+          map[name] = true;
+        }
       }
-    });
+    );
     return map;
   }, [purchasedProducts, purchasedProductsLoading]);
 

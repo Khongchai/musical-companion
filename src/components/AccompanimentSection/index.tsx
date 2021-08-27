@@ -1,16 +1,8 @@
-import { SearchIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Flex,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightAddon,
-} from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { Text } from "../../types/text";
-import setActionWithDelay from "../../utils/setActionWithDelay";
 import { Cart } from "../Cart";
+import SearchBox from "../Shared/SearchBox";
 import AccompanimentCards from "./AccompanimentCards";
 
 interface AccompanimentSectionProps extends Text {}
@@ -21,7 +13,6 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
   const [page, setPage] = useState(1);
 
   const [searchVal, setSearchVal] = useState("");
-  const inputRef = useRef(null);
   return (
     <Box width="100%" overflowX="hidden">
       <Flex
@@ -42,24 +33,7 @@ const AccompanimentSection: React.FC<AccompanimentSectionProps> = ({
           align="center"
           pr="2rem"
         >
-          <InputGroup w="min(300px, 100%)" mr={["1rem", null, null, "2rem"]}>
-            <Input
-              placeholder="Search"
-              onChange={(e) => {
-                setPage(1);
-                setActionWithDelay(() => setSearchVal(e.target.value), 0.3);
-              }}
-              ref={inputRef}
-            />
-            <InputRightAddon
-              cursor="pointer"
-              onClick={() => {
-                inputRef.current &&
-                  (inputRef.current as unknown as HTMLElement).focus();
-              }}
-              children={<SearchIcon />}
-            />
-          </InputGroup>
+          <SearchBox setPage={setPage} setSearchVal={setSearchVal} />
           <Cart flipColorMode />
         </Flex>
       </Flex>

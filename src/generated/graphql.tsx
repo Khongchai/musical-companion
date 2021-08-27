@@ -80,6 +80,14 @@ export type AllProductsDataType = {
   pagePosition: PagePositionType;
 };
 
+export type AllPurchasedDataType = {
+  __typename?: 'AllPurchasedDataType';
+  data: Array<Maybe<DataAfterPurchaseType>>;
+  isFirst: Scalars['Boolean'];
+  isLast: Scalars['Boolean'];
+  pagePosition: PagePositionType;
+};
+
 export type CartCompletionMutation = {
   __typename?: 'CartCompletionMutation';
   cart?: Maybe<CartType>;
@@ -308,7 +316,7 @@ export type Query = {
   allDataAfterPurchase?: Maybe<Array<Maybe<DataAfterPurchaseType>>>;
   allCompositionsInfo?: Maybe<Array<Maybe<CompositionType>>>;
   allProductsInfo?: Maybe<AllProductsDataType>;
-  productsPurchasedByCurrentUser: Array<Maybe<DataAfterPurchaseType>>;
+  productsPurchasedByCurrentUser?: Maybe<AllPurchasedDataType>;
   allComposersInfo?: Maybe<Array<Maybe<ComposerType>>>;
   meExtended?: Maybe<MeExtendedType>;
   me?: Maybe<UserNode>;
@@ -323,6 +331,13 @@ export type QueryCartOfUserArgs = {
 
 
 export type QueryAllProductsInfoArgs = {
+  search?: Maybe<Scalars['String']>;
+  limit?: Maybe<Scalars['Int']>;
+  page?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryProductsPurchasedByCurrentUserArgs = {
   search?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
   page?: Maybe<Scalars['Int']>;
@@ -609,37 +624,55 @@ export type MeQuery = (
   )> }
 );
 
-export type ProductPurchasedByCurrentUserAllDataQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProductPurchasedByCurrentUserAllDataQueryVariables = Exact<{
+  search?: Maybe<Scalars['String']>;
+  page?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+}>;
 
 
 export type ProductPurchasedByCurrentUserAllDataQuery = (
   { __typename?: 'Query' }
-  & { productsPurchasedByCurrentUser: Array<Maybe<(
-    { __typename?: 'DataAfterPurchaseType' }
-    & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
-    & { composition?: Maybe<(
-      { __typename?: 'CompositionType' }
-      & Pick<CompositionType, 'name'>
-      & { composers: Array<(
-        { __typename?: 'ComposerType' }
-        & Pick<ComposerType, 'name'>
+  & { productsPurchasedByCurrentUser?: Maybe<(
+    { __typename?: 'AllPurchasedDataType' }
+    & Pick<AllPurchasedDataType, 'isLast' | 'isFirst'>
+    & { data: Array<Maybe<(
+      { __typename?: 'DataAfterPurchaseType' }
+      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
+      & { composition?: Maybe<(
+        { __typename?: 'CompositionType' }
+        & Pick<CompositionType, 'name'>
+        & { composers: Array<(
+          { __typename?: 'ComposerType' }
+          & Pick<ComposerType, 'name'>
+        )> }
       )> }
-    )> }
-  )>> }
+    )>>, pagePosition: (
+      { __typename?: 'PagePositionType' }
+      & Pick<PagePositionType, 'page' | 'of'>
+    ) }
+  )> }
 );
 
-export type ProductPurchasedByCurrentUserOnlyNameQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProductPurchasedByCurrentUserOnlyNameQueryVariables = Exact<{
+  search?: Maybe<Scalars['String']>;
+  page?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+}>;
 
 
 export type ProductPurchasedByCurrentUserOnlyNameQuery = (
   { __typename?: 'Query' }
-  & { productsPurchasedByCurrentUser: Array<Maybe<(
-    { __typename?: 'DataAfterPurchaseType' }
-    & { composition?: Maybe<(
-      { __typename?: 'CompositionType' }
-      & Pick<CompositionType, 'name'>
-    )> }
-  )>> }
+  & { productsPurchasedByCurrentUser?: Maybe<(
+    { __typename?: 'AllPurchasedDataType' }
+    & { data: Array<Maybe<(
+      { __typename?: 'DataAfterPurchaseType' }
+      & { composition?: Maybe<(
+        { __typename?: 'CompositionType' }
+        & Pick<CompositionType, 'name'>
+      )> }
+    )>> }
+  )> }
 );
 
 export const ProductInfoFragmentDoc = gql`
@@ -991,17 +1024,25 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const ProductPurchasedByCurrentUserAllDataDocument = gql`
-    query productPurchasedByCurrentUserAllData {
-  productsPurchasedByCurrentUser {
-    midiLink
-    wavLink
-    flacLink
-    pdfLink
-    composition {
-      name
-      composers {
+    query productPurchasedByCurrentUserAllData($search: String, $page: Int, $limit: Int) {
+  productsPurchasedByCurrentUser(search: $search, page: $page, limit: $limit) {
+    data {
+      midiLink
+      wavLink
+      flacLink
+      pdfLink
+      composition {
         name
+        composers {
+          name
+        }
       }
+    }
+    isLast
+    isFirst
+    pagePosition {
+      page
+      of
     }
   }
 }
@@ -1019,6 +1060,9 @@ export const ProductPurchasedByCurrentUserAllDataDocument = gql`
  * @example
  * const { data, loading, error } = useProductPurchasedByCurrentUserAllDataQuery({
  *   variables: {
+ *      search: // value for 'search'
+ *      page: // value for 'page'
+ *      limit: // value for 'limit'
  *   },
  * });
  */
@@ -1034,10 +1078,12 @@ export type ProductPurchasedByCurrentUserAllDataQueryHookResult = ReturnType<typ
 export type ProductPurchasedByCurrentUserAllDataLazyQueryHookResult = ReturnType<typeof useProductPurchasedByCurrentUserAllDataLazyQuery>;
 export type ProductPurchasedByCurrentUserAllDataQueryResult = Apollo.QueryResult<ProductPurchasedByCurrentUserAllDataQuery, ProductPurchasedByCurrentUserAllDataQueryVariables>;
 export const ProductPurchasedByCurrentUserOnlyNameDocument = gql`
-    query productPurchasedByCurrentUserOnlyName {
-  productsPurchasedByCurrentUser {
-    composition {
-      name
+    query productPurchasedByCurrentUserOnlyName($search: String, $page: Int, $limit: Int) {
+  productsPurchasedByCurrentUser(search: $search, page: $page, limit: $limit) {
+    data {
+      composition {
+        name
+      }
     }
   }
 }
@@ -1055,6 +1101,9 @@ export const ProductPurchasedByCurrentUserOnlyNameDocument = gql`
  * @example
  * const { data, loading, error } = useProductPurchasedByCurrentUserOnlyNameQuery({
  *   variables: {
+ *      search: // value for 'search'
+ *      page: // value for 'page'
+ *      limit: // value for 'limit'
  *   },
  * });
  */

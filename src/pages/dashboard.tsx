@@ -1,10 +1,13 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useMemo, useState } from "react";
+import DashboardHeader from "../components/DashboardHeader";
 import { PurchasedItemListing } from "../components/PurchasedItemListing";
 import DownloadBlobButton from "../components/PurchasedItemListing/DownloadBlobButton";
 import { DownloadBlobButtonsContainer } from "../components/PurchasedItemListing/DownloadBlobButtonsContainer";
 import Meta from "../components/PurchasedItemListing/Meta";
 import { ComposersName } from "../components/Shared/ComposersName";
+import PageSelector from "../components/Shared/PageSelector";
+import SearchInputBox from "../components/Shared/SearchBox";
 import { MainContainer } from "../Elements/MainContainer";
 import {
   ComposerType,
@@ -14,19 +17,45 @@ import useAuthRedirect from "../utils-hooks/useAuthRedirect";
 
 const dashboard: React.FC = () => {
   useAuthRedirect("toHomeIfNotLoggedIn");
-  const { data, loading } = useProductPurchasedByCurrentUserAllDataQuery();
+
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+
+  const { data, loading } = useProductPurchasedByCurrentUserAllDataQuery({
+    variables: {
+      limit: 5,
+      page,
+      search,
+    },
+  });
+
+  const totalPages = useMemo(() => {
+    return data?.productsPurchasedByCurrentUser?.pagePosition.of;
+  }, [data]);
 
   return (
     <MainContainer>
       <Box minHeight="70vh" mt="4.25rem" mb="4.25rem">
-        <Heading>Purchased Items</Heading>
+        <DashboardHeader>
+          <Heading>Purchased Items</Heading>
+          <Box ml="auto">
+            <SearchInputBox setPage={setPage} setSearchVal={setSearch} />
+          </Box>
+        </DashboardHeader>
+        {totalPages ? (
+          <PageSelector
+            setPage={setPage}
+            totalPages={totalPages}
+            currentPage={page}
+          />
+        ) : null}
         <br />
         <hr />
         <br />
         {loading ? (
           <div>...loading</div>
         ) : (
-          data?.productsPurchasedByCurrentUser.map((product) => {
+          data?.productsPurchasedByCurrentUser?.data.map((product) => {
             const compositionName = product?.composition?.name;
             const composers = product?.composition?.composers;
 

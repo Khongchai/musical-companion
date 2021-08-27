@@ -8,6 +8,7 @@ import useStore from "../../../globalStates";
 import useAlreadyPurchasedProducts from "../../../utils-hooks/useAlreadyPurchasedProducts";
 import useIsAuthenticated from "../../../utils-hooks/useIsAuthenticated";
 import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageNum";
+import PageSelector from "../../Shared/PageSelector";
 import { Card } from "./Card";
 
 const AccompanimentCards: React.FC<{
@@ -37,38 +38,18 @@ const AccompanimentCards: React.FC<{
     null,
     "1fr 1fr 1fr 1fr ",
   ];
-  const totalPages = allProductsData?.allProductsInfo?.pagePosition?.of;
-  const pages = useMemo(() => {
-    if (totalPages) {
-      return extractPagesFromTotalNumberOfPages(totalPages);
-    }
-    return [];
-  }, [totalPages]);
+  const totalPages = allProductsData?.allProductsInfo?.pagePosition.of;
 
   const itemsInCart = useStore((state) => state.itemsInCart);
 
   return (
     <Box>
-      {allProductsData?.allProductsInfo?.pagePosition ? (
-        <Flex padding="2rem" w="100%" justify="center">
-          {pages.map((pageNum) => (
-            <Button
-              key={pageNum}
-              ml="1.5rem"
-              boxShadow="base"
-              value={pageNum}
-              transform={pageNum === page ? "scale(1.3)" : "scale(1)"}
-              onClick={(e) => {
-                const requestedPage = parseInt(
-                  (e.target as HTMLButtonElement).value
-                );
-                setPage(requestedPage);
-              }}
-            >
-              {pageNum}
-            </Button>
-          ))}
-        </Flex>
+      {totalPages ? (
+        <PageSelector
+          setPage={setPage}
+          currentPage={page}
+          totalPages={totalPages}
+        />
       ) : null}
       {allProductsLoading ? (
         <Box width="fit-content" m="0 auto">

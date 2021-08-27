@@ -1,14 +1,26 @@
-query productPurchasedByCurrentUserAllData {
-  productsPurchasedByCurrentUser {
-    midiLink
-    wavLink
-    flacLink
-    pdfLink
-    composition {
-      name
-      composers {
+query productPurchasedByCurrentUserAllData(
+  $search: String
+  $page: Int
+  $limit: Int
+) {
+  productsPurchasedByCurrentUser(search: $search, page: $page, limit: $limit) {
+    data {
+      midiLink
+      wavLink
+      flacLink
+      pdfLink
+      composition {
         name
+        composers {
+          name
+        }
       }
+    }
+    isLast
+    isFirst
+    pagePosition {
+      page
+      of
     }
   }
 }
