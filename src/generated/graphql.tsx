@@ -157,6 +157,11 @@ export type Mutation = {
    */
   addDataAfterPurchaseToUserAfterCheckout?: Maybe<AddDataAfterPurchaseToUserAfterCheckout>;
   /**
+   * Accepts user's email and validates if email exist. If the email address exists, a validation email
+   * is sent with the valid jwt token.
+   */
+  sendResetPasswordEmail?: Maybe<ValidateEmailExistAndSendPasswordResetToken>;
+  /**
    * Register user with fields defined in the settings.
    *
    * If the email field of the user model is part of the
@@ -207,6 +212,18 @@ export type Mutation = {
   updateAccount?: Maybe<UpdateAccount>;
   /** Same as `grapgql_jwt` implementation, with standard output. */
   refreshToken?: Maybe<RefreshToken>;
+  /**
+   * Change user password without old password.
+   *
+   * Receive the token that was sent by email.
+   *
+   * If token and new passwords are valid, update
+   * user password and in case of using refresh
+   * tokens, revoke all of them.
+   *
+   * Also, if user has not been verified yet, verify it.
+   */
+  forgotPassword?: Maybe<PasswordReset>;
 };
 
 
@@ -219,6 +236,11 @@ export type MutationUpdateCartCompletionArgs = {
 export type MutationAddOrRemoveCartItemArgs = {
   operation: Scalars['String'];
   productId: Scalars['Int'];
+};
+
+
+export type MutationSendResetPasswordEmailArgs = {
+  email: Scalars['String'];
 };
 
 
@@ -251,6 +273,13 @@ export type MutationUpdateAccountArgs = {
 
 export type MutationRefreshTokenArgs = {
   token: Scalars['String'];
+};
+
+
+export type MutationForgotPasswordArgs = {
+  token: Scalars['String'];
+  newPassword1: Scalars['String'];
+  newPassword2: Scalars['String'];
 };
 
 /** An object with an ID */
@@ -298,6 +327,23 @@ export type PagePositionType = {
   __typename?: 'PagePositionType';
   page: Scalars['Int'];
   of: Scalars['Int'];
+};
+
+/**
+ * Change user password without old password.
+ *
+ * Receive the token that was sent by email.
+ *
+ * If token and new passwords are valid, update
+ * user password and in case of using refresh
+ * tokens, revoke all of them.
+ *
+ * Also, if user has not been verified yet, verify it.
+ */
+export type PasswordReset = {
+  __typename?: 'PasswordReset';
+  success?: Maybe<Scalars['Boolean']>;
+  errors?: Maybe<Scalars['ExpectedErrorType']>;
 };
 
 export type ProductType = {
@@ -454,6 +500,16 @@ export type UserNodeEdge = {
 };
 
 /**
+ * Accepts user's email and validates if email exist. If the email address exists, a validation email
+ * is sent with the valid jwt token.
+ */
+export type ValidateEmailExistAndSendPasswordResetToken = {
+  __typename?: 'ValidateEmailExistAndSendPasswordResetToken';
+  token?: Maybe<Scalars['String']>;
+  success?: Maybe<Scalars['Boolean']>;
+};
+
+/**
  * Verify user account.
  *
  * Receive the token that was sent by email.
@@ -524,6 +580,21 @@ export type AddOrRemoveCartItemMutation = (
   )> }
 );
 
+export type ForgotPasswordMutationVariables = Exact<{
+  token: Scalars['String'];
+  newPassword1: Scalars['String'];
+  newPassword2: Scalars['String'];
+}>;
+
+
+export type ForgotPasswordMutation = (
+  { __typename?: 'Mutation' }
+  & { forgotPassword?: Maybe<(
+    { __typename?: 'PasswordReset' }
+    & Pick<PasswordReset, 'success' | 'errors'>
+  )> }
+);
+
 export type GetOrCreateAndGetCartMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -571,6 +642,19 @@ export type RegisterMutation = (
   & { register?: Maybe<(
     { __typename?: 'Register' }
     & Pick<Register, 'success' | 'errors' | 'token'>
+  )> }
+);
+
+export type SendResetPasswordEmailMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type SendResetPasswordEmailMutation = (
+  { __typename?: 'Mutation' }
+  & { sendResetPasswordEmail?: Maybe<(
+    { __typename?: 'ValidateEmailExistAndSendPasswordResetToken' }
+    & Pick<ValidateEmailExistAndSendPasswordResetToken, 'success'>
   )> }
 );
 
@@ -784,6 +868,46 @@ export function useAddOrRemoveCartItemMutation(baseOptions?: Apollo.MutationHook
 export type AddOrRemoveCartItemMutationHookResult = ReturnType<typeof useAddOrRemoveCartItemMutation>;
 export type AddOrRemoveCartItemMutationResult = Apollo.MutationResult<AddOrRemoveCartItemMutation>;
 export type AddOrRemoveCartItemMutationOptions = Apollo.BaseMutationOptions<AddOrRemoveCartItemMutation, AddOrRemoveCartItemMutationVariables>;
+export const ForgotPasswordDocument = gql`
+    mutation ForgotPassword($token: String!, $newPassword1: String!, $newPassword2: String!) {
+  forgotPassword(
+    token: $token
+    newPassword1: $newPassword1
+    newPassword2: $newPassword2
+  ) {
+    success
+    errors
+  }
+}
+    `;
+export type ForgotPasswordMutationFn = Apollo.MutationFunction<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
+
+/**
+ * __useForgotPasswordMutation__
+ *
+ * To run a mutation, you first call `useForgotPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useForgotPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [forgotPasswordMutation, { data, loading, error }] = useForgotPasswordMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *      newPassword1: // value for 'newPassword1'
+ *      newPassword2: // value for 'newPassword2'
+ *   },
+ * });
+ */
+export function useForgotPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(ForgotPasswordDocument, options);
+      }
+export type ForgotPasswordMutationHookResult = ReturnType<typeof useForgotPasswordMutation>;
+export type ForgotPasswordMutationResult = Apollo.MutationResult<ForgotPasswordMutation>;
+export type ForgotPasswordMutationOptions = Apollo.BaseMutationOptions<ForgotPasswordMutation, ForgotPasswordMutationVariables>;
 export const GetOrCreateAndGetCartDocument = gql`
     mutation GetOrCreateAndGetCart {
   getOrCreateAndGetCart {
@@ -903,6 +1027,39 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SendResetPasswordEmailDocument = gql`
+    mutation SendResetPasswordEmail($email: String!) {
+  sendResetPasswordEmail(email: $email) {
+    success
+  }
+}
+    `;
+export type SendResetPasswordEmailMutationFn = Apollo.MutationFunction<SendResetPasswordEmailMutation, SendResetPasswordEmailMutationVariables>;
+
+/**
+ * __useSendResetPasswordEmailMutation__
+ *
+ * To run a mutation, you first call `useSendResetPasswordEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendResetPasswordEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendResetPasswordEmailMutation, { data, loading, error }] = useSendResetPasswordEmailMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useSendResetPasswordEmailMutation(baseOptions?: Apollo.MutationHookOptions<SendResetPasswordEmailMutation, SendResetPasswordEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendResetPasswordEmailMutation, SendResetPasswordEmailMutationVariables>(SendResetPasswordEmailDocument, options);
+      }
+export type SendResetPasswordEmailMutationHookResult = ReturnType<typeof useSendResetPasswordEmailMutation>;
+export type SendResetPasswordEmailMutationResult = Apollo.MutationResult<SendResetPasswordEmailMutation>;
+export type SendResetPasswordEmailMutationOptions = Apollo.BaseMutationOptions<SendResetPasswordEmailMutation, SendResetPasswordEmailMutationVariables>;
 export const AllProductsInfoDocument = gql`
     query AllProductsInfo($search: String, $page: Int, $limit: Int) {
   allProductsInfo(search: $search, page: $page, limit: $limit) {
