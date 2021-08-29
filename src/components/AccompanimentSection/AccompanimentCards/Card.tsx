@@ -9,6 +9,7 @@ import AddToCartButton from "./AddToCartButton";
 interface CardProps {
   product: ProductType;
   itemsInCart: Record<string, ProductType>;
+  isStudent?: boolean;
   isAuthenticated: boolean;
   colorMode: "dark" | "light";
   userAlreadyPurchasedThis: boolean;
@@ -20,12 +21,13 @@ export const Card: React.FC<CardProps> = ({
   isAuthenticated,
   colorMode,
   userAlreadyPurchasedThis,
+  isStudent,
 }) => {
   const name = product.composition?.name || "";
   const id = product.id;
   const alreadyAddedToCart = !!itemsInCart[product.id];
   const price: string | number =
-    product.priceUsd > 0 ? "$" + product.priceUsd : "free";
+    product.priceUsd > 0 && !isStudent ? "$" + product.priceUsd : "free";
 
   return (
     <Box mb="1rem" key={name} pos="relative">
@@ -50,7 +52,10 @@ export const Card: React.FC<CardProps> = ({
           </>
         }
         priceComponent={
-          <Text fontWeight="bold" color={price === "free" ? "green" : "unset"}>
+          <Text
+            fontWeight="bold"
+            color={price === "free" || isStudent ? "green" : "unset"}
+          >
             {price}
           </Text>
         }

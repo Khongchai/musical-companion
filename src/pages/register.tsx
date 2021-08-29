@@ -31,6 +31,7 @@ const Register: React.FC = ({}) => {
           password1: "",
           password2: "",
           isStudent: false,
+          schoolOrUniversity: "",
         }}
         onSubmit={async (values, { setFieldError }) => {
           const { username, email, ...rest } = values;
@@ -53,7 +54,7 @@ const Register: React.FC = ({}) => {
         {({ isSubmitting, values: { isStudent } }) => (
           <Form>
             <Box as={Stack} mt={["6rem", null, "0"]} spacing="1.2rem">
-              <InputField name="username" type="usename" label="Username" />
+              <InputField name="username" type="username" label="Username" />
               <InputField name="email" type="email" label="Email" />
               <InputField name="password1" type="password" label="Password" />
               <InputField
@@ -74,13 +75,20 @@ const Register: React.FC = ({}) => {
                   />
                   <Text>I am a student</Text>
                 </Flex>
-                {isStudent ? (
+                {isStudent && (
                   <small style={{ color: "var(--chakra-colors-mainGrey)" }}>
                     As a student, you will be granted access to all content on
                     this site free of charge.{" "}
                   </small>
-                ) : null}
+                )}
               </FormLabel>
+              {isStudent && (
+                <InputField
+                  name="schoolOrUniversity"
+                  type="text"
+                  label="School or University"
+                />
+              )}
               <Button
                 mt={4}
                 color={bgFlip}

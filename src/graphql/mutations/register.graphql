@@ -4,6 +4,7 @@ mutation Register(
   $password1: String!
   $password2: String!
   $isStudent: Boolean!
+  $schoolOrUniversity: String!
 ) {
   register(
     email: $email
@@ -11,6 +12,7 @@ mutation Register(
     password1: $password1
     password2: $password2
     isStudent: $isStudent
+    schoolOrUniversity: $schoolOrUniversity
   ) {
     success
     errors

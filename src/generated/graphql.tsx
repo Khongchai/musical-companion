@@ -250,6 +250,7 @@ export type MutationRegisterArgs = {
   password1: Scalars['String'];
   password2: Scalars['String'];
   isStudent: Scalars['Boolean'];
+  schoolOrUniversity: Scalars['String'];
 };
 
 
@@ -474,6 +475,7 @@ export type UserNode = Node & {
   dateJoined: Scalars['DateTime'];
   email: Scalars['String'];
   isStudent: Scalars['Boolean'];
+  schoolOrUniversity?: Maybe<Scalars['String']>;
   carts: Array<CartType>;
   purchasedItems: Array<DataAfterPurchaseType>;
   pk?: Maybe<Scalars['Int']>;
@@ -634,6 +636,7 @@ export type RegisterMutationVariables = Exact<{
   password1: Scalars['String'];
   password2: Scalars['String'];
   isStudent: Scalars['Boolean'];
+  schoolOrUniversity: Scalars['String'];
 }>;
 
 
@@ -983,13 +986,14 @@ export type TokenAuthMutationHookResult = ReturnType<typeof useTokenAuthMutation
 export type TokenAuthMutationResult = Apollo.MutationResult<TokenAuthMutation>;
 export type TokenAuthMutationOptions = Apollo.BaseMutationOptions<TokenAuthMutation, TokenAuthMutationVariables>;
 export const RegisterDocument = gql`
-    mutation Register($email: String!, $username: String!, $password1: String!, $password2: String!, $isStudent: Boolean!) {
+    mutation Register($email: String!, $username: String!, $password1: String!, $password2: String!, $isStudent: Boolean!, $schoolOrUniversity: String!) {
   register(
     email: $email
     username: $username
     password1: $password1
     password2: $password2
     isStudent: $isStudent
+    schoolOrUniversity: $schoolOrUniversity
   ) {
     success
     errors
@@ -1017,6 +1021,7 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  *      password1: // value for 'password1'
  *      password2: // value for 'password2'
  *      isStudent: // value for 'isStudent'
+ *      schoolOrUniversity: // value for 'schoolOrUniversity'
  *   },
  * });
  */

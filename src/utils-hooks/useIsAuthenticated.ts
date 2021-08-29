@@ -28,7 +28,11 @@ function useIsAuthenticated(useNormalMeQuery?: boolean) {
   }, [data]);
 
   if (useNormalMeQuery) {
-    return { isAuthenticated, userId: (data as MeQuery)?.me?.id };
+    return {
+      isAuthenticated,
+      userId: (data as MeQuery)?.me?.id,
+      isStudent: (data as MeQuery)?.me?.isStudent,
+    };
   }
 
   return {

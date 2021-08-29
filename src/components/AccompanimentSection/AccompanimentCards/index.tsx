@@ -1,5 +1,5 @@
-import { Box, Button, Flex, Grid, Text, useColorMode } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import { Box, Grid, Text, useColorMode } from "@chakra-ui/react";
+import React from "react";
 import {
   ProductType,
   useAllProductsInfoQuery,
@@ -7,7 +7,6 @@ import {
 import useStore from "../../../globalStates";
 import useAlreadyPurchasedProducts from "../../../utils-hooks/useAlreadyPurchasedProducts";
 import useIsAuthenticated from "../../../utils-hooks/useIsAuthenticated";
-import extractPagesFromTotalNumberOfPages from "../../../utils/getArrayFromPageNum";
 import PageSelector from "../../Shared/PageSelector";
 import { Card } from "./Card";
 
@@ -29,7 +28,7 @@ const AccompanimentCards: React.FC<{
 
   const { colorMode } = useColorMode();
 
-  const { isAuthenticated } = useIsAuthenticated(true);
+  const { isAuthenticated, isStudent } = useIsAuthenticated(true);
 
   const responsiveGridColumns = [
     "1fr 1fr",
@@ -68,6 +67,7 @@ const AccompanimentCards: React.FC<{
               (product) => (
                 <Card
                   key={product.composition.name}
+                  isStudent={isStudent}
                   product={product}
                   itemsInCart={itemsInCart}
                   colorMode={colorMode}
