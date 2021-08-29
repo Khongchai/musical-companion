@@ -12,6 +12,7 @@ const ForgotPassword: React.FC = ({}) => {
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [forgotPassword] = useSendResetPasswordEmailMutation();
   const [finishedMessage, setFinishedMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   return (
     <FormContainer>
@@ -22,11 +23,19 @@ const ForgotPassword: React.FC = ({}) => {
         onSubmit={async ({ email }) => {
           await forgotPassword({
             variables: { email },
-          }).then(() => {
-            setFinishedMessage(
-              "Reset password email sent (if a user with the provided email exsits)"
-            );
-          });
+          })
+            .then(() => {
+              setFinishedMessage(
+                "Reset password email sent (if a user with the provided email exsits)"
+              );
+              setErrorMessage("");
+            })
+            .catch((error) => {
+              setErrorMessage(
+                "Send this error message to the admin: " + error.message
+              );
+              setFinishedMessage("");
+            });
         }}
       >
         {({ isSubmitting }) => (
@@ -35,6 +44,9 @@ const ForgotPassword: React.FC = ({}) => {
               <InputField name="email" type="email" label="Email" />
               {finishedMessage && (
                 <small style={{ color: "green" }}>{finishedMessage}</small>
+              )}
+              {errorMessage && (
+                <small style={{ color: "red" }}>{errorMessage}</small>
               )}
               <Button
                 mt={4}

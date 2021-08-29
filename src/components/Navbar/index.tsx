@@ -9,7 +9,7 @@ import { FlipColorButton } from "./FlipColorButton";
 import KhongLogoLink from "./KhongLogoLink";
 import { NavbarContent } from "./NavbarContent";
 import { DrawerComponent as Drawer } from "./NavbarDrawer";
-import NavbarAuthLinks from "./NavbarLinks";
+import NavbarLinks from "./NavbarLinks";
 import { NavbarRight } from "./NavbarRight";
 import NavbarWrapper from "./NavbarWrapper";
 
@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
               <Cart />
             </Box>
             <FlipColorButton bg={bg} bgFlip={bgFlip} />
-            <NavbarAuthLinks
+            <NavbarLinks
               textColor={bgFlip}
               isAuthenticated={isAuthenticated}
               userData={userData}
@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
           <Cart />
         </Box>
         <FlipColorButton bg={bg} bgFlip={bgFlip} />
-        <NavbarAuthLinks
+        <NavbarLinks
           textColor={bgFlip}
           isAuthenticated={isAuthenticated}
           userData={userData}

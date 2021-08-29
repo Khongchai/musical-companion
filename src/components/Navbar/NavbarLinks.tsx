@@ -11,7 +11,7 @@ interface NavbarLinksProps {
   isAuthenticated: boolean;
 }
 
-const NavbarAuthLinks: React.FC<NavbarLinksProps> = ({
+const NavbarLinks: React.FC<NavbarLinksProps> = ({
   textColor,
   isAuthenticated,
   userData,
@@ -25,7 +25,7 @@ const NavbarAuthLinks: React.FC<NavbarLinksProps> = ({
     </>
   ) : (
     <>
-      <Text color={textColor}>
+      <Text color={textColor} textTransform="capitalize">
         Logged in as: {userData ? userData.username : ""}
       </Text>
       <TextLink
@@ -36,4 +36,4 @@ const NavbarAuthLinks: React.FC<NavbarLinksProps> = ({
     </>
   );
 };
-export default NavbarAuthLinks;
+export default NavbarLinks;

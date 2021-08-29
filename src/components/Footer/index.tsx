@@ -25,13 +25,25 @@ const index: React.FC<indexProps> = ({}) => {
               Contact
             </Heading>
             <Text>
-              <b>Email</b>:{" "}
-              <a
-                style={{ textDecoration: "underline" }}
-                href="mailto: world1955@hotmail.com"
-              >
-                World1955@hotmail.com
-              </a>
+              <b>Email</b>
+              <div>
+                -{" "}
+                <a
+                  style={{ textDecoration: "underline" }}
+                  href="mailto: khongchai.musicalcompanion@gmail.com"
+                >
+                  Khongchai.musicalcompanion@gmail.com
+                </a>
+              </div>
+              <div>
+                -{" "}
+                <a
+                  style={{ textDecoration: "underline" }}
+                  href="mailto: world1955@hotmail.com"
+                >
+                  World1955@hotmail.com
+                </a>
+              </div>
             </Text>
             <Text>
               <b>YouTube</b>:{" "}
