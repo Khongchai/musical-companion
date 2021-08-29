@@ -6,6 +6,7 @@ import { FormContainer } from "../Elements/FormContainer";
 import { useTokenAuthMutation } from "../generated/graphql";
 import useAuthRedirect from "../utils-hooks/useAuthRedirect";
 import redirectAfterTokenAuth from "../utils/authentication/redirectAfterTokenAuth";
+import Link from "next/link";
 
 const Login: React.FC = ({}) => {
   useAuthRedirect("toHomeIfLoggedIn");
@@ -51,12 +52,13 @@ const Login: React.FC = ({}) => {
               {genericLoginError && (
                 <small style={{ color: "red" }}>{genericLoginError}</small>
               )}
-              <small
-                onClick={() => alert("todo")}
-                style={{ cursor: "pointer" }}
-              >
-                Forget password?
-              </small>
+              <Link href="/forgotPassword">
+                <small
+                  style={{ cursor: "pointer", textDecoration: "underline" }}
+                >
+                  Forgot password?
+                </small>
+              </Link>
               <Button
                 mt={4}
                 color={bgFlip}

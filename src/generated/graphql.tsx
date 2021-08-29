@@ -82,10 +82,10 @@ export type AllProductsDataType = {
 
 export type AllPurchasedDataType = {
   __typename?: 'AllPurchasedDataType';
-  data: Array<Maybe<DataAfterPurchaseType>>;
-  isFirst: Scalars['Boolean'];
-  isLast: Scalars['Boolean'];
-  pagePosition: PagePositionType;
+  data?: Maybe<Array<Maybe<DataAfterPurchaseType>>>;
+  isFirst?: Maybe<Scalars['Boolean']>;
+  isLast?: Maybe<Scalars['Boolean']>;
+  pagePosition?: Maybe<PagePositionType>;
 };
 
 export type CartCompletionMutation = {
@@ -723,7 +723,7 @@ export type ProductPurchasedByCurrentUserAllDataQuery = (
   & { productsPurchasedByCurrentUser?: Maybe<(
     { __typename?: 'AllPurchasedDataType' }
     & Pick<AllPurchasedDataType, 'isLast' | 'isFirst'>
-    & { data: Array<Maybe<(
+    & { data?: Maybe<Array<Maybe<(
       { __typename?: 'DataAfterPurchaseType' }
       & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
       & { composition?: Maybe<(
@@ -734,10 +734,10 @@ export type ProductPurchasedByCurrentUserAllDataQuery = (
           & Pick<ComposerType, 'name'>
         )> }
       )> }
-    )>>, pagePosition: (
+    )>>>, pagePosition?: Maybe<(
       { __typename?: 'PagePositionType' }
       & Pick<PagePositionType, 'page' | 'of'>
-    ) }
+    )> }
   )> }
 );
 
@@ -752,13 +752,13 @@ export type ProductPurchasedByCurrentUserOnlyNameQuery = (
   { __typename?: 'Query' }
   & { productsPurchasedByCurrentUser?: Maybe<(
     { __typename?: 'AllPurchasedDataType' }
-    & { data: Array<Maybe<(
+    & { data?: Maybe<Array<Maybe<(
       { __typename?: 'DataAfterPurchaseType' }
       & { composition?: Maybe<(
         { __typename?: 'CompositionType' }
         & Pick<CompositionType, 'name'>
       )> }
-    )>> }
+    )>>> }
   )> }
 );
 

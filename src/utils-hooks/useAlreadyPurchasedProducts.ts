@@ -19,7 +19,7 @@ export default function useAlreadyPurchasedProducts() {
 
   const purchasedProductMap = useMemo(() => {
     const map: Record<string, true> = {};
-    purchasedProducts?.productsPurchasedByCurrentUser?.data.forEach(
+    purchasedProducts?.productsPurchasedByCurrentUser?.data?.forEach(
       (product) => {
         const name = product?.composition?.name;
         if (name) {
