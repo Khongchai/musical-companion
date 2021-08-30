@@ -6,7 +6,7 @@ export default function useTotalToPay() {
   const currentTotal = useStore((state) => state.priceOfItemsInCart);
   const itemsInCart = useStore((state) => state.itemsInCart);
   const { data, loading } = useMeQuery();
-  const isStudent = data?.me?.isStudent;
+  const isStudent = data?.meExtended?.user?.isStudent;
 
   const totalToPay = useMemo(() => {
     return data && !loading ? (isStudent ? 0 : currentTotal) : 0;
