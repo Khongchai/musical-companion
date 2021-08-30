@@ -36,6 +36,7 @@ const Login: React.FC = ({}) => {
             const token = response.data?.tokenAuth?.token;
             token && redirectAfterTokenAuth(token);
           } else {
+            //Doesn't have to be specific with the fields. We just need to give a generic info.
             setGenericLoginError("Invalid credentials");
           }
         }}

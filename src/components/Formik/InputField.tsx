@@ -20,7 +20,7 @@ export const InputField: React.FC<InputFieldProps> = ({ label, ...props }) => {
       <FormLabel htmlFor={field.name} textTransform="capitalize">
         {label}
       </FormLabel>
-      <Input {...field} {...props} id={field.name} />
+      <Input required {...field} {...props} id={field.name} />
       {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
     </FormControl>
   );

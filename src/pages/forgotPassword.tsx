@@ -2,6 +2,7 @@ import { Box, Button, Stack, useColorModeValue } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { InputField } from "../components/Formik/InputField";
+import GenericFormStatusMessage from "../components/GenericFormStatusMessage";
 import { FormContainer } from "../Elements/FormContainer";
 import { useSendResetPasswordEmailMutation } from "../generated/graphql";
 import useAuthRedirect from "../utils-hooks/useAuthRedirect";
@@ -21,6 +22,11 @@ const ForgotPassword: React.FC = ({}) => {
           email: "",
         }}
         onSubmit={async ({ email }) => {
+          if (!email) {
+            setErrorMessage("Please enter your email");
+            setFinishedMessage("");
+            return;
+          }
           await forgotPassword({
             variables: { email },
           })
@@ -43,10 +49,14 @@ const ForgotPassword: React.FC = ({}) => {
             <Box as={Stack} mt={["6rem", null, "0"]} spacing="1.2rem">
               <InputField name="email" type="email" label="Email" />
               {finishedMessage && (
-                <small style={{ color: "green" }}>{finishedMessage}</small>
+                <GenericFormStatusMessage color="green">
+                  {finishedMessage}
+                </GenericFormStatusMessage>
               )}
               {errorMessage && (
-                <small style={{ color: "red" }}>{errorMessage}</small>
+                <GenericFormStatusMessage color="red">
+                  {errorMessage}
+                </GenericFormStatusMessage>
               )}
               <Button
                 mt={4}

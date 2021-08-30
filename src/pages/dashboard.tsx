@@ -30,7 +30,7 @@ const dashboard: React.FC = () => {
   });
 
   const totalPages = useMemo(() => {
-    return data?.productsPurchasedByCurrentUser?.pagePosition.of;
+    return data?.productsPurchasedByCurrentUser?.pagePosition?.of;
   }, [data]);
 
   return (

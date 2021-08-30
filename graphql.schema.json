@@ -1117,7 +1117,7 @@
             "deprecationReason": null
           },
           {
-            "name": "forgotPassword",
+            "name": "resetPassword",
             "description": "Change user password without old password.\n\nReceive the token that was sent by email.\n\nIf token and new passwords are valid, update\nuser password and in case of using refresh\ntokens, revoke all of them.\n\nAlso, if user has not been verified yet, verify it.",
             "args": [
               {
