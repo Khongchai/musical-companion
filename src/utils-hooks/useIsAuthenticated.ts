@@ -21,7 +21,7 @@ function useIsAuthenticated(useNormalMeQuery?: boolean) {
 
   useEffect(() => {
     if (useNormalMeQuery) {
-      setIsAuthenticated(!!(data as MeQuery)?.me?.id);
+      setIsAuthenticated(!!(data as MeQuery)?.meExtended?.user.id);
     } else {
       setIsAuthenticated(!!(data as MeExtendedQuery)?.meExtended?.user);
     }
@@ -30,8 +30,8 @@ function useIsAuthenticated(useNormalMeQuery?: boolean) {
   if (useNormalMeQuery) {
     return {
       isAuthenticated,
-      userId: (data as MeQuery)?.me?.id,
-      isStudent: (data as MeQuery)?.me?.isStudent,
+      userId: (data as MeQuery)?.meExtended?.user?.id,
+      isStudent: (data as MeQuery)?.meExtended?.user?.isStudent,
     };
   }
 

@@ -1,6 +1,6 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
-import DashboardHeader from "../components/DashboardHeader";
+import MyItemsHeader from "../components/MyItemsHeader";
 import { PurchasedItemListing } from "../components/PurchasedItemListing";
 import DownloadBlobButton from "../components/PurchasedItemListing/DownloadBlobButton";
 import { DownloadBlobButtonsContainer } from "../components/PurchasedItemListing/DownloadBlobButtonsContainer";
@@ -15,7 +15,7 @@ import {
 } from "../generated/graphql";
 import useAuthRedirect from "../utils-hooks/useAuthRedirect";
 
-const dashboard: React.FC = () => {
+const MyItems: React.FC = () => {
   useAuthRedirect("toHomeIfNotLoggedIn");
 
   const [page, setPage] = useState(1);
@@ -36,12 +36,12 @@ const dashboard: React.FC = () => {
   return (
     <MainContainer>
       <Box minHeight="70vh" mt="4.25rem" mb="4.25rem">
-        <DashboardHeader>
+        <MyItemsHeader>
           <Heading>Purchased Items</Heading>
           <Box ml="auto">
             <SearchInputBox setPage={setPage} setSearchVal={setSearch} />
           </Box>
-        </DashboardHeader>
+        </MyItemsHeader>
         {totalPages ? (
           <PageSelector
             setPage={setPage}
@@ -54,8 +54,10 @@ const dashboard: React.FC = () => {
         <br />
         {loading ? (
           <div>...loading</div>
+        ) : totalPages === 0 ? (
+          <div>You haven't yet purchased anything.</div>
         ) : (
-          data?.productsPurchasedByCurrentUser?.data.map((product) => {
+          data?.productsPurchasedByCurrentUser?.data?.map((product) => {
             const compositionName = product?.composition?.name;
             const composers = product?.composition?.composers;
 
@@ -112,4 +114,4 @@ const dashboard: React.FC = () => {
   );
 };
 
-export default dashboard;
+export default MyItems;

@@ -30,7 +30,7 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({
       </Text>
       <TextLink
         text="my items"
-        onClickFunction={() => router.push("/dashboard")}
+        onClickFunction={() => router.push("/my-items")}
       />
       <TextLink text="logout" onClickFunction={() => logout()} />
     </>

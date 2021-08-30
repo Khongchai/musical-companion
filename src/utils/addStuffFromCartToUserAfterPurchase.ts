@@ -8,7 +8,7 @@ export default async function addStuffFromCartToUserAfterPurchase(
   checkForApolloMutationErrors(result);
 
   if (result.data?.addDataAfterPurchaseToUserAfterCheckout?.purchaseSuccess) {
-    location.href = "/dashboard";
+    location.href = "/my-items";
   } else {
     alert("Something went wrong, please contact the admin.");
   }

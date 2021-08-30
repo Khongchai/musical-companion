@@ -12,7 +12,6 @@ export default function catchFormErrors(
       if (setFieldError) {
         setFieldError(key, value[0].message);
       } else if (setNonFieldError) {
-        console.log(value);
         setNonFieldError(value[0].message);
       }
     }

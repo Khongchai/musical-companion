@@ -1,19 +1,20 @@
 import { Box, Button, Stack, useColorModeValue } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 import { InputField } from "../components/Formik/InputField";
 import GenericFormStatusMessage from "../components/GenericFormStatusMessage";
 import { FormContainer } from "../Elements/FormContainer";
 import { useSendResetPasswordEmailMutation } from "../generated/graphql";
 import useAuthRedirect from "../utils-hooks/useAuthRedirect";
+import useFormStatusMessages from "../utils-hooks/useFormStatusMessages";
 
 const ForgotPassword: React.FC = ({}) => {
   useAuthRedirect("toHomeIfLoggedIn");
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
   const [forgotPassword] = useSendResetPasswordEmailMutation();
-  const [finishedMessage, setFinishedMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const { finishedMessage, setFinishedMessage, errorMessage, setErrorMessage } =
+    useFormStatusMessages();
 
   return (
     <FormContainer>
@@ -24,7 +25,6 @@ const ForgotPassword: React.FC = ({}) => {
         onSubmit={async ({ email }) => {
           if (!email) {
             setErrorMessage("Please enter your email");
-            setFinishedMessage("");
             return;
           }
           await forgotPassword({
@@ -34,13 +34,11 @@ const ForgotPassword: React.FC = ({}) => {
               setFinishedMessage(
                 "Reset password email sent (if a user with the provided email exsits)"
               );
-              setErrorMessage("");
             })
             .catch((error) => {
               setErrorMessage(
                 "Send this error message to the admin: " + error.message
               );
-              setFinishedMessage("");
             });
         }}
       >

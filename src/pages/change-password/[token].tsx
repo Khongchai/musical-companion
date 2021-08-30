@@ -2,7 +2,6 @@ import { Box, Button, Stack, useColorModeValue } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { finished } from "stream";
 import { InputField } from "../../components/Formik/InputField";
 import GenericFormStatusMessage from "../../components/GenericFormStatusMessage";
 import { FormContainer } from "../../Elements/FormContainer";
@@ -11,6 +10,7 @@ import {
   useTokenAuthMutation,
 } from "../../generated/graphql";
 import useAuthRedirect from "../../utils-hooks/useAuthRedirect";
+import useFormStatusMessages from "../../utils-hooks/useFormStatusMessages";
 import redirectAfterTokenAuth from "../../utils/authentication/redirectAfterTokenAuth";
 import catchFormErrors from "../../utils/forms/catchFormErrors";
 
@@ -26,8 +26,9 @@ const ChangePassword: React.FC = ({}) => {
   const [resetPassword] = useResetPasswordMutation();
   const [login] = useTokenAuthMutation();
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [finishedMessage, setFinishedMessage] = useState("");
+  const { errorMessage, setErrorMessage, finishedMessage, setFinishedMessage } =
+    useFormStatusMessages();
+
   const [passwordForLoggingIn, setPasswordForLoggingIn] = useState("");
 
   return (
@@ -44,7 +45,7 @@ const ChangePassword: React.FC = ({}) => {
           await resetPassword({
             variables: { token: token as string, ...passwords },
           })
-            //Refactor the following then logic chain
+            //Catch expected failures (password too easy, password not the same, etc.)
             .then((result) => {
               if (
                 !catchFormErrors(
@@ -54,16 +55,14 @@ const ChangePassword: React.FC = ({}) => {
                 )
               ) {
                 //Success
-                setErrorMessage("");
                 setFinishedMessage("Password changed successfully");
 
                 //For logging in after changing the password
                 setPasswordForLoggingIn(passwords.newPassword1);
               }
             })
-            //Catch unexpected backend failures
+            //Catch unexpected backend failures (backend fails to respond, etc.)
             .catch((error) => {
-              setFinishedMessage("");
               setErrorMessage("Send this error to the admin: " + error.message);
             });
         }}

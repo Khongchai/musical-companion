@@ -705,9 +705,12 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = (
   { __typename?: 'Query' }
-  & { me?: Maybe<(
-    { __typename?: 'UserNode' }
-    & Pick<UserNode, 'id' | 'isStudent'>
+  & { meExtended?: Maybe<(
+    { __typename?: 'MeExtendedType' }
+    & { user: (
+      { __typename?: 'UserNode' }
+      & Pick<UserNode, 'id' | 'isStudent'>
+    ) }
   )> }
 );
 
@@ -1152,9 +1155,11 @@ export type MeExtendedLazyQueryHookResult = ReturnType<typeof useMeExtendedLazyQ
 export type MeExtendedQueryResult = Apollo.QueryResult<MeExtendedQuery, MeExtendedQueryVariables>;
 export const MeDocument = gql`
     query me {
-  me {
-    id
-    isStudent
+  meExtended {
+    user {
+      id
+      isStudent
+    }
   }
 }
     `;
