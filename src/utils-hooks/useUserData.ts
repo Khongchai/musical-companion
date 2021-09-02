@@ -6,7 +6,7 @@ import {
   useMeQuery,
 } from "../generated/graphql";
 
-function useIsAuthenticated(useNormalMeQuery?: boolean) {
+function useUserData(useNormalMeQuery?: boolean) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   /**
    * meExtended query is meQuery but fetches more data.
@@ -43,4 +43,4 @@ function useIsAuthenticated(useNormalMeQuery?: boolean) {
   };
 }
 
-export default useIsAuthenticated;
+export default useUserData;

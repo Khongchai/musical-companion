@@ -2,7 +2,7 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ProductType } from "../../generated/graphql";
 import useStore from "../../globalStates";
-import useIsAuthenticated from "../../utils-hooks/useIsAuthenticated";
+import useUserData from "../../utils-hooks/useUserData";
 import { Cart } from "../Cart";
 import { HamburgerIcon } from "../HamburgerIcon";
 import { FlipColorButton } from "./FlipColorButton";
@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const bg = useColorModeValue("mainGrey", "white");
   const bgFlip = useColorModeValue("white", "mainGrey");
 
-  const { isAuthenticated, userData, userCart } = useIsAuthenticated();
+  const { isAuthenticated, userData, userCart } = useUserData();
 
   const setInitialItemsInCart = useStore((state) => state.setItemsToCart);
   useEffect(() => {

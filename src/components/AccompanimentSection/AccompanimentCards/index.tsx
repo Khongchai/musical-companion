@@ -6,7 +6,7 @@ import {
 } from "../../../generated/graphql";
 import useStore from "../../../globalStates";
 import useAlreadyPurchasedProducts from "../../../utils-hooks/useAlreadyPurchasedProducts";
-import useIsAuthenticated from "../../../utils-hooks/useIsAuthenticated";
+import useUserData from "../../../utils-hooks/useUserData";
 import PageSelector from "../../Shared/PageSelector";
 import { Card } from "./Card";
 
@@ -28,7 +28,7 @@ const AccompanimentCards: React.FC<{
 
   const { colorMode } = useColorMode();
 
-  const { isAuthenticated, isStudent } = useIsAuthenticated(true);
+  const { isAuthenticated, isStudent } = useUserData(true);
 
   const responsiveGridColumns = [
     "1fr 1fr",
