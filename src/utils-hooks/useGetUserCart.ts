@@ -7,6 +7,7 @@ import {
 export function useGetUserCart() {
   const [cart, setCart] = useState<CartType | null>(null);
   const [getUserCart] = useGetOrCreateAndGetCartMutation();
+
   useEffect(() => {
     const getData = async () => {
       const { data } = await getUserCart();
@@ -16,5 +17,6 @@ export function useGetUserCart() {
     };
     getData();
   }, []);
+
   return cart;
 }

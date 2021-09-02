@@ -4,3 +4,7 @@ https://www.apollographql.com/docs/react/development-testing/testing/
 Test cases area already written.
 
 Smart soloist section
+
+Try the private route approach.
+Try useLayoutEffect first
+https://theodorusclarence.com/blog/nextjs-redirect-no-flashing
