@@ -101,6 +101,14 @@ const MyItems: React.FC = () => {
                             link={product.pdfLink}
                           />
                         )}
+                        {product?.metronomeLink && (
+                          <DownloadBlobButton
+                            compositionName={product.composition!.name}
+                            buttonInner="CLICK"
+                            fileExtension="mp3"
+                            link={product.metronomeLink}
+                          />
+                        )}
                       </DownloadBlobButtonsContainer>
                     )}
                   </Meta>

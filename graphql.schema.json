@@ -607,6 +607,18 @@
             "deprecationReason": null
           },
           {
+            "name": "metronomeLink",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "youtubeLink",
             "description": null,
             "args": [],
@@ -1728,18 +1740,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "MeExtendedType",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "me",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "UserNode",
               "ofType": null
             },
             "isDeprecated": false,

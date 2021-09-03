@@ -12,6 +12,7 @@ export const FileFormats: React.FC<{
       {links?.wavLink && <FileFormatBox>WAV</FileFormatBox>}
       {links?.midiLink && <FileFormatBox>MIDI</FileFormatBox>}
       {links?.pdfLink && <FileFormatBox>PDF</FileFormatBox>}
+      {links?.metronomeLink && <FileFormatBox>CLICK</FileFormatBox>}
     </Flex>
   );
 };

@@ -10,6 +10,7 @@ fragment ProductInfo on ProductType {
       flacLink
       pdfLink
       youtubeLink
+      metronomeLink
     }
     composers {
       name

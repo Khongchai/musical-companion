@@ -9,6 +9,7 @@ query productPurchasedByCurrentUserAllData(
       wavLink
       flacLink
       pdfLink
+      metronomeLink
       composition {
         name
         composers {

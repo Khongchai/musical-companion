@@ -130,6 +130,7 @@ export type DataAfterPurchaseType = {
   wavLink?: Maybe<Scalars['String']>;
   flacLink?: Maybe<Scalars['String']>;
   pdfLink?: Maybe<Scalars['String']>;
+  metronomeLink?: Maybe<Scalars['String']>;
   youtubeLink?: Maybe<Scalars['String']>;
   composition?: Maybe<CompositionType>;
 };
@@ -366,7 +367,6 @@ export type Query = {
   productsPurchasedByCurrentUser?: Maybe<AllPurchasedDataType>;
   allComposersInfo?: Maybe<Array<Maybe<ComposerType>>>;
   meExtended?: Maybe<MeExtendedType>;
-  me?: Maybe<UserNode>;
   user?: Maybe<UserNode>;
   users?: Maybe<UserNodeConnection>;
 };
@@ -541,7 +541,7 @@ export type ProductInfoFragment = (
     & Pick<CompositionType, 'name'>
     & { links?: Maybe<(
       { __typename?: 'DataAfterPurchaseType' }
-      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink' | 'youtubeLink'>
+      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink' | 'youtubeLink' | 'metronomeLink'>
     )>, composers: Array<(
       { __typename?: 'ComposerType' }
       & Pick<ComposerType, 'name'>
@@ -728,7 +728,7 @@ export type ProductPurchasedByCurrentUserAllDataQuery = (
     & Pick<AllPurchasedDataType, 'isLast' | 'isFirst'>
     & { data?: Maybe<Array<Maybe<(
       { __typename?: 'DataAfterPurchaseType' }
-      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink'>
+      & Pick<DataAfterPurchaseType, 'midiLink' | 'wavLink' | 'flacLink' | 'pdfLink' | 'metronomeLink'>
       & { composition?: Maybe<(
         { __typename?: 'CompositionType' }
         & Pick<CompositionType, 'name'>
@@ -778,6 +778,7 @@ export const ProductInfoFragmentDoc = gql`
       flacLink
       pdfLink
       youtubeLink
+      metronomeLink
     }
     composers {
       name
@@ -1198,6 +1199,7 @@ export const ProductPurchasedByCurrentUserAllDataDocument = gql`
       wavLink
       flacLink
       pdfLink
+      metronomeLink
       composition {
         name
         composers {
