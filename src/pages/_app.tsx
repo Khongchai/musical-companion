@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { client } from "../utils/apolloClient";
 import "../css/loader.css";
+import "../css/smart-soloist-image.css";
 
 function MyApp({ Component, pageProps }: any) {
   return (

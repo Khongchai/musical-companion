@@ -1,11 +1,11 @@
 import { Stack } from "@chakra-ui/react";
 import React from "react";
 
-interface MainContainerProps {
+interface ContainerWithPadding {
   overridePadding?: string;
 }
 
-export const MainContainer: React.FC<MainContainerProps> = ({
+export const ContainerWithPadding: React.FC<ContainerWithPadding> = ({
   overridePadding,
   children,
 }) => {

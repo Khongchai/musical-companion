@@ -9,7 +9,7 @@ import { ToHomeIfNotLoggedIn } from "../components/Shared/AuthCheck";
 import { ComposersName } from "../components/Shared/ComposersName";
 import PageSelector from "../components/Shared/PageSelector";
 import SearchInputBox from "../components/Shared/SearchBox";
-import { MainContainer } from "../Elements/MainContainer";
+import { MainContainer } from "../Elements/ContainerWithPadding";
 import {
   ComposerType,
   useProductPurchasedByCurrentUserAllDataQuery,

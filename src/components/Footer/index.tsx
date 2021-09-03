@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { MainContainer } from "../../Elements/MainContainer";
+import { ContainerWithPadding } from "../../Elements/ContainerWithPadding";
 
 interface indexProps {}
 
@@ -16,7 +16,7 @@ const index: React.FC<indexProps> = ({}) => {
   const bgFlip = useColorModeValue("white", "mainGrey");
   return (
     <Box w="100%" bg={bg} color={bgFlip}>
-      <MainContainer overridePadding="5rem 1rem">
+      <ContainerWithPadding overridePadding="5rem 1rem">
         <Flex align="center" flexDir={["column", null, null, "row"]}>
           <Box flex="0.7">
             <Text>© KhongtheFork</Text>
@@ -64,7 +64,7 @@ const index: React.FC<indexProps> = ({}) => {
             </Text>
           </Stack>
         </Flex>
-      </MainContainer>
+      </ContainerWithPadding>
     </Box>
   );
 };
