@@ -9,7 +9,7 @@ const SmartSoloistSection: React.FC<SmartSoloistSectionProps> = ({}) => {
   return (
     <Box>
       <About />
-      <Flex width="100%" justify="center">
+      {/* <Flex width="100%" justify="center">
         <Link
           href="https://smartsoloist.com/"
           _hover={{ transform: "scale(1.02)" }}
@@ -24,7 +24,7 @@ const SmartSoloistSection: React.FC<SmartSoloistSectionProps> = ({}) => {
             src="/logos/smart-soloist.png"
           />
         </Link>
-      </Flex>
+      </Flex> */}
     </Box>
   );
 };

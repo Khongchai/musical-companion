@@ -1,4 +1,4 @@
-import { Stack, Text } from "@chakra-ui/react";
+import { Link, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
 export default function About() {
@@ -10,14 +10,23 @@ export default function About() {
       </Text>
       <Text>
         I would like to take this opportunity to recommend to you{" "}
-        <i>SmartSoloist</i>. Their proprietary software allows you to adjust the
-        tempo to your likings, giving you more control over your own playing.
+        <i>
+          <Link
+            href="https://smartsoloist.com/"
+            textDecoration="underline"
+            target="_blank"
+          >
+            SmartSoloist
+          </Link>
+        </i>
+        . Their proprietary software allows you to adjust the tempo to your
+        likings, giving you more control over your own playing.
       </Text>
       <Text>
         Their software is not free, but it's more than worth it if you are
         looking for more immersive practicing sessions.
       </Text>
-      <Text>Click the image below for more information.</Text>
+      <Text>Click the word "SmartSoloist" above for more information. </Text>
     </Stack>
   );
 }
