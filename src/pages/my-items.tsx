@@ -9,7 +9,7 @@ import { ToHomeIfNotLoggedIn } from "../components/Shared/AuthCheck";
 import { ComposersName } from "../components/Shared/ComposersName";
 import PageSelector from "../components/Shared/PageSelector";
 import SearchInputBox from "../components/Shared/SearchBox";
-import { MainContainer } from "../Elements/ContainerWithPadding";
+import { ContainerWithPadding } from "../Elements/ContainerWithPadding";
 import {
   ComposerType,
   useProductPurchasedByCurrentUserAllDataQuery,
@@ -33,7 +33,7 @@ const MyItems: React.FC = () => {
 
   return (
     <ToHomeIfNotLoggedIn>
-      <MainContainer>
+      <ContainerWithPadding>
         <Box minHeight="70vh" mt="4.25rem" mb="4.25rem">
           <MyItemsHeader>
             <Heading>Purchased Items</Heading>
@@ -117,7 +117,7 @@ const MyItems: React.FC = () => {
             })
           )}
         </Box>
-      </MainContainer>
+      </ContainerWithPadding>
     </ToHomeIfNotLoggedIn>
   );
 };

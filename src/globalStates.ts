@@ -1,7 +1,7 @@
 import create from "zustand";
 import { ProductType } from "./generated/graphql";
 
-interface AppStates {
+export interface AppStates {
   itemsInCart: Record<string, ProductType>;
   setItemsToCart: (products: ProductType[]) => void;
   //Price will get updated when itemsInCart is updated
