@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import { client } from "../utils/apolloClient";
 import "../css/loader.css";
 import "../css/smart-soloist-image.css";
+import "../css/accompaniment-loader.css";
 
 function MyApp({ Component, pageProps }: any) {
   return (

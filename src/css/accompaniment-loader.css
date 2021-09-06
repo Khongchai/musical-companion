@@ -1,0 +1,45 @@
+:root {
+  --background: linear-gradient(rgb(123, 123, 123), 80%, transparent 0);
+  --background-size: 100% 100%;
+  --background-position: 0 0;
+
+  --bottom-bar: linear-gradient(rgb(169, 169, 169) 100%, transparent 0);
+  --bottom-bar-size: 100% 100%;
+  --bottom-bar-position: 0 0;
+
+  --button: linear-gradient(rgb(194, 194, 194), 40%, transparent 0);
+  --button-size: 30% 40%;
+  --button-position: 97.5% 100%;
+}
+.accompaniment-loader {
+  border-radius: 6px;
+  transition: 0.3s;
+
+  background-repeat: no-repeat;
+  /* width height */
+
+  background-size: var(--button-size), var(--background-size),
+    var(--bottom-bar-size);
+
+  background-position: var(--button-position), var(--background-position),
+    var(--bottom-bar-position);
+
+  background-image: var(--button), var(--background), var(--bottom-bar);
+
+  padding-bottom: 100%;
+
+  grid-row: auto;
+
+  opacity: 0.7;
+
+  animation: skeleton-loading 1s linear infinite alternate-reverse;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}

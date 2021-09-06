@@ -6,6 +6,7 @@ import {
 } from "../../../generated/graphql";
 import useStore from "../../../globalStates";
 import checkForApolloMutationErrors from "../../../utils/checkForApolloMutationErrrors";
+import Loader from "../../Shared/Loader";
 
 interface AccompanimentImageProps {
   src: string;
@@ -54,7 +55,7 @@ const AccompanimentImageAndOverlay: React.FC<AccompanimentImageProps> = ({
         {loading ? (
           <>
             <ItemInCartStatus>Removing</ItemInCartStatus>
-            <div className="lds-dual-ring"></div>
+            <Loader />
           </>
         ) : (
           <>

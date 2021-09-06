@@ -7,8 +7,11 @@ import {
 import useStore from "../../../globalStates";
 import useAlreadyPurchasedProducts from "../../../utils-hooks/useAlreadyPurchasedProducts";
 import useUserData from "../../../utils-hooks/useUserData";
+import Loader from "../../Shared/Loader";
 import PageSelector from "../../Shared/PageSelector";
+import AccompanimentSkeletonLoader from "./AccompanimentSkeletonLoader";
 import { Card } from "./Card";
+import CardsContainer from "./CardsContainer";
 
 const AccompanimentCards: React.FC<{
   searchVal: string;
@@ -30,13 +33,6 @@ const AccompanimentCards: React.FC<{
 
   const { isAuthenticated, isStudent } = useUserData(true);
 
-  const responsiveGridColumns = [
-    "1fr 1fr",
-    null,
-    "1fr 1fr 1fr",
-    null,
-    "1fr 1fr 1fr 1fr ",
-  ];
   const totalPages = allProductsData?.allProductsInfo?.pagePosition.of;
 
   const itemsInCart = useStore((state) => state.itemsInCart);
@@ -50,17 +46,13 @@ const AccompanimentCards: React.FC<{
           totalPages={totalPages}
         />
       ) : null}
+      {/* add exclamation mark to test loader: !allProductsLoading ? ... */}
       {allProductsLoading ? (
-        <Box width="fit-content" m="0 auto">
-          <div className="lds-dual-ring"></div>
-        </Box>
+        <CardsContainer>
+          <AccompanimentSkeletonLoader />
+        </CardsContainer>
       ) : (
-        <Grid
-          gridTemplateColumns={responsiveGridColumns}
-          gap="19px"
-          height="fit-content"
-          position="relative"
-        >
+        <CardsContainer>
           {allProductsData?.allProductsInfo?.products &&
           allProductsData.allProductsInfo.products.length > 0 ? (
             (allProductsData?.allProductsInfo.products as ProductType[]).map(
@@ -90,7 +82,7 @@ const AccompanimentCards: React.FC<{
               No data found
             </Text>
           )}
-        </Grid>
+        </CardsContainer>
       )}
     </Box>
   );
