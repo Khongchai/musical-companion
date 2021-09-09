@@ -9,10 +9,12 @@ export default function catchFormErrors(
   if (errors) {
     //Assume that each array has a length of only 1
     for (const [key, value] of Object.entries(errors)) {
-      if (setFieldError) {
-        setFieldError(key, value[0].message);
-      } else if (setNonFieldError) {
-        setNonFieldError(value[0].message);
+      if (value && key) {
+        if (setFieldError) {
+          setFieldError(key, value[0].message);
+        } else if (setNonFieldError) {
+          setNonFieldError(value[0].message);
+        }
       }
     }
     return true;

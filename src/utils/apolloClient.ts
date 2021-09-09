@@ -3,7 +3,7 @@ import { setContext } from "@apollo/client/link/context";
 import getAuthToken from "./getAuthToken";
 
 const link = createHttpLink({
-  uri: "http://127.0.0.1:8000/graphql",
+  uri: "https://musical-companion.herokuapp.com/graphql",
   credentials: "include",
 });
 
