@@ -20,7 +20,7 @@
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
     "noUnusedLocals": false,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "jsx": "preserve"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
