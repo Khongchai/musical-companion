@@ -1,3 +1,3 @@
-more left right padding for smaller devices + fix error on vercel
+refactor the pagination thing to a custom hook.
 
 Smart soloist section
