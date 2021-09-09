@@ -37,7 +37,7 @@ const PageSelector: React.FC<PageSelectorProps> = ({
           value={pageNum}
           transform={pageNum === currentPage ? "scale(1.3)" : "scale(1)"}
           onClick={(e) => {
-            if (!asPlaceHolder) {
+            if (!asPlaceHolder && setPage) {
               const requestedPage = parseInt(
                 (e.target as HTMLButtonElement).value
               );
