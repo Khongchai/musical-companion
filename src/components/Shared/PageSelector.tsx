@@ -2,16 +2,26 @@ import { Button, Flex } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import extractPagesFromTotalNumberOfPages from "../../utils/getArrayFromPageNum";
 
-interface PageSelectorProps {
-  totalPages: number;
-  currentPage: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
-}
+type PageSelectorProps =
+  | {
+      totalPages: number;
+      currentPage: number;
+      setPage: React.Dispatch<React.SetStateAction<number>>;
+      //Place holder to prevent content shift, use when page selector is loading
+      asPlaceHolder?: never;
+    }
+  | {
+      asPlaceHolder: boolean;
+      totalPages?: never;
+      currentPage?: never;
+      setPage?: never;
+    };
 
 const PageSelector: React.FC<PageSelectorProps> = ({
-  totalPages,
-  currentPage,
+  totalPages = 1,
+  currentPage = 1,
   setPage,
+  asPlaceHolder,
 }) => {
   const pageNumbersAsArray = useMemo(() => {
     return extractPagesFromTotalNumberOfPages(totalPages);
@@ -27,10 +37,12 @@ const PageSelector: React.FC<PageSelectorProps> = ({
           value={pageNum}
           transform={pageNum === currentPage ? "scale(1.3)" : "scale(1)"}
           onClick={(e) => {
-            const requestedPage = parseInt(
-              (e.target as HTMLButtonElement).value
-            );
-            setPage(requestedPage);
+            if (!asPlaceHolder) {
+              const requestedPage = parseInt(
+                (e.target as HTMLButtonElement).value
+              );
+              setPage(requestedPage);
+            }
           }}
         >
           {pageNum}
