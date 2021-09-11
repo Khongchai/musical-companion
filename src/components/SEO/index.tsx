@@ -8,7 +8,7 @@ interface SEOProps {
 }
 
 const SEO: React.FC<SEOProps> = ({
-  title = "Musical-Copmpanion",
+  title = "Musical-Companion",
   description = "An online collection of quality orchestral accompaniments",
 }) => {
   return (
