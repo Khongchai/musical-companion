@@ -1,11 +1,13 @@
 import { Box, Grid, Text, useColorMode } from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  AllProductsInfoQuery,
   ProductType,
   useAllProductsInfoQuery,
 } from "../../../generated/graphql";
 import useStore from "../../../globalStates";
 import useAlreadyPurchasedProducts from "../../../utils-hooks/useAlreadyPurchasedProducts";
+import useTotalPagesMemoized from "../../../utils-hooks/useTotalPagesMemoized";
 import useUserData from "../../../utils-hooks/useUserData";
 import Loader from "../../Shared/Loader";
 import PageSelector from "../../Shared/PageSelector";
@@ -33,15 +35,7 @@ const AccompanimentCards: React.FC<{
 
   const { isAuthenticated, isStudent } = useUserData(true);
 
-  //This will keep the selector bar from falling back to the placeholder everytime the user switch page.
-  //TODO refactor this to a custom hook.
-  const totalPage = allProductsData?.allProductsInfo?.pagePosition.of;
-  const [totalPagesMemoized, setTotalPageMemoized] = useState(0);
-  useEffect(() => {
-    if (totalPage) {
-      setTotalPageMemoized(totalPage);
-    }
-  }, [totalPage]);
+  const { totalPagesMemoized = 1 } = useTotalPagesMemoized(allProductsData);
 
   const itemsInCart = useStore((state) => state.itemsInCart);
 
