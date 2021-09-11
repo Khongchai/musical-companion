@@ -5,10 +5,10 @@ import "../../public/fonts/style.css";
 import theme from "../../theme";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { client } from "../utils/apolloClient";
+import "../css/accompaniment-loader.css";
 import "../css/loader.css";
 import "../css/smart-soloist-image.css";
-import "../css/accompaniment-loader.css";
+import { client } from "../utils/apolloClient";
 
 function MyApp({ Component, pageProps }: any) {
   return (
