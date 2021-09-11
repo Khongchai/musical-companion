@@ -32,6 +32,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <Box mb="1rem" key={name} pos="relative">
       <AccompanimentImageAndOverlay
+        imageAlt={product.composition.composers[0].name}
         youtubeLink={product.composition.links?.youtubeLink}
         src={product.imageLink as string}
         productId={parseInt(id)}

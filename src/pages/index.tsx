@@ -3,6 +3,7 @@ import React from "react";
 import AccompanimentSection from "../components/AccompanimentSection/index";
 import { BeforeYouProceed } from "../components/BeforeYouProceed";
 import CompositionSection from "../components/CompositionSection";
+import SEO from "../components/SEO";
 import SmartSoloistSection from "../components/SmartSoloistSection";
 import { WelcomeSection } from "../components/WelcomeSection";
 import { ContainerWithPadding } from "../Elements/ContainerWithPadding";
@@ -13,6 +14,7 @@ export default function Home() {
 
   return (
     <>
+      <SEO />
       <ContainerWithPadding>
         <WelcomeSection textSize={textSize} headerSize={headerSize} />
         <BeforeYouProceed textSize={textSize} headerSize={headerSize} />

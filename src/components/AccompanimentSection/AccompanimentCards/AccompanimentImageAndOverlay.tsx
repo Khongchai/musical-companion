@@ -13,6 +13,7 @@ interface AccompanimentImageProps {
   productId: number;
   alreadyAddedToCart?: boolean;
   youtubeLink?: string | null;
+  imageAlt: string;
 }
 
 const AccompanimentImageAndOverlay: React.FC<AccompanimentImageProps> = ({
@@ -20,6 +21,7 @@ const AccompanimentImageAndOverlay: React.FC<AccompanimentImageProps> = ({
   productId,
   alreadyAddedToCart,
   youtubeLink,
+  imageAlt,
 }) => {
   const [removeFromCart, { loading }] = useAddOrRemoveCartItemMutation();
   const setItemsToCart = useStore((state) => state.setItemsToCart);
@@ -34,6 +36,7 @@ const AccompanimentImageAndOverlay: React.FC<AccompanimentImageProps> = ({
           w="100%"
           objectFit="cover"
           pos="absolute"
+          alt={imageAlt}
         />
       </ComposerImageContainer>
       {youtubeLink ? (
