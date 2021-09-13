@@ -26,7 +26,7 @@ export const WelcomeSection: React.FC<WelcomeSectionProps> = ({
         midi.
       </Text>
       <Text textAlign="center" fontSize={textSize}>
-        If you don't have an account already, please do! The process is very
+        If you haven't yet create an account, please do! The process is very
         easy, no need to confirm your email. The purpose of having an account is
         so that you can keep track of what you own.
       </Text>
