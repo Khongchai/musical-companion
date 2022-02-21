@@ -23,7 +23,7 @@ export default function useScript(
                 {
                   amount: {
                     //TODO uncomment for production
-                    value: 9,
+                    value: 7,
                     currency_code: "USD",
                     // value: totalToPay,
                     // currentcy_code: "USD",
