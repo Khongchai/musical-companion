@@ -13,6 +13,7 @@ const KhongLogoLink: React.FC<KhongLogoLinkProps> = ({}) => {
           width="60px"
           height="60px"
         />
+        <h5>Test Version: 0.5.2</h5>
       </Flex>
     </Link>
   );
