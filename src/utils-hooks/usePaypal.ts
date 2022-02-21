@@ -22,8 +22,11 @@ export default function useScript(
               purchase_units: [
                 {
                   amount: {
-                    currentcy_code: "USD",
-                    value: totalToPay,
+                    //TODO uncomment for production
+                    value: 1,
+                    currency_code: "USD",
+                    // value: totalToPay,
+                    // currentcy_code: "USD",
                   },
                 },
               ],
