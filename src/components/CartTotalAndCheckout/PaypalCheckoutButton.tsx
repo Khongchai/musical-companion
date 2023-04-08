@@ -16,12 +16,11 @@ const CheckoutButton: React.FC<{
       "AefzESw_LUu6JXFE5P8Bf72A4v5Oe6RSRtthksZLKJMSKEkt0NsdQN5b7SSDO_mcJ0OSqyPiHZQBCMTz",
   };
 
-  // TODO uncomment only when everything finishes
   // const clientID =
   //   process.env.NODE_ENV === "production"
   //     ? client.productionKey
   //     : client.sandboxKey;
-  const clientID = client.productionKey;
+  const clientID = client.sandboxKey;
 
   const paypalButtonContainer = useRef<any>(null);
 
