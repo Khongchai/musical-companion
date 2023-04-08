@@ -45,5 +45,5 @@ export default function useScript(
     return () => {
       document.body.removeChild(script);
     };
-  }, [paypalButtonContainer, totalToPay]);
+  }, [paypalButtonContainer]);
 }
